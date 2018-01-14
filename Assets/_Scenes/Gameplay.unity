@@ -809,6 +809,7 @@ MonoBehaviour:
   spawnRate: 1.5
   waveRate: 7
   enemy: {fileID: 1684365596376908, guid: 9bab13ff372b645e4aaef4cc2b59f708, type: 2}
+  mine: {fileID: 1768288237577756, guid: cc97fb19a9101469db781ec4ef0b1c6f, type: 2}
 --- !u!1 &1006402250
 GameObject:
   m_ObjectHideFlags: 0

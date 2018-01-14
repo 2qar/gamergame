@@ -8,53 +8,42 @@ public class EnemyManager2 : MonoBehaviour {
     private int enemyWeapon;
 	private int health = 1;
 
-    //Weapon Stuff
+    // Weapon Stuff
     float nextFire;
     public float fireRate = 2;
     public Vector3 bulletOffset = new Vector3(.2f, 0, 0);
 
-    //Object reference stuff
+    // Object reference stuff
     public GameObject bullet;
     public Sprite altShip;
     private GameObject gameController;
     private GameController controller;
 
-    void Start()
+	void Start()
     {
-        //Get GameController script
+        // Get GameController script
         gameController = GameObject.FindGameObjectWithTag("GameController");
         controller = gameController.GetComponent<GameController>();
-		//Get SpriteRenderer component so the sprite can be changed
+		// Get SpriteRenderer component so the sprite can be changed
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
-        //Set weapon and ship
+        // Set weapon and ship
         enemyWeapon = Random.Range (1, controller.enemyLevel);
-		//If the weapon is 2, triple blast ship
+		// If the weapon is 2, triple blast ship
 		if (enemyWeapon == 2) 
 		{
 			sr.sprite = altShip;
 			health = 2;
 		}
-		//If the weapon is 3, mine enemy
-		if(enemyWeapon == 3)
-			//Change to mine
         //Debug.Log ("Enemy Weapon: " + enemyWeapon); //Check weapon
     }
 
     private void Update()
     {
-        //Checks to fire weapon
-        if (Time.time >= nextFire && enemyWeapon == 1)
-        {
-            nextFire = Time.time + fireRate;
-            Instantiate(bullet, transform.position + bulletOffset, transform.rotation);
-        }
-        if (Time.time >= nextFire && enemyWeapon == 2)
-        {
-            nextFire = Time.time + fireRate;
-            for (int reps = 15; reps >= -15; reps -= 15)
-                Instantiate(bullet, transform.position + bulletOffset, Quaternion.Euler(new Vector3(0, 0, reps)));
-        }
-		//Check enemy health & destroy enemy if health is 0
+        // Checks to fire weapon
+        if (Time.time >= nextFire)
+			fireWeapon (enemyWeapon);
+		
+		// Check enemy health & destroy enemy if health is 0
 		if (health == 0) 
 		{
 			Destroy (gameObject);
@@ -83,4 +72,27 @@ public class EnemyManager2 : MonoBehaviour {
 			health--;
 		}
     }
+
+	void fireWeapon(int weapon)
+	{
+		// * * * * * * * * *
+		// * Enemy Weapons *
+		// * * * * * * * * *
+
+		// Enemy Weapon #1: Single Fire
+		// Simple single shot weapon with
+		// normal cooldown
+		if(enemyWeapon == 1)
+			Instantiate(bullet, transform.position + bulletOffset, transform.rotation);
+
+		// Enemy Weapon #2: Triple Shot
+		// Same as the single shot with additional bullets
+		// and normal cooldown
+		if(enemyWeapon == 2)
+			for (int reps = 15; reps >= -15; reps -= 15)
+				Instantiate(bullet, transform.position + bulletOffset, Quaternion.Euler(new Vector3(0, 0, reps)));
+
+		// Start cooldown
+		nextFire = Time.time + fireRate;
+	}
 }

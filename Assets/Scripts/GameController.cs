@@ -23,9 +23,11 @@ public class GameController : MonoBehaviour
 	public float waveRate = 100000f;
 	private float nextWave;
 
-    //Object to spawn
+    //Enemies to spawn
 	public GameObject enemy;
+	public GameObject mine;
 
+	//Spawn point for enemies
 	private Vector2 enemySpawnPos;
 
     //Player Stuff
@@ -41,12 +43,11 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update () 
 	{
-        //Update text
-        healthText.text = "Health: " + playerMan.health;
-		scoreText.text = "Score: " + score;
-		waveText.text = "Wave " + wave;
+        // Update text
+		UpdateText();
 
-        //Spawn enemies n stuff
+		// Begin Waves
+        // Spawn enemies n stuff
 		if (Time.time >= nextSpawn && currentSpawns > 0) 
 		{
 			nextSpawn = Time.time + spawnRate;
@@ -70,7 +71,41 @@ public class GameController : MonoBehaviour
 			currentSpawns = spawns;
 			wave++;
         }
-        //if (playerMan.health <= 0)
-        //Destroy(player);
     }
+
+	// NOTE:
+	// IF IT AIN'T BROKE, DON'T FIX IT
+	// HINT: THAT SHIT BELOW IS A BROKE BOYE
+
+	/*IEnumerator WaveManager()
+	{
+		while (currentSpawns > 0) 
+		{
+			Vector2 enemySpawn = new Vector2 (9.5f, Random.Range (-4f, 4f));
+			Instantiate (enemy, enemySpawnPos, transform.rotation);
+			currentSpawns--;
+			yield return new WaitForSeconds(spawnRate);
+		}
+		while (currentSpawns == 0) 
+		{
+			yield return new WaitForSeconds (waveRate);
+			currentSpawns--;
+		}
+		while(currentSpawns == -1)
+		{
+			if (spawnRate >= .5f)
+				spawnRate -= .1f;
+			enemyLevel++;
+			spawns *= 2;
+			currentSpawns = spawns;
+		}
+	}*/
+
+	// Update the text when called
+	void UpdateText()
+	{
+		healthText.text = "Health: " + playerMan.health;
+		scoreText.text = "Score: " + score;
+		waveText.text = "Wave " + wave;
+	}
 }

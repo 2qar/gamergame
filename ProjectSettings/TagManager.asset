@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - EnemyBullet
   - Borders
+  - MineCollider
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - Enemy
   - EnemyBullet
   - Borders
-  - 
+  - MineCollider
   - 
   - 
   - 
