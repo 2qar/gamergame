@@ -20,12 +20,6 @@ public class MineCollider : MonoBehaviour
 		// Get player object
 		player = GameObject.FindGameObjectWithTag("Player");
 	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
-		// DO NOTHING
-	}
 
 	void OnTriggerEnter2D(Collider2D other)
 	{

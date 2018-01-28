@@ -32,12 +32,14 @@ public class PlayerFire : MonoBehaviour {
 		// Fires a single bullet projectile
 		if (weapon == 1)
 			Instantiate (bullet, transform.position + bulletOffset, transform.rotation);
+		
 		// Weapon #2: Triple Fire
 		// Same as normal fire, but
 		// fires an extra bullet on each side
 		else if (weapon == 2)
 			for (int reps = 15; reps >= -15; reps -= 15)
 				Instantiate (bullet, transform.position + bulletOffset, Quaternion.Euler (new Vector3 (0, 0, reps)));
+		
 		// Weapon #3: Mine
 		// Fire a slow-moving mine that explodes after x seconds
 		// OR on contact w/ enemy

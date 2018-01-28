@@ -36,8 +36,11 @@ public class EnemyManager1 : MonoBehaviour {
 		{
 			// Set player weapon to mine when
 			// mine is destroyed
-			if (gameObject.name == "Mine")
+			if (gameObject.name == "Mine") 
+			{
 				controller.weapon = 3;
+				Debug.Log ("Weapon Changed");
+			}
 			Destroy (other.gameObject);
 			Destroy (gameObject);
 		}

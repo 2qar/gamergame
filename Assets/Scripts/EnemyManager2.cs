@@ -13,9 +13,11 @@ public class EnemyManager2 : MonoBehaviour {
     public float fireRate = 2;
     public Vector3 bulletOffset = new Vector3(.2f, 0, 0);
 
-    // Object reference stuff
+    // Bullet and Ship objects
     public GameObject bullet;
     public Sprite altShip;
+
+	// GameController object
     private GameObject gameController;
     private GameController controller;
 
@@ -26,13 +28,16 @@ public class EnemyManager2 : MonoBehaviour {
         controller = gameController.GetComponent<GameController>();
 		// Get SpriteRenderer component so the sprite can be changed
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
+		// Get the BoxCollider so the size can be changed
+		//BoxCollider2D collider = GetComponent<BoxCollider2D> ();
         // Set weapon and ship
-        enemyWeapon = Random.Range (1, controller.enemyLevel);
+		enemyWeapon = controller.enemyWeapon;
 		// If the weapon is 2, triple blast ship
 		if (enemyWeapon == 2) 
 		{
 			sr.sprite = altShip;
 			health = 2;
+			//collider.size.y = 0.6;
 		}
         //Debug.Log ("Enemy Weapon: " + enemyWeapon); //Check weapon
     }
@@ -65,6 +70,7 @@ public class EnemyManager2 : MonoBehaviour {
         {
             Destroy(other.gameObject);
         }
+
         //Take enemy health when shot, destroy player bullet object
 		if (other.gameObject.tag == "PlayerBullet") 
 		{
@@ -95,4 +101,11 @@ public class EnemyManager2 : MonoBehaviour {
 		// Start cooldown
 		nextFire = Time.time + fireRate;
 	}
+
+	// IDEA: When enemies die, the player gets a set amount of money
+	// BUT
+	// The enemy ship explodes into little bits, and the player can
+	// collect these bits for extra cash at the risk of losing health
+	// cus they have to get the bits and dodge enemy fire at the same
+	// time
 }

@@ -22,6 +22,7 @@ public class GameController : MonoBehaviour
 	private float nextSpawn;
 	public float waveRate = 100000f;
 	private float nextWave;
+	public int enemyWeapon;
 
     //Enemies to spawn
 	public GameObject enemy;
@@ -52,7 +53,11 @@ public class GameController : MonoBehaviour
 		{
 			nextSpawn = Time.time + spawnRate;
 			enemySpawnPos = new Vector2 (9.5f, Random.Range (-4f, 4f));
-			Instantiate(enemy, enemySpawnPos, transform.rotation);
+			enemyWeapon = Random.Range(1, enemyLevel);
+			if (enemyWeapon == 1 || enemyWeapon == 2)
+				Instantiate (enemy, enemySpawnPos, transform.rotation);
+			else if (enemyWeapon == 3)
+				Instantiate (mine, enemySpawnPos, transform.rotation);
 			currentSpawns--;
 		}
         //Break between waves
