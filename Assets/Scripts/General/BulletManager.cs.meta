@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 0220526b97fc94df1a005b7cf704cd80
+timeCreated: 1517175601
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - mineBlast: {instanceID: 0}
+  - bulletBlast: {fileID: 1006667684072656, guid: e3603ed83ecdc7b40a50c813b25bdc7c,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

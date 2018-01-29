@@ -29,7 +29,7 @@ public class EnemyManager2 : MonoBehaviour {
 		// Get SpriteRenderer component so the sprite can be changed
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
 		// Get the BoxCollider so the size can be changed
-		//BoxCollider2D collider = GetComponent<BoxCollider2D> ();
+		BoxCollider2D collider = GetComponent<BoxCollider2D> ();
         // Set weapon and ship
 		enemyWeapon = controller.enemyWeapon;
 		// If the weapon is 2, triple blast ship
@@ -37,7 +37,7 @@ public class EnemyManager2 : MonoBehaviour {
 		{
 			sr.sprite = altShip;
 			health = 2;
-			//collider.size.y = 0.6;
+            collider.size = new Vector2(.6f, .7f);
 		}
         //Debug.Log ("Enemy Weapon: " + enemyWeapon); //Check weapon
     }
@@ -69,6 +69,8 @@ public class EnemyManager2 : MonoBehaviour {
         if (other.gameObject.tag == "Player")
         {
             Destroy(other.gameObject);
+            // Update the health to 0 so no funky stuff happens
+            controller.playerMan.health = 0;
         }
 
         //Take enemy health when shot, destroy player bullet object
@@ -108,4 +110,6 @@ public class EnemyManager2 : MonoBehaviour {
 	// collect these bits for extra cash at the risk of losing health
 	// cus they have to get the bits and dodge enemy fire at the same
 	// time
+
+    // Add a little gravity field around the player that sucks up ship bits
 }

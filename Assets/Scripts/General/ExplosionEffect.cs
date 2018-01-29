@@ -1,0 +1,36 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ExplosionEffect : MonoBehaviour
+{
+    SpriteRenderer sr;
+	// Use this for initialization
+	void Start ()
+    {
+        // Get the SpriteRenderer
+        sr = GetComponent<SpriteRenderer>();
+        // Play the effect
+        StartCoroutine(effect(sr));
+	}
+
+    private void Update()
+    {
+        //effect(sr);
+    }
+
+    IEnumerator effect(SpriteRenderer sr)
+    {
+        while(true)
+        {
+            // Wait for half a second
+            yield return new WaitForSeconds(0.01f);
+            // Change the color to black
+            sr.color = new Color(0, 0, 0, 255);
+            // Wait for a fifth of a second
+            yield return new WaitForSeconds(0.01f);
+            // Disappear
+            Destroy(gameObject);
+        }
+    }
+}

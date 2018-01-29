@@ -33,12 +33,13 @@ public class GameController : MonoBehaviour
 
     //Player Stuff
     private GameObject player;
-    private PlayerManager playerMan;
+    public PlayerManager playerMan;
 
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         playerMan = player.GetComponent<PlayerManager>();
+        healthText.fontSize = Screen.height / 25;
     }
 
     // Update is called once per frame
@@ -47,9 +48,9 @@ public class GameController : MonoBehaviour
         // Update text
 		UpdateText();
 
-		// Begin Waves
+        // Begin Waves
         // Spawn enemies n stuff
-		if (Time.time >= nextSpawn && currentSpawns > 0) 
+        if (Time.time >= nextSpawn && currentSpawns > 0) 
 		{
 			nextSpawn = Time.time + spawnRate;
 			enemySpawnPos = new Vector2 (9.5f, Random.Range (-4f, 4f));
@@ -112,5 +113,8 @@ public class GameController : MonoBehaviour
 		healthText.text = "Health: " + playerMan.health;
 		scoreText.text = "Score: " + score;
 		waveText.text = "Wave " + wave;
-	}
+        healthText.fontSize = Screen.height / 25;
+        scoreText.fontSize = Screen.height / 25;
+        waveText.fontSize = Screen.height / 25;
+    }
 }
