@@ -10,6 +10,9 @@ TagManager:
   - EnemyBullet
   - Borders
   - MineCollider
+  - WaveText
+  - ScoreText
+  - HealthText
   layers:
   - Default
   - TransparentFX
