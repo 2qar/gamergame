@@ -10,6 +10,9 @@ public class GameController : MonoBehaviour
 	public Text scoreText;
 	public Text waveText;
     public Text healthText;
+	// num that screen height will be divided by
+	// to determine the font size of the text
+	int textSizeDivisor = 21;
 
     //Bunch of variables
     public int enemyLevel = 2;
@@ -20,7 +23,7 @@ public class GameController : MonoBehaviour
 	private int currentSpawns = 5;
 	public float spawnRate = 1.5f;
 	private float nextSpawn;
-	public float waveRate = 100000f;
+	public float waveRate = 7f;
 	private float nextWave;
 	public int enemyWeapon;
 
@@ -39,7 +42,6 @@ public class GameController : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         playerMan = player.GetComponent<PlayerManager>();
-        healthText.fontSize = Screen.height / 25;
     }
 
     // Update is called once per frame
@@ -52,8 +54,11 @@ public class GameController : MonoBehaviour
         // Spawn enemies n stuff
         if (Time.time >= nextSpawn && currentSpawns > 0) 
 		{
+			// Reset timer
 			nextSpawn = Time.time + spawnRate;
+			// Generate a random enemy spawn position
 			enemySpawnPos = new Vector2 (9.5f, Random.Range (-4f, 4f));
+			// Pick a random weapon up to the current cap
 			enemyWeapon = Random.Range(1, enemyLevel);
 			if (enemyWeapon == 1 || enemyWeapon == 2)
 				Instantiate (enemy, enemySpawnPos, transform.rotation);
@@ -113,8 +118,9 @@ public class GameController : MonoBehaviour
 		healthText.text = "Health: " + playerMan.health;
 		scoreText.text = "Score: " + score;
 		waveText.text = "Wave " + wave;
-        healthText.fontSize = Screen.height / 25;
-        scoreText.fontSize = Screen.height / 25;
-        waveText.fontSize = Screen.height / 25;
+		//Debug.Log (Screen.height / textSizeDivisor);
+        healthText.fontSize = Screen.height / textSizeDivisor;
+        scoreText.fontSize = Screen.height / textSizeDivisor;
+        waveText.fontSize = Screen.height / textSizeDivisor;
     }
 }

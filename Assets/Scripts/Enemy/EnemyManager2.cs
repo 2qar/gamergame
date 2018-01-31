@@ -21,13 +21,15 @@ public class EnemyManager2 : MonoBehaviour {
     private GameObject gameController;
     private GameController controller;
 
+	SpriteRenderer sr;
+
 	void Start()
     {
         // Get GameController script
         gameController = GameObject.FindGameObjectWithTag("GameController");
         controller = gameController.GetComponent<GameController>();
 		// Get SpriteRenderer component so the sprite can be changed
-        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        sr = GetComponent<SpriteRenderer>();
 		// Get the BoxCollider so the size can be changed
 		BoxCollider2D collider = GetComponent<BoxCollider2D> ();
         // Set weapon and ship
@@ -78,6 +80,8 @@ public class EnemyManager2 : MonoBehaviour {
 		{
 			Destroy (other.gameObject);
 			health--;
+			//if(health != 0)
+			StartCoroutine (hitEffect(sr));
 		}
     }
 
@@ -104,6 +108,20 @@ public class EnemyManager2 : MonoBehaviour {
 		nextFire = Time.time + fireRate;
 	}
 
+	// Make enemy flash white when hit
+	// Bug: Right now it just kinda changes them to white, fix that ya nerd
+	IEnumerator hitEffect(SpriteRenderer sr)
+	{
+		while(true)
+		{
+			// Change the ship color to white
+			sr.color = new Color (255, 255, 255, 255);
+			// Wait for like a a millisecond
+			yield return new WaitForSeconds(0.01f);
+			// Change the ship color back to red
+			sr.color = new Color (255, 0, 0, 255);
+		}
+	}
 	// IDEA: When enemies die, the player gets a set amount of money
 	// BUT
 	// The enemy ship explodes into little bits, and the player can

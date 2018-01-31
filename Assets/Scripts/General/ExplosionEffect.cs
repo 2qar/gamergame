@@ -14,11 +14,7 @@ public class ExplosionEffect : MonoBehaviour
         StartCoroutine(effect(sr));
 	}
 
-    private void Update()
-    {
-        //effect(sr);
-    }
-
+	// Explosion effect
     IEnumerator effect(SpriteRenderer sr)
     {
         while(true)
