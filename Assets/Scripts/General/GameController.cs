@@ -12,7 +12,7 @@ public class GameController : MonoBehaviour
     public Text healthText;
 	// num that screen height will be divided by
 	// to determine the font size of the text
-	int textSizeDivisor = 21;
+	int textSizeDivisor = 15;
 
     //Bunch of variables
     public int enemyLevel = 2;
@@ -42,6 +42,10 @@ public class GameController : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         playerMan = player.GetComponent<PlayerManager>();
+        /*while(Screen.height % textSizeDivisor != 0)
+        {
+            textSizeDivisor++;
+        }*/
     }
 
     // Update is called once per frame
@@ -118,9 +122,14 @@ public class GameController : MonoBehaviour
 		healthText.text = "Health: " + playerMan.health;
 		scoreText.text = "Score: " + score;
 		waveText.text = "Wave " + wave;
-		//Debug.Log (Screen.height / textSizeDivisor);
-        healthText.fontSize = Screen.height / textSizeDivisor;
-        scoreText.fontSize = Screen.height / textSizeDivisor;
-        waveText.fontSize = Screen.height / textSizeDivisor;
+        //Debug.Log (Screen.height / textSizeDivisor);
+        healthText.fontSize = calcTextSize();
+        scoreText.fontSize = calcTextSize();
+        waveText.fontSize = calcTextSize();
+    }
+
+    int calcTextSize()
+    {
+        return Screen.height / textSizeDivisor;
     }
 }
