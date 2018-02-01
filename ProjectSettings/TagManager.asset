@@ -13,6 +13,8 @@ TagManager:
   - WaveText
   - ScoreText
   - HealthText
+  - GameOverText
+  - ResetText
   layers:
   - Default
   - TransparentFX

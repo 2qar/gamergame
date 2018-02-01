@@ -6,6 +6,7 @@ public class PlayerManager : MonoBehaviour
 {
     // Variable shit
     public int health = 3;
+	bool iFrames = false;
 
     // GameController reference shit
     private GameObject controller;
@@ -36,29 +37,51 @@ public class PlayerManager : MonoBehaviour
             sr.sprite = ship2;
 		
         // Kill the player when health is less than 0
-        if (health <= 0)
-            Destroy(gameObject);
+		if (health <= 0) 
+		{
+			Destroy (gameObject);
+			showResetButton ();
+		}
 	}
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //Take health off when the player gets hit
-        if(collision.transform.tag == "EnemyBullet")
+        // Take health off when the player gets hit
+        if(collision.transform.tag == "EnemyBullet" && !iFrames)
         {
-            health--;
-            Destroy(collision.gameObject);
+			StartCoroutine (subtractHealth(collision));
         }
     }
 
-	public IEnumerator subtractHealth()
+	IEnumerator subtractHealth(Collision2D other)
 	{
-		while (true) 
-		{
-			health--;
-			//Change alpha to half
-			//Disable collider
-			yield return new WaitForSeconds (1);
-			//Change alpha to full
-		}
+		// Take 1 HP
+		health--;
+		// Destroy the enemy's bullet
+		Destroy (other.gameObject);
+		// Maybe subtract fuel???
+		// Enable iFrames so the player can't get clipped again
+		iFrames = true;
+		// Change alpha to half
+		sr.color = new Color(255, 255, 255, 125);
+		// Change alpha of booster to half
+
+		// Wait for 1 second
+		yield return new WaitForSeconds (1f);
+		// Change alpha back to full
+		sr.color = new Color(255, 255, 255, 255);
+		// Change alpha of booster back to full
+
+		// Disable invincibility
+		iFrames = false;
+		// Exit
+		//yield break;
+	}
+
+	void showResetButton()
+	{
+		// Show the game over text and prompt to restart
+		gameController.gameOverText.enabled = true;
+		gameController.resetText.enabled = true;
 	}
 }

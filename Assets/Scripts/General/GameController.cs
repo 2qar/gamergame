@@ -10,6 +10,8 @@ public class GameController : MonoBehaviour
 	public Text scoreText;
 	public Text waveText;
     public Text healthText;
+	public Text gameOverText;
+	public Text resetText;
 	// num that screen height will be divided by
 	// to determine the font size of the text
 	int textSizeDivisor = 15;
@@ -40,6 +42,9 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
+		// Get the player object so the script can snatch some stuff off the player
+		// IDK why this reference is here anymore, I think some other scripts
+		// leech off of this one for player info
         player = GameObject.FindGameObjectWithTag("Player");
         playerMan = player.GetComponent<PlayerManager>();
         /*while(Screen.height % textSizeDivisor != 0)
@@ -47,6 +52,24 @@ public class GameController : MonoBehaviour
             textSizeDivisor++;
         }*/
     }
+
+	/**
+	 * IDEA FOR COMPLETE GAME REDESIGN: 
+	 * 
+	 * Instead of WAVE-BASED COMBAT, give the player a FUEL BAR
+	 * SHOOTING makes FUEL go DOWN
+	 * Killing ENEMIES makes them EXPLODE into FUEL, HEALTH, MONEY
+	 * 
+	 * The TWIST; the FUEL BAR is actually more like a SPEED BAR
+	 * 
+	 * MORE FUEL makes you GO FASTER
+	 * 
+	 * THE GAME CAN BE LEVEL BASED INSTEAD, WHERE THE PLAYER IS 
+	 * ENCOURAGED TO GET A TON OF FUEL AND SPEED TO THE END OF THE LEVEL
+	 * 
+	 * -POWER UP THAT MAKES YOU LOSE NO FUEL
+	 * -Enemy level goes up the further into the level you get
+	 **/
 
     // Update is called once per frame
     void Update () 
@@ -61,6 +84,7 @@ public class GameController : MonoBehaviour
 			// Reset timer
 			nextSpawn = Time.time + spawnRate;
 			// Generate a random enemy spawn position
+				// NOTE: Move the spawn position and the killbox further right
 			enemySpawnPos = new Vector2 (9.5f, Random.Range (-4f, 4f));
 			// Pick a random weapon up to the current cap
 			enemyWeapon = Random.Range(1, enemyLevel);
@@ -119,17 +143,20 @@ public class GameController : MonoBehaviour
 	// Update the text when called
 	void UpdateText()
 	{
+		// Update the text to be accurate with variables
 		healthText.text = "Health: " + playerMan.health;
 		scoreText.text = "Score: " + score;
 		waveText.text = "Wave " + wave;
-        //Debug.Log (Screen.height / textSizeDivisor);
-        healthText.fontSize = calcTextSize();
-        scoreText.fontSize = calcTextSize();
-        waveText.fontSize = calcTextSize();
+		// Adjust all of the text size so it scales with the user's display
+        healthText.fontSize = calcTextSize(textSizeDivisor);
+        scoreText.fontSize = calcTextSize(textSizeDivisor);
+        waveText.fontSize = calcTextSize(textSizeDivisor);
+		gameOverText.fontSize = calcTextSize(10);
+		resetText.fontSize = calcTextSize(textSizeDivisor);
     }
 
-    int calcTextSize()
+	int calcTextSize(int divisor)
     {
-        return Screen.height / textSizeDivisor;
+        return Screen.height / divisor;
     }
 }

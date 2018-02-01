@@ -17,16 +17,13 @@ public class ExplosionEffect : MonoBehaviour
 	// Explosion effect
     IEnumerator effect(SpriteRenderer sr)
     {
-        while(true)
-        {
-            // Wait for half a second
-            yield return new WaitForSeconds(0.01f);
-            // Change the color to black
-            sr.color = new Color(0, 0, 0, 255);
-            // Wait for a fifth of a second
-            yield return new WaitForSeconds(0.01f);
-            // Disappear
-            Destroy(gameObject);
-        }
+        // Wait for half a second
+        yield return new WaitForSeconds(0.02f);
+        // Change the color to black
+        sr.color = new Color(0, 0, 0, 255);
+        // Wait for a fifth of a second
+        yield return new WaitForSeconds(0.02f);
+        // Disappear
+        Destroy(gameObject);
     }
 }

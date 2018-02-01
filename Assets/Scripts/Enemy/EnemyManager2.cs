@@ -9,7 +9,7 @@ public class EnemyManager2 : MonoBehaviour {
 	private int health = 1;
 
     // Weapon Stuff
-    float nextFire;
+	float nextFire;
     public float fireRate = 2;
     public Vector3 bulletOffset = new Vector3(.2f, 0, 0);
 
@@ -41,7 +41,9 @@ public class EnemyManager2 : MonoBehaviour {
 			health = 2;
             collider.size = new Vector2(.6f, .7f);
 		}
-        //Debug.Log ("Enemy Weapon: " + enemyWeapon); //Check weapon
+		// Set nextFire on startup so that the enemy doesn't just
+		// immediately shoot when they spawn
+		nextFire = Time.time + Random.Range(0.0f, 1.0f);
     }
 
     private void Update()
@@ -51,8 +53,9 @@ public class EnemyManager2 : MonoBehaviour {
 			fireWeapon (enemyWeapon);
 		
 		// Check enemy health & destroy enemy if health is 0
-		if (health == 0) 
+		if (health <= 0) 
 		{
+			//StartCoroutine (hitEffect(sr));
 			Destroy (gameObject);
 			controller.weapon = enemyWeapon;
 			controller.score++;
@@ -67,7 +70,7 @@ public class EnemyManager2 : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        //Kill the player on collision
+        // Kill the player on collision
         if (other.gameObject.tag == "Player")
         {
             Destroy(other.gameObject);
@@ -75,13 +78,13 @@ public class EnemyManager2 : MonoBehaviour {
             controller.playerMan.health = 0;
         }
 
-        //Take enemy health when shot, destroy player bullet object
+        // Take enemy health when shot, destroy player bullet object
+		// also flash white cus muh game feel
 		if (other.gameObject.tag == "PlayerBullet") 
 		{
 			Destroy (other.gameObject);
-			health--;
-			//if(health != 0)
 			StartCoroutine (hitEffect(sr));
+			health--;
 		}
     }
 
@@ -109,18 +112,16 @@ public class EnemyManager2 : MonoBehaviour {
 	}
 
 	// Make enemy flash white when hit
-	// Bug: Right now it just kinda changes them to white, fix that ya nerd
 	IEnumerator hitEffect(SpriteRenderer sr)
 	{
-		while(true)
-		{
-			// Change the ship color to white
-			sr.color = new Color (255, 255, 255, 255);
-			// Wait for like a a millisecond
-			yield return new WaitForSeconds(0.01f);
-			// Change the ship color back to red
-			sr.color = new Color (255, 0, 0, 255);
-		}
+		// Change the ship color to white
+		sr.color = new Color (255, 255, 255, 255);
+		// Wait for like a a millisecond
+		yield return new WaitForSeconds(0.05f);
+		// Change the ship color back to red
+		sr.color = new Color (255, 0, 0, 255);
+		// Exit the method
+		yield break;
 	}
 	// IDEA: When enemies die, the player gets a set amount of money
 	// BUT
