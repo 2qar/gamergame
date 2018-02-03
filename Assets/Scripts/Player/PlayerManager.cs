@@ -6,11 +6,14 @@ public class PlayerManager : MonoBehaviour
 {
     // Variable shit
     public int health = 3;
-	bool iFrames = false;
+	private bool iFrames = false;
 
     // GameController reference shit
     private GameObject controller;
     private GameController gameController;
+
+	// The player's particle booster
+	ParticleSystem booster;
 
     // Sprite shit
     private SpriteRenderer sr;
@@ -19,13 +22,15 @@ public class PlayerManager : MonoBehaviour
     public Sprite ship1;
     public Sprite ship2;
 
+	public GameObject resetUI;
+
 	void Start ()
     {
         // Getting components n shit
         controller = GameObject.FindGameObjectWithTag("GameController");
         gameController = controller.GetComponent<GameController>();
         sr = gameObject.GetComponent<SpriteRenderer>();
-
+		booster = gameObject.GetComponent<ParticleSystem> ();
 	}
 	
 	void Update ()
@@ -51,6 +56,13 @@ public class PlayerManager : MonoBehaviour
         {
 			StartCoroutine (subtractHealth(collision));
         }
+		// Kill the player on collision with an enemy
+		/*if (collision.gameObject.tag == "Enemy") 
+		{
+			Destroy (collision.gameObject);
+			Destroy(gameObject);
+			showResetButton ();
+		}*/
     }
 
 	IEnumerator subtractHealth(Collision2D other)
@@ -65,13 +77,13 @@ public class PlayerManager : MonoBehaviour
 		// Change alpha to half
 		sr.color = new Color(255, 255, 255, 125);
 		// Change alpha of booster to half
-
+		//booster.main.startColor = new Color(255, 111, 0, 125);
 		// Wait for 1 second
 		yield return new WaitForSeconds (1f);
 		// Change alpha back to full
 		sr.color = new Color(255, 255, 255, 255);
 		// Change alpha of booster back to full
-
+		//booster.main.startColor = Color(255, 111, 0, 255);
 		// Disable invincibility
 		iFrames = false;
 		// Exit
@@ -80,8 +92,7 @@ public class PlayerManager : MonoBehaviour
 
 	void showResetButton()
 	{
-		// Show the game over text and prompt to restart
-		gameController.gameOverText.enabled = true;
-		gameController.resetText.enabled = true;
+		// Create the gameover text and the reset text
+		Instantiate (resetUI, new Vector3 (0, 0, 0), transform.rotation);
 	}
 }

@@ -73,7 +73,7 @@ public class EnemyManager2 : MonoBehaviour {
         // Kill the player on collision
         if (other.gameObject.tag == "Player")
         {
-            Destroy(other.gameObject);
+            //Destroy(other.gameObject);
             // Update the health to 0 so no funky stuff happens
             controller.playerMan.health = 0;
         }

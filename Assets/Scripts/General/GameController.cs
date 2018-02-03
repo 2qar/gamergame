@@ -10,8 +10,8 @@ public class GameController : MonoBehaviour
 	public Text scoreText;
 	public Text waveText;
     public Text healthText;
-	public Text gameOverText;
-	public Text resetText;
+	//public Text gameOverText;
+	//public Text resetText;
 	// num that screen height will be divided by
 	// to determine the font size of the text
 	int textSizeDivisor = 15;
@@ -151,8 +151,8 @@ public class GameController : MonoBehaviour
         healthText.fontSize = calcTextSize(textSizeDivisor);
         scoreText.fontSize = calcTextSize(textSizeDivisor);
         waveText.fontSize = calcTextSize(textSizeDivisor);
-		gameOverText.fontSize = calcTextSize(10);
-		resetText.fontSize = calcTextSize(textSizeDivisor);
+		//gameOverText.fontSize = calcTextSize(10);
+		//resetText.fontSize = calcTextSize(textSizeDivisor);
     }
 
 	int calcTextSize(int divisor)

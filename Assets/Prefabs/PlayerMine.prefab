@@ -90,6 +90,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSpeed: 5
+  mineBlast: {fileID: 1104464134862156, guid: 74aa77de08e4af94a94af32985c37588, type: 2}
+  bulletBlast: {fileID: 1006667684072656, guid: e3603ed83ecdc7b40a50c813b25bdc7c,
+    type: 2}
 --- !u!212 &212552045147446704
 SpriteRenderer:
   m_ObjectHideFlags: 1

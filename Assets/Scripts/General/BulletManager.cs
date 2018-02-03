@@ -20,26 +20,39 @@ public class BulletManager : MonoBehaviour
     private void Start()
     {
         // Lower the speed a little bit if the bullet is actually a mine
-        if (gameObject.name == "PlayerMine")
-            bulletSpeed = 4;
+		if (gameObject.name == "PlayerMine") 
+		{
+			bulletSpeed = 4;
+			mineMovement ();
+		}
     }
     void FixedUpdate () 
 	{
         // Move the bullet
-		transform.position += transform.right * bulletSpeed * Time.deltaTime;
+		if(gameObject.tag == "PlayerBullet")
+			transform.position += transform.right * bulletSpeed * Time.deltaTime;
 	}
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-            // If the object being destroyed is a mine,
-            if (gameObject.name == "PlayerMine")
-                // Create the object that handles the explosion
-                Instantiate(mineBlast, transform.position, transform.rotation);
-            // If the object isn't a mine,
-            else
-                // Make a lil poof instead of a mine explosion
-                Instantiate(bulletBlast, transform.position, transform.rotation);
+        // If the object being destroyed is a mine,
+		if (gameObject.tag != "PlayerBullet")
+            // Create the object that handles the explosion
+            Instantiate(mineBlast, transform.position, transform.rotation);
+        // If the object isn't a mine,
+        else
+            // Make a lil poof instead of a mine explosion
+            Instantiate(bulletBlast, transform.position, transform.rotation);
     }
+
+	IEnumerator mineMovement()
+	{
+		float waitTime = Time.time + 4;
+		while (Time.time < waitTime)
+			transform.position += transform.right * bulletSpeed * Time.deltaTime * ((waitTime - Time.time) / 3);
+		Instantiate(mineBlast, transform.position, transform.rotation);
+		yield break;
+	}
 
     /*bool collisionChecker(Collision2D other)
     {

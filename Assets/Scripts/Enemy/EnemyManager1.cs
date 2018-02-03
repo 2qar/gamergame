@@ -26,9 +26,11 @@ public class EnemyManager1 : MonoBehaviour {
 
 	void OnCollisionEnter2D (Collision2D other)
 	{
+		// Kill the player on collision
 		if (other.gameObject.tag == "Player") 
 		{
-			Destroy (other.gameObject);
+			//Destroy (other.gameObject);
+			controller.playerMan.health = 0;
 			if (gameObject.name == "Mine")
 				Destroy (gameObject);
 		}
