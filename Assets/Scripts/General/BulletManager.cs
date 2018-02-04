@@ -5,7 +5,7 @@ using UnityEngine;
 public class BulletManager : MonoBehaviour
 {
     // Speed the projectile will travel at
-	public float bulletSpeed = 5;
+    public float bulletSpeed = 5;
     // Offset of the bullet explosion
     //Vector3 bulletOffset = new Vector3(.6f, 0);
 
@@ -19,6 +19,10 @@ public class BulletManager : MonoBehaviour
     // Update is called once per frame
     private void Start()
     {
+        // When the player or the enemy fires a bullet,
+        if (gameObject.tag == "PlayerBullet" || gameObject.tag == "EnemyBullet")
+            // Make a lil explosion
+            Instantiate(bulletBlast, transform.position, transform.rotation);
         // Lower the speed a little bit if the bullet is actually a mine
 		if (gameObject.name == "PlayerMine") 
 		{
@@ -29,14 +33,14 @@ public class BulletManager : MonoBehaviour
     void FixedUpdate () 
 	{
         // Move the bullet
-		if(gameObject.tag == "PlayerBullet")
-			transform.position += transform.right * bulletSpeed * Time.deltaTime;
+		//if(gameObject.tag == "PlayerBullet")
+		transform.position += transform.right * bulletSpeed * Time.deltaTime;
 	}
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // If the object being destroyed is a mine,
-		if (gameObject.tag != "PlayerBullet")
+		if (gameObject.tag != "PlayerBullet" && gameObject.tag != "EnemyBullet")
             // Create the object that handles the explosion
             Instantiate(mineBlast, transform.position, transform.rotation);
         // If the object isn't a mine,
