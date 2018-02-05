@@ -57,7 +57,7 @@ public class EnemyManager2 : MonoBehaviour {
 		{
 			//StartCoroutine (hitEffect(sr));
 			Destroy (gameObject);
-			controller.weapon = enemyWeapon;
+			controller.playerMan.Weapon = enemyWeapon;
 			controller.score++;
 		}
     }
@@ -75,7 +75,7 @@ public class EnemyManager2 : MonoBehaviour {
         {
             //Destroy(other.gameObject);
             // Update the health to 0 so no funky stuff happens
-            controller.playerMan.health = 0;
+            controller.playerMan.Health = 0;
         }
 
         // Take enemy health when shot, destroy player bullet object

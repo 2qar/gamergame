@@ -4,16 +4,10 @@ using UnityEngine;
 
 public class RestartGame : MonoBehaviour 
 {
-
-	// Use this for initialization
-	void Start () 
-	{
-		
-	}
-	
 	// Update is called once per frame
 	void Update () 
 	{
+        // If the player presses the R key, restart the game
 		if (Input.GetKeyDown (KeyCode.R)) 
 			Application.LoadLevel (Application.loadedLevel);
 	}

@@ -30,7 +30,7 @@ public class EnemyManager1 : MonoBehaviour {
 		if (other.gameObject.tag == "Player") 
 		{
 			//Destroy (other.gameObject);
-			controller.playerMan.health = 0;
+			controller.playerMan.Health = 0;
 			if (gameObject.name == "Mine")
 				Destroy (gameObject);
 		}
@@ -40,7 +40,7 @@ public class EnemyManager1 : MonoBehaviour {
 			// mine is destroyed
 			if (gameObject.name == "Mine") 
 			{
-				controller.weapon = 3;
+				controller.playerMan.Weapon = 3;
 				Debug.Log ("Weapon Changed");
 			}
 			Destroy (other.gameObject);

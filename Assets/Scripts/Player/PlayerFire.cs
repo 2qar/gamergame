@@ -23,7 +23,7 @@ public class PlayerFire : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.Space) && Time.time >= nextFire) 
 		{
             // SHOOT
-			fireWeapon (gameController.weapon);
+			fireWeapon (gameController.playerMan.Weapon);
 		}
 	}
 

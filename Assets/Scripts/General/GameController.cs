@@ -19,7 +19,7 @@ public class GameController : MonoBehaviour
     //Bunch of variables
     public int enemyLevel = 2;
     public int score = 0;
-	public int weapon = 1;
+	//public int weapon = 1;
 	private int wave = 1;
 	private int spawns = 5;
 	private int currentSpawns = 5;
@@ -144,7 +144,7 @@ public class GameController : MonoBehaviour
 	void UpdateText()
 	{
 		// Update the text to be accurate with variables
-		healthText.text = "Health: " + playerMan.health;
+		//healthText.text = "Health: " + playerMan.health;
 		scoreText.text = "Score: " + score;
 		waveText.text = "Wave " + wave;
 		// Adjust all of the text size so it scales with the user's display
