@@ -8,6 +8,8 @@ public class PlayerManager : MonoBehaviour
     private int health = 3;
     // Array that will hold the player's health cells shown on the UI
     GameObject[] healthCells = new GameObject[10];
+    // Sorted version of the health cells
+    GameObject[] sortedHealthCells = new GameObject[10];
     // The health cell object that will be created on the UI
     //public GameObject healthCell;
     // Does the player currently have invincibility?
@@ -54,23 +56,23 @@ public class PlayerManager : MonoBehaviour
 
         // Set up the UI health element
         healthCells = GameObject.FindGameObjectsWithTag("HealthCell");
-        // Sort the GameObjects in the array to be in the correct order
-        // TODO: Fix the thing where after resetting the game
-        // the sorting is completely fucked up cus RAM is weird
-        for(int pos = 0; pos < healthCells.Length / 2; pos++)
-        {
-            // Hold the value of the current element
-            GameObject temp = healthCells[pos];
-            // Change the current element to the element <pos> spaces away from the last
-            healthCells[pos] = healthCells[healthCells.Length - 1 - pos];
-            // Change the element <pos> spaces away from the last to stored current element
-            healthCells[healthCells.Length - 1 - pos] = temp;
-        }
-        // Check to make sure it's in order
-        //for (int pos = 0; pos < healthCells.Length; pos++)
-            //Debug.Log("Element " + (pos + 1) + ": " + healthCells[pos]);
-        updateHealthCells();
+        // Sort the GameObjects into a seperate array
+        // Run through each element in the new array
+        for(int pos = 0; pos < sortedHealthCells.Length; pos++)
+            // Run through each element in the old array
+            for(int reps = 0; reps < healthCells.Length; reps++)
+            {
+                // Store the name of the current object
+                string objName = "" + healthCells[reps];
+                // If the object has the correct number for the current sorted array position,
+                if(objName.Contains("" + pos))
+                    // Put the cola in the slot
+                    sortedHealthCells[pos] = healthCells[reps];
+            }
+        updateHealthCells(sortedHealthCells);
     }
+
+    // Health value that everything else will access
     public int Health
     {
         get { return health; }
@@ -79,9 +81,10 @@ public class PlayerManager : MonoBehaviour
             // Update health
             health = value;
             // Make sure the health cells on the UI reflect the player's health
-            updateHealthCells();
+            updateHealthCells(sortedHealthCells);
         }
     }
+    
     void Update ()
     {
         // Kill the player when health is less than 0
@@ -113,6 +116,8 @@ public class PlayerManager : MonoBehaviour
     }
 
     // TODO: Fix the alpha change
+    // Subtracts from the player's health, gives a small frame of invincibility and
+    // does some fancy visual stuff
 	IEnumerator subtractHealth(Collision2D other)
 	{
 		// Take 1 HP
@@ -138,12 +143,14 @@ public class PlayerManager : MonoBehaviour
 		//yield break;
 	}
 
+    // Shows the game over text and reset button
 	void showResetButton()
 	{
 		// Create the gameover text and the reset text
 		Instantiate (resetUI, new Vector3 (0, 0, 0), transform.rotation);
 	}
 
+    // Changes the player's ship and makes a lil poof
     void changeShip()
     {
         // Give player right sprite for right weapon
@@ -157,17 +164,18 @@ public class PlayerManager : MonoBehaviour
         Destroy(poofRef, 1);
     }
 
-    void updateHealthCells()
+    // Updates the UI health element
+    void updateHealthCells(GameObject[] cells)
     {
         // Run through all of the objects in the array
-        for (int pos = 0; pos < healthCells.Length; pos++)
+        for (int pos = 0; pos < cells.Length; pos++)
             // If the current cell <= the player's health,
             if (pos < health)
                 // Show it on the UI
-                healthCells[pos].SetActive(true);
+                cells[pos].SetActive(true);
             // If the current cell is at a position greater than the player's health,
             else
                 // Hide it on the UI
-                healthCells[pos].SetActive(false);
+                cells[pos].SetActive(false);
     }
 }
