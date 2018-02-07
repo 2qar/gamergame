@@ -6,14 +6,25 @@ public class PlayerManager : MonoBehaviour
 {
     // Player Health
     private int health = 3;
+    private int maxHealth = 3;
     // Array that will hold the player's health cells shown on the UI
     GameObject[] healthCells = new GameObject[10];
     // Sorted version of the health cells
     GameObject[] sortedHealthCells = new GameObject[10];
-    // The health cell object that will be created on the UI
-    //public GameObject healthCell;
+    // The background for the health cells
+    private GameObject healthCellBG;
+    // Transform for adjusting the size of the bg later
+    private RectTransform healthCellRect;
     // Does the player currently have invincibility?
 	private bool iFrames = false;
+
+    // SPEEEEEEED BOOST
+    private float speed = 1.0f;
+    // If you couldn't tell I just learned about properties and I love them :^)
+    public float Speed
+    {
+        get { return speed; }
+    }
 
     // Store the player's weapon,
     // play an animation and change ship when the value changes
@@ -53,6 +64,7 @@ public class PlayerManager : MonoBehaviour
         // Getting components n shit
         sr = gameObject.GetComponent<SpriteRenderer>();
 		booster = gameObject.GetComponent<ParticleSystem> ();
+        healthCellBG = GameObject.FindGameObjectWithTag("HealthCellBG");
 
         // Set up the UI health element
         healthCells = GameObject.FindGameObjectsWithTag("HealthCell");
@@ -70,6 +82,10 @@ public class PlayerManager : MonoBehaviour
                     sortedHealthCells[pos] = healthCells[reps];
             }
         updateHealthCells(sortedHealthCells);
+        // Get the rect transform of the healthcellbg
+        healthCellRect = (RectTransform)healthCellBG.transform;
+        // Adjust the size to fit the 3 health cells
+        healthCellRect.sizeDelta = new Vector2(16.3f * health + 5f, healthCellRect.sizeDelta.y);
     }
 
     // Health value that everything else will access
@@ -84,9 +100,23 @@ public class PlayerManager : MonoBehaviour
             updateHealthCells(sortedHealthCells);
         }
     }
+    public int MaxHealth
+    {
+        get { return maxHealth; }
+        set
+        {
+            maxHealth = value;
+            // Be nice and give the player max health when their maxhealth increases
+            health = maxHealth;
+            // Adjust the size of the bg to compensate for an extra health cell
+            healthCellRect.sizeDelta += new Vector2(16.3f, 0f);
+        }
+    }
     
     void Update ()
     {
+        // Constantly lower the player's speed, encourage v i o l e n c e
+        speed -= .0001f;
         // Kill the player when health is less than 0
 		if (health <= 0) 
 		{

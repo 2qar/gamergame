@@ -75,7 +75,7 @@ public class GameController : MonoBehaviour
     void Update () 
 	{
         // Update text
-		UpdateText();
+		//UpdateText();
 
         // Begin Waves
         // Spawn enemies n stuff
@@ -110,53 +110,5 @@ public class GameController : MonoBehaviour
 			currentSpawns = spawns;
 			wave++;
         }
-    }
-
-	// NOTE:
-	// IF IT AIN'T BROKE, DON'T FIX IT
-	// HINT: THAT SHIT BELOW IS A BROKE BOYE
-
-	/*IEnumerator WaveManager()
-	{
-		while (currentSpawns > 0) 
-		{
-			Vector2 enemySpawn = new Vector2 (9.5f, Random.Range (-4f, 4f));
-			Instantiate (enemy, enemySpawnPos, transform.rotation);
-			currentSpawns--;
-			yield return new WaitForSeconds(spawnRate);
-		}
-		while (currentSpawns == 0) 
-		{
-			yield return new WaitForSeconds (waveRate);
-			currentSpawns--;
-		}
-		while(currentSpawns == -1)
-		{
-			if (spawnRate >= .5f)
-				spawnRate -= .1f;
-			enemyLevel++;
-			spawns *= 2;
-			currentSpawns = spawns;
-		}
-	}*/
-
-	// Update the text when called
-	void UpdateText()
-	{
-		// Update the text to be accurate with variables
-		//healthText.text = "Health: " + playerMan.health;
-		scoreText.text = "Score: " + score;
-		waveText.text = "Wave " + wave;
-		// Adjust all of the text size so it scales with the user's display
-        healthText.fontSize = calcTextSize(textSizeDivisor);
-        scoreText.fontSize = calcTextSize(textSizeDivisor);
-        waveText.fontSize = calcTextSize(textSizeDivisor);
-		//gameOverText.fontSize = calcTextSize(10);
-		//resetText.fontSize = calcTextSize(textSizeDivisor);
-    }
-
-	int calcTextSize(int divisor)
-    {
-        return Screen.height / divisor;
     }
 }
