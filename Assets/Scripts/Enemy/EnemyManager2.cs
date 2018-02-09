@@ -123,6 +123,9 @@ public class EnemyManager2 : MonoBehaviour {
 		// Exit the method
 		yield break;
 	}
+
+    //TODO: Make enemies blow up into a million pretty little pieces
+
 	// IDEA: When enemies die, the player gets a set amount of money
 	// BUT
 	// The enemy ship explodes into little bits, and the player can

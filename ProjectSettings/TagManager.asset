@@ -17,6 +17,7 @@ TagManager:
   - ResetText
   - HealthCell
   - HealthCellBG
+  - PlayerSpeedText
   layers:
   - Default
   - TransparentFX

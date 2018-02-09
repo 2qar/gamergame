@@ -116,7 +116,9 @@ public class PlayerManager : MonoBehaviour
     void Update ()
     {
         // Constantly lower the player's speed, encourage v i o l e n c e
-        speed -= .0001f;
+        if(speed > 0)
+            speed -= .0005f;
+        //Debug.Log(Speed);
         // Kill the player when health is less than 0
 		if (health <= 0) 
 		{
@@ -208,4 +210,5 @@ public class PlayerManager : MonoBehaviour
                 // Hide it on the UI
                 cells[pos].SetActive(false);
     }
+
 }

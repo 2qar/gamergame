@@ -10,6 +10,7 @@ public class GameController : MonoBehaviour
 	public Text scoreText;
 	public Text waveText;
     public Text healthText;
+    public Text speedText;
 	//public Text gameOverText;
 	//public Text resetText;
 	// num that screen height will be divided by
@@ -69,13 +70,14 @@ public class GameController : MonoBehaviour
 	 * 
 	 * -POWER UP THAT MAKES YOU LOSE NO FUEL
 	 * -Enemy level goes up the further into the level you get
+	 * -power up that makes me not sad anymore
 	 **/
 
     // Update is called once per frame
     void Update () 
 	{
         // Update text
-		//UpdateText();
+		updateText();
 
         // Begin Waves
         // Spawn enemies n stuff
@@ -111,4 +113,13 @@ public class GameController : MonoBehaviour
 			wave++;
         }
     }
+
+    // Update UI text
+    void updateText()
+    {
+        // Get the player's speed value, then "truncate" by taking substring
+        string speedMsg = "" + playerMan.Speed;
+        speedText.text = speedMsg.Substring(0, 3);
+    }
+
 }
