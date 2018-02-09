@@ -7,6 +7,7 @@ public class EnemyManager2 : MonoBehaviour {
     public int moveSpeed = 5;
     private int enemyWeapon;
 	private int health = 1;
+    public GameObject explosion;
 
     // Weapon Stuff
 	float nextFire;
@@ -59,6 +60,8 @@ public class EnemyManager2 : MonoBehaviour {
 			Destroy (gameObject);
 			controller.playerMan.Weapon = enemyWeapon;
 			controller.score++;
+            // Explode
+            Instantiate(explosion, transform.position, transform.rotation);
 		}
     }
 		

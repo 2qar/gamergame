@@ -142,8 +142,8 @@ public class PlayerManager : MonoBehaviour
         // TODO: Maybe use this instead of the 2 seperate bits of code in both of the 
         // EnemyManager scripts???
 
-		// Kill the player on collision with an enemy
-		/*if (collision.gameObject.tag == "Enemy") 
+        // Kill the player on collision with an enemy
+        /*if (collision.gameObject.tag == "Enemy") 
 		{
 			Destroy (collision.gameObject);
 			Destroy(gameObject);
