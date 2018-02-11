@@ -24,6 +24,10 @@ public class PlayerManager : MonoBehaviour
     public float Speed
     {
         get { return speed; }
+        set
+        {
+            speed = value;
+        }
     }
 
     // Store the player's weapon,
@@ -128,7 +132,7 @@ public class PlayerManager : MonoBehaviour
     {
         // Constantly lower the player's speed, encourage v i o l e n c e
         if (speed > 0)
-            speed -= .0005f;
+            speed -= .0025f;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

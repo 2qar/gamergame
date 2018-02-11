@@ -70,7 +70,6 @@ public class GameController : MonoBehaviour
 	 * 
 	 * -POWER UP THAT MAKES YOU LOSE NO FUEL
 	 * -Enemy level goes up the further into the level you get
-	 * -power up that makes me not sad anymore
 	 **/
 
     // Update is called once per frame
@@ -119,7 +118,8 @@ public class GameController : MonoBehaviour
     {
         // Get the player's speed value, then "truncate" by taking substring
         string speedMsg = "" + playerMan.Speed;
-        speedText.text = speedMsg.Substring(0, 3);
+        int startIndex = speedMsg.IndexOf(".");
+        speedText.text = speedMsg.Substring(0, startIndex + 2);
     }
 
 }

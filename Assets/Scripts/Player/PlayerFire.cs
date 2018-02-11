@@ -55,5 +55,8 @@ public class PlayerFire : MonoBehaviour {
 		
 		// Set cooldown for next shot
 		nextFire = Time.time + fireRate;
+
+        // Subtract some fuel so the player doesn't spam their weapon
+        gameController.playerMan.Speed -= .1f;
 	}
 }

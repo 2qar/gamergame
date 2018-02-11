@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyManager2 : MonoBehaviour {
 
-    public int moveSpeed = 5;
+    public float moveSpeed = 5;
     private int enemyWeapon;
 	private int health = 1;
     public GameObject explosion;
@@ -49,6 +49,9 @@ public class EnemyManager2 : MonoBehaviour {
 
     private void Update()
     {
+        // Change the enemy's move speed based on the player's speed
+        moveSpeed = 3 + (controller.playerMan.Speed / 10);
+
         // Checks to fire weapon
         if (Time.time >= nextFire)
 			fireWeapon (enemyWeapon);
