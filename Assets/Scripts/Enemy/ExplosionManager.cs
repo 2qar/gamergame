@@ -55,7 +55,8 @@ public class ExplosionManager : MonoBehaviour
     // that collides with the player isn't just increasing their speed
     private void OnParticleCollision(GameObject other)
     {
-        playerMan.Speed += .1f;
+        if(playerMan.Speed < 25.0)
+            playerMan.Speed += .1f;
     }
 
     IEnumerator getParticlesAlive()

@@ -3,32 +3,41 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/**
+	 * IDEA FOR COMPLETE GAME REDESIGN: 
+	 * 
+	 * Instead of WAVE-BASED COMBAT, give the player a FUEL BAR
+	 * SHOOTING makes FUEL go DOWN
+	 * Killing ENEMIES makes them EXPLODE into FUEL, HEALTH, MONEY
+	 * 
+	 * The TWIST; the FUEL BAR is actually more like a SPEED BAR
+	 * 
+	 * MORE FUEL makes you GO FASTER
+	 * 
+	 * THE GAME CAN BE LEVEL BASED INSTEAD, WHERE THE PLAYER IS 
+	 * ENCOURAGED TO GET A TON OF FUEL AND SPEED TO THE END OF THE LEVEL
+	 * 
+	 * -POWER UP THAT MAKES YOU LOSE NO FUEL
+	 * -Enemy level goes up the further into the level you get
+	 **/
+
 public class GameController : MonoBehaviour
 {
-
     //UI Elements
-	public Text scoreText;
-	public Text waveText;
-    public Text healthText;
-    public Text speedText;
-	//public Text gameOverText;
-	//public Text resetText;
-	// num that screen height will be divided by
-	// to determine the font size of the text
-	int textSizeDivisor = 15;
+    public Text[] UIElements = new Text[5];
 
     //Bunch of variables
+    private int level = 1;
     public int enemyLevel = 2;
     public int score = 0;
-	//public int weapon = 1;
 	private int wave = 1;
 	private int spawns = 5;
-	private int currentSpawns = 5;
 	public float spawnRate = 1.5f;
-	private float nextSpawn;
 	public float waveRate = 7f;
-	private float nextWave;
 	public int enemyWeapon;
+
+    // Should the game wait before starting the wave???
+    public bool waitBeforeWave = true;
 
     //Enemies to spawn
 	public GameObject enemy;
@@ -52,74 +61,82 @@ public class GameController : MonoBehaviour
         {
             textSizeDivisor++;
         }*/
+        // Start spawning enemies
+        StartCoroutine(spawnEnemies());
     }
-
-	/**
-	 * IDEA FOR COMPLETE GAME REDESIGN: 
-	 * 
-	 * Instead of WAVE-BASED COMBAT, give the player a FUEL BAR
-	 * SHOOTING makes FUEL go DOWN
-	 * Killing ENEMIES makes them EXPLODE into FUEL, HEALTH, MONEY
-	 * 
-	 * The TWIST; the FUEL BAR is actually more like a SPEED BAR
-	 * 
-	 * MORE FUEL makes you GO FASTER
-	 * 
-	 * THE GAME CAN BE LEVEL BASED INSTEAD, WHERE THE PLAYER IS 
-	 * ENCOURAGED TO GET A TON OF FUEL AND SPEED TO THE END OF THE LEVEL
-	 * 
-	 * -POWER UP THAT MAKES YOU LOSE NO FUEL
-	 * -Enemy level goes up the further into the level you get
-	 **/
 
     // Update is called once per frame
     void Update () 
 	{
         // Update text
 		updateText();
-
-        // Begin Waves
-        // Spawn enemies n stuff
-        if (Time.time >= nextSpawn && currentSpawns > 0) 
-		{
-			// Reset timer
-			nextSpawn = Time.time + spawnRate;
-			// Generate a random enemy spawn position
-				// NOTE: Move the spawn position and the killbox further right
-			enemySpawnPos = new Vector2 (9.5f, Random.Range (-4f, 4f));
-			// Pick a random weapon up to the current cap
-			enemyWeapon = Random.Range(1, enemyLevel);
-			if (enemyWeapon == 1 || enemyWeapon == 2)
-				Instantiate (enemy, enemySpawnPos, transform.rotation);
-			else if (enemyWeapon == 3)
-				Instantiate (mine, enemySpawnPos, transform.rotation);
-			currentSpawns--;
-		}
-        //Break between waves
-		if (currentSpawns == 0) 
-		{
-			nextWave = Time.time + waveRate;
-			currentSpawns--;
-		}
-        //Transition to next wave, increase spawns
-		if (Time.time >= nextWave && currentSpawns == -1) 
-		{
-            if (spawnRate >= .5f)
-                spawnRate -= .1f;
-            enemyLevel++;
-			spawns *= 2;
-			currentSpawns = spawns;
-			wave++;
-        }
     }
 
     // Update UI text
     void updateText()
     {
         // Get the player's speed value, then "truncate" by taking substring
-        string speedMsg = "" + playerMan.Speed;
+        string speedMsg = playerMan.Speed.ToString();
         int startIndex = speedMsg.IndexOf(".");
-        speedText.text = speedMsg.Substring(0, startIndex + 2);
+        UIElements[3].text = speedMsg.Substring(0, startIndex + 2);
+    }
+
+    IEnumerator spawnEnemies()
+    {
+        // If true,
+        if (waitBeforeWave)
+        {
+            // Set up the level text element to show the right stuff
+            UIElements[4].text = "Level " + level + " - ";
+            // Show the leveltext element
+            UIElements[4].gameObject.SetActive(true);
+            // Wait for a few seconds
+            yield return new WaitForSeconds(3);
+            // Hide the text
+            UIElements[4].gameObject.SetActive(false);
+        }
+        // Make sure we don't wait again next time around
+        waitBeforeWave = false;
+
+        // Spawn <spawns> enemies
+        for(int enemies = 0; enemies <= spawns; enemies++)
+        {
+            // Generate a random spawn position for the enemy
+            Vector2 spawnPos = new Vector2(9.5f, Random.Range(-4f, 4f));
+            // Generate a random weapon for the enemy based on how high the current level is
+            enemyWeapon = Random.Range(1, enemyLevel);
+            // If the enemy's weapon is 1 or 2,
+            if (enemyWeapon == 1 || enemyWeapon == 2)
+                // Create a normal enemy object
+                Instantiate(enemy, spawnPos, transform.rotation);
+            // If the enemy's weapon is 3,
+            else if (enemyWeapon == 3)
+                // Create a mine
+                Instantiate(mine, spawnPos, transform.rotation);
+            // Wait to spawn another enemy
+            yield return new WaitForSeconds(spawnRate);
+        }
+
+        // Set up next wave
+        StartCoroutine(nextWaveSetup());
+    }
+
+    IEnumerator nextWaveSetup()
+    {
+        // Wait to start the next wave
+        yield return new WaitForSeconds(waveRate);
+
+        // Transition into the next wave
+        // While the spawnRate is above a certain num,
+        if (spawnRate >= .5f)
+            // Decrease it
+            spawnRate -= .1f;
+        // Increase the range of enemies allowed
+        enemyLevel++;
+        // Double the spawns
+        spawns *= 2;
+        // Go back to spawning enemies
+        StartCoroutine(spawnEnemies());
     }
 
 }

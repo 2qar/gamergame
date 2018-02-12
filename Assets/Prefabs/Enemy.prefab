@@ -103,6 +103,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 3
   explosion: {fileID: 1869322562304272, guid: 88c08217537d84fb0b65187f38388063, type: 2}
+  bulletSound: {fileID: 1993372921689474, guid: 39dcc2947c632fc48aae2ecc67b091bf,
+    type: 2}
+  hurtSound: {fileID: 1330616568670334, guid: dbd7bad2a1b6a3041a6f318dda9ec7cc, type: 2}
   fireRate: 2
   bulletOffset: {x: 0.2, y: 0, z: 0}
   bullet: {fileID: 1604099380356906, guid: c127442ddfe554746b71c6fbdfb88941, type: 2}

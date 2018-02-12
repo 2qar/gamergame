@@ -9,6 +9,10 @@ public class EnemyManager2 : MonoBehaviour {
 	private int health = 1;
     public GameObject explosion;
 
+    // Sound Effect objects
+    public GameObject bulletSound;
+    public GameObject hurtSound;
+
     // Weapon Stuff
 	float nextFire;
     public float fireRate = 2;
@@ -115,6 +119,11 @@ public class EnemyManager2 : MonoBehaviour {
 
 		// Start cooldown
 		nextFire = Time.time + fireRate;
+
+        // Make a lil noise
+        GameObject noise = (GameObject)Instantiate(bulletSound, transform.position, transform.rotation);
+        // Destroy the object that makes the noise a lil bit after so there isn't garbage everywhere
+        Destroy(noise, .5f);
 	}
 
 	// Make enemy flash white when hit
@@ -122,6 +131,10 @@ public class EnemyManager2 : MonoBehaviour {
 	{
 		// Change the ship color to white
 		sr.color = new Color (255, 255, 255, 255);
+        // Play the hit sound
+        GameObject hurt = (GameObject)Instantiate(hurtSound, transform.position, transform.rotation);
+        // Destroy it automatically a lil later cus garbage collection yada yada
+        Destroy(hurt, .2f);
 		// Wait for like a a millisecond
 		yield return new WaitForSeconds(0.05f);
 		// Change the ship color back to red

@@ -18,6 +18,7 @@ TagManager:
   - HealthCell
   - HealthCellBG
   - PlayerSpeedText
+  - LevelText
   layers:
   - Default
   - TransparentFX

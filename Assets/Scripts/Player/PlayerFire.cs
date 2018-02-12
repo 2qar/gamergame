@@ -13,6 +13,9 @@ public class PlayerFire : MonoBehaviour {
     public GameObject bullet;
     public GameObject mine;
 
+    // Object that makes a lil noise
+    public GameObject bulletSound;
+
     // Object that manages the game stuff
 	public GameController gameController;
 	
@@ -20,7 +23,7 @@ public class PlayerFire : MonoBehaviour {
 	void Update () 
 	{
 		// If the player presses the shoot key,
-		if (Input.GetKeyDown (KeyCode.Space) && Time.time >= nextFire) 
+		if ((Input.GetKeyDown (KeyCode.Space) || Input.GetButtonDown("Fire1")) && Time.time >= nextFire) 
 		{
             // SHOOT
 			fireWeapon (gameController.playerMan.Weapon);
@@ -58,5 +61,10 @@ public class PlayerFire : MonoBehaviour {
 
         // Subtract some fuel so the player doesn't spam their weapon
         gameController.playerMan.Speed -= .1f;
+
+        // Make a lil noise
+        GameObject noise = (GameObject)Instantiate(bulletSound, transform.position, transform.rotation);
+        // Destroy it after so there's no garbage sitting around
+        Destroy(noise, .5f);
 	}
 }

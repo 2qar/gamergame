@@ -21,5 +21,6 @@ public class ParentTextFinder : MonoBehaviour
     {
         objText.text = parentText.text;
         objText.fontSize = parentText.fontSize;
+        objText.gameObject.SetActive(parentText.isActiveAndEnabled);
 	}
 }

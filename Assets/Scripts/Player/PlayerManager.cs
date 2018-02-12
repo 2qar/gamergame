@@ -19,7 +19,7 @@ public class PlayerManager : MonoBehaviour
 	private bool iFrames = false;
 
     // SPEEEEEEED BOOST
-    private float speed = 1.0f;
+    private float speed = 1.5f;
     // If you couldn't tell I just learned about properties and I love them :^)
     public float Speed
     {
@@ -27,6 +27,38 @@ public class PlayerManager : MonoBehaviour
         set
         {
             speed = value;
+            // TODO: Make the text blink blue or something every time the speed increases
+        }
+    }
+    // Factor to be taken off of player's speed; gets set later in a method
+    float speedSub = 0;
+    // Powered-Up mode that player enters when they hit 25 speed
+    bool poweredUp = false;
+    // Two variables to hold the initial values that they were so they can be set back
+    float fireRateBackup;
+    int moveSpeedBackup;
+    bool PoweredUp
+    {
+        get { return poweredUp; }
+        set
+        {
+            // If the powered up mode was just enabled,
+            if(value)
+            {
+                // Remove the fire rate limit on the player's weapon
+                fireScript.fireRate = 0f;
+                // Make the player move a little faster
+                movement.moveSpeed = 2 + moveSpeedBackup;
+                // Make their trail blue maybe???
+                // Make bullets + bullet trail blue maybe???
+            }
+            // If the player isn't powered up,
+            else
+            {
+                // Keep the fire rate and movement speed at their normal values
+                fireScript.fireRate = fireRateBackup;
+                movement.moveSpeed = moveSpeedBackup;
+            }
         }
     }
 
@@ -52,8 +84,18 @@ public class PlayerManager : MonoBehaviour
 	// The player's particle booster
 	ParticleSystem booster;
 
+    // The player's firing script
+    PlayerFire fireScript;
+
+    // Player movement script
+    PlayerMovement movement;
+
     // Sprite shit
     private SpriteRenderer sr;
+
+    // GameController
+    GameObject gameController;
+    GameController controller;
 
     // Sprites n shit
     public Sprite ship1;
@@ -62,6 +104,8 @@ public class PlayerManager : MonoBehaviour
     // Stuff that's gonna get instantiated
 	public GameObject resetUI;
     public GameObject poof;
+    public GameObject deathExplosion;
+    public GameObject hurtSound;
 
 	void Start ()
     {
@@ -69,6 +113,14 @@ public class PlayerManager : MonoBehaviour
         sr = gameObject.GetComponent<SpriteRenderer>();
 		booster = gameObject.GetComponent<ParticleSystem> ();
         healthCellBG = GameObject.FindGameObjectWithTag("HealthCellBG");
+        fireScript = gameObject.GetComponent<PlayerFire>();
+        movement = gameObject.GetComponent<PlayerMovement>();
+        gameController = GameObject.FindGameObjectWithTag("GameController");
+        controller = gameController.GetComponent<GameController>();
+
+        // Set up backup variables for powerup stuff
+        fireRateBackup = fireScript.fireRate;
+        moveSpeedBackup = movement.moveSpeed;
 
         // Set up the UI health element
         healthCells = GameObject.FindGameObjectsWithTag("HealthCell");
@@ -98,10 +150,28 @@ public class PlayerManager : MonoBehaviour
         get { return health; }
         set
         {
+            // If the player's health decreased,
+            if(value < health)
+            {
+                // Play a hurt sound
+                GameObject hurt = (GameObject)Instantiate(hurtSound, transform.position, transform.rotation);
+                // Get rid of the obj a lil bit later cus garbage collection
+                Destroy(hurt, .2f);
+            }
             // Update health
             health = value;
             // Make sure the health cells on the UI reflect the player's health
             updateHealthCells(sortedHealthCells);
+            // If the player's health reaches zero or somehow below that,
+            if (health <= 0)
+            {
+                // Explode into a bunch of bits
+                Instantiate(deathExplosion, transform.position, transform.rotation);
+                // Kill the player
+                Destroy(gameObject);
+                // Show the reset button
+                showResetButton();
+            }
         }
     }
     public int MaxHealth
@@ -109,11 +179,14 @@ public class PlayerManager : MonoBehaviour
         get { return maxHealth; }
         set
         {
-            maxHealth = value;
-            // Be nice and give the player max health when their maxhealth increases
-            health = maxHealth;
-            // Adjust the size of the bg to compensate for an extra health cell
-            healthCellRect.sizeDelta += new Vector2(16.3f, 0f);
+            if (value <= 10)
+            {
+                maxHealth = value;
+                // Be nice and give the player max health when their maxhealth increases
+                Health = maxHealth;
+                // Adjust the size of the bg to compensate for an extra health cell
+                healthCellRect.sizeDelta += new Vector2(16.3f, 0f);
+            }
         }
     }
     
@@ -121,18 +194,35 @@ public class PlayerManager : MonoBehaviour
     {
         //Debug.Log(Speed);
         // Kill the player when health is less than 0
-		if (health <= 0) 
-		{
-			Destroy (gameObject);
-			showResetButton ();
-		}
-	}
+    }
 
     private void FixedUpdate()
     {
-        // Constantly lower the player's speed, encourage v i o l e n c e
-        if (speed > 0)
-            speed -= .0025f;
+        subtractSpeed();
+    }
+
+    void subtractSpeed()
+    {
+        // If the game isn't in a break period right now, 
+        if(!controller.waitBeforeWave)
+        {
+            // Constantly lower the player's speed, encourage v i o l e n c e
+            if (speed > 0f && speed < 20f)
+            {
+                PoweredUp = false;
+                speedSub = .0025f;
+            }
+            // If the player's speed is at the cap or somehow above,
+            if (speed >= 25f)
+            {
+                // Make the player powered up
+                PoweredUp = true;
+                // Set the amount removed from their speed each frame higher
+                speedSub = .025f;
+            }
+            // Take the subrate off of the player's speed
+            speed -= speedSub;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
