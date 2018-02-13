@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO: Make mines explode into a bunch of bullets going in every direction
+
 public class EnemyManager1 : MonoBehaviour {
 
 	//public int moveSpeed = 5;
