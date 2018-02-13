@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+// TODO: Use Mathf.Smoothstep for a nice smooth title rotation
+
 public class MainMenuButtons : MonoBehaviour
 {
     // The UI buttons on the main menu

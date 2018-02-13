@@ -5,10 +5,6 @@ using UnityEngine;
 public class EnemyParentMover : MonoBehaviour
 {
     public int speed = 5;
-
-	void Start () {
-		
-	}
 	
 	void FixedUpdate ()
     {
