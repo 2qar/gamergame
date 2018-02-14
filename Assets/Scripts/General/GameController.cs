@@ -29,7 +29,10 @@ public class GameController : MonoBehaviour
     //Bunch of variables
     private int level = 1;
     public int enemyLevel = 2;
+    // The player's score earned from destroying enemies and stuff
     public int score = 0;
+    // The player's money earned from destroying enemies that they can spend
+    public int money = 0;
 	private int wave = 1;
 	private int spawns = 5;
 	public float spawnRate = 1.5f;
@@ -38,6 +41,9 @@ public class GameController : MonoBehaviour
 
     // Should the game wait before starting the wave???
     public bool waitBeforeWave = true;
+
+    // Is it the start of a level?
+    public bool levelStart = true;
 
     //Enemies to spawn
 	public GameObject enemy;
@@ -81,10 +87,10 @@ public class GameController : MonoBehaviour
         UIElements[3].text = speedMsg.Substring(0, startIndex + 2);
     }
 
-    IEnumerator spawnEnemies()
+    public IEnumerator spawnEnemies()
     {
         // If true,
-        if (waitBeforeWave)
+        if (levelStart)
         {
             // Set up the level text element to show the right stuff
             UIElements[4].text = "Level " + level + " - ";
@@ -96,6 +102,9 @@ public class GameController : MonoBehaviour
             UIElements[4].gameObject.SetActive(false);
         }
         // Make sure we don't wait again next time around
+        levelStart = false;
+
+        // Disable the wait before wave cus yeah
         waitBeforeWave = false;
 
         // Spawn <spawns> enemies
@@ -121,7 +130,7 @@ public class GameController : MonoBehaviour
         StartCoroutine(nextWaveSetup());
     }
 
-    IEnumerator nextWaveSetup()
+    public IEnumerator nextWaveSetup()
     {
         // Wait to start the next wave
         yield return new WaitForSeconds(waveRate);
@@ -139,4 +148,11 @@ public class GameController : MonoBehaviour
         StartCoroutine(spawnEnemies());
     }
 
+    // Called by the shop entrance; makes the game wait to spawn enemies and stuff
+    public IEnumerator shopWait()
+    {
+        waitBeforeWave = true;
+        while (true)
+            yield return new WaitForSeconds(1);
+    }
 }

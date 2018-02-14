@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 // TODO: Use Mathf.Smoothstep for a nice smooth title rotation
+// TODO: Also use Mathf.Smoothstep for the selector cus it would probably look nice
 
 public class MainMenuButtons : MonoBehaviour
 {
@@ -23,16 +24,27 @@ public class MainMenuButtons : MonoBehaviour
         get { return index; }
         set
         {
+            // Space between one button
             int moveFact = 50;
             if (value > index)
                 moveFact *= -1;
+            // If the selector is at the top element and the value passed in is
+            // the bottom element,
             if (index == 0 && value == 2)
+                // Set the position the selector will move to at 2 buttons below
                 moveFact = -100;
+            // If the selector is at the bottom element and the value passed in is
+            // the top element,
             if (index == 2 && value == 0)
+                // Set the position the selector will move to at 2 buttons above
                 moveFact = 100;
+            // Get the current position of the selector
             Vector2 pos = selectorPos.anchoredPosition;
-            Vector3 newSelectorPos = new Vector3(pos.x, pos.y + moveFact, 0);
+            // Get the new position for the selector to go to
+            Vector2 newSelectorPos = new Vector2(pos.x, pos.y + moveFact);
+            // Make it go there
             selectorPos.anchoredPosition = newSelectorPos;
+            // Update the index
             index = value;
         }
     }
@@ -40,6 +52,7 @@ public class MainMenuButtons : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
+        // Get the selector position
         selectorPos = (RectTransform)selector.transform;
 	}
 	
@@ -52,6 +65,7 @@ public class MainMenuButtons : MonoBehaviour
         pressButton();
 	}
 
+    // Get input from the player and update the index based on their input
     void changeSelectedElement()
     {
         // If the player presses an up button,
@@ -76,6 +90,7 @@ public class MainMenuButtons : MonoBehaviour
                 Index++;
     }
 
+    // Get input from the player and do stuff when they press buttons
     void pressButton()
     {
         // If the player gives input to press the currently selected item,

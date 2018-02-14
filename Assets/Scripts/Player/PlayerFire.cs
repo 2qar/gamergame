@@ -18,9 +18,9 @@ public class PlayerFire : MonoBehaviour {
 
     // Object that manages the game stuff
 	public GameController gameController;
-	
-	// Update is called once per frame
-	void Update () 
+
+    // Update is called once per frame
+    void Update () 
 	{
 		// If the player presses the shoot key,
 		if ((Input.GetKeyDown (KeyCode.Space) || Input.GetButtonDown("Fire1")) && Time.time >= nextFire) 
@@ -59,8 +59,10 @@ public class PlayerFire : MonoBehaviour {
 		// Set cooldown for next shot
 		nextFire = Time.time + fireRate;
 
-        // Subtract some fuel so the player doesn't spam their weapon
-        gameController.playerMan.Speed -= .1f;
+        // If the game isn't in a wait period, like in a shop,
+        if(!gameController.waitBeforeWave)
+            // Subtract fuel when they fire
+            gameController.playerMan.Speed -= .1f;
 
         // Make a lil noise
         GameObject noise = (GameObject)Instantiate(bulletSound, transform.position, transform.rotation);

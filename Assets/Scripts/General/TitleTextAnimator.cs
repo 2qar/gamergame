@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class TitleTextAnimator : MonoBehaviour
 {
+    // Actual rotation factor
+    public float rotationFactor = .1f;
     // Rotation factor
     float rotation = 0f;
     // Check whether to rotate left or not
@@ -25,7 +27,7 @@ public class TitleTextAnimator : MonoBehaviour
         // If the text is supposed to rotate left and hasn't made it far enough yet,
         if (rotateLeft && rotation < 25)
             // Keep rotating
-            rotation += .1f;
+            rotation += rotationFactor;
         // If it has made it far enough left,
         else
             // No more rotating left
@@ -33,7 +35,7 @@ public class TitleTextAnimator : MonoBehaviour
         // If the text is supposed to rotate right and it hasn't made it far enough yet,
         if (!rotateLeft && rotation > -15)
             // Rotate right
-            rotation -= .1f;
+            rotation -= rotationFactor;
         // If it has made it,
         else
             // Start rotating left

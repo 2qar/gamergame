@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ShopEntrance : MonoBehaviour
 {
+    // The shop manager that will be enabled on entrance
+    private GameObject shopManager;
+
     // Rotation speed
     public float rotateFactor;
 
@@ -15,11 +18,23 @@ public class ShopEntrance : MonoBehaviour
     // The player
     public GameObject player;
 
+    // Get the GameController
+    private GameObject gameController;
+    private GameController controller;
+
 	// Use this for initialization
 	void Start () 
     {
         // Initialize nicer version of rotation speed to use
         rotation = new Vector3(0, 0, rotateFactor);
+
+        // Get the GameController object
+        gameController = GameObject.FindGameObjectWithTag("GameController");
+        // Get the script off the gamecontroller object
+        controller = gameController.GetComponent<GameController>();
+
+        // Find the shopmanager
+        shopManager = GameObject.FindGameObjectWithTag("ShopManager");
 	}
 	
 	// Update is called once per frame
@@ -54,15 +69,23 @@ public class ShopEntrance : MonoBehaviour
 
     void teleportToShop()
     {
-        // Get all of the enemies in the area and kill them
+        // Get all of the enemies in the area
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        // Run through and kill all of them
+        foreach (GameObject enemy in enemies)
+            Destroy(enemy);
+        
+        // Stop the enemy spawning
+        controller.StopAllCoroutines();
+        // Start a wait that runs until the player leaves the shop
+        controller.StartCoroutine(controller.shopWait());
 
         // Change the camera's position to the shop position
         mainCam.transform.position = new Vector3(0, -15, -10);
         // Change the player's position to the shop position minus an offset
         player.transform.position = new Vector3(-6.05f, -15, transform.position.z);
-        // Generate a random pool of items for the player to pick from
-
-        // TODO: Make a shop to teleport to :^)
+        // Set up the shop
+        shopManager.SendMessage("setUpShop");
     }
 
 }

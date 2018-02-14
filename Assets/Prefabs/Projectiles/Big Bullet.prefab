@@ -100,6 +100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSpeed: 25
+  mineBlast: {fileID: 0}
+  bulletBlast: {fileID: 0}
 --- !u!212 &212657210715801438
 SpriteRenderer:
   m_ObjectHideFlags: 1

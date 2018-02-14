@@ -223,7 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: -6, y: -3}
   m_UseGraphicAlpha: 1
 --- !u!114 &184172274
@@ -3787,7 +3787,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: untitled space game
+  m_Text: shooty space game
 --- !u!222 &383954415
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3805,6 +3805,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27f9ce7dfaeb265418f24263e04a16d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationFactor: 0.1
 --- !u!1 &463480202
 GameObject:
   m_ObjectHideFlags: 0
@@ -3914,7 +3915,7 @@ MonoBehaviour:
   m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: -6, y: -3}
   m_UseGraphicAlpha: 1
 --- !u!114 &627918246
@@ -4003,7 +4004,7 @@ MonoBehaviour:
   m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: -6, y: -3}
   m_UseGraphicAlpha: 1
 --- !u!114 &829802619
@@ -4166,7 +4167,7 @@ MonoBehaviour:
   m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: -6, y: -3}
   m_UseGraphicAlpha: 1
 --- !u!114 &1024623495
@@ -4546,7 +4547,7 @@ MonoBehaviour:
   m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: -6, y: -3}
   m_UseGraphicAlpha: 1
 --- !u!1 &1264169453
@@ -4616,7 +4617,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: untitled space game
+  m_Text: shooty space game
 --- !u!222 &1264169456
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5014,7 +5015,7 @@ MonoBehaviour:
   m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: -6, y: -3}
   m_UseGraphicAlpha: 1
 --- !u!1 &1771402284

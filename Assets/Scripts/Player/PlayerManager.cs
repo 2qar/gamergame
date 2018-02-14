@@ -27,12 +27,27 @@ public class PlayerManager : MonoBehaviour
         set
         {
             speed = value;
+            if (speed <= 0.1)
+                Health = 0;
             // TODO: Make the text blink blue or something every time the speed increases
+        }
+    }
+    private float maxSpeed = 25.01f;
+    // The player's max speed
+    public float MaxSpeed
+    {
+        get { return maxSpeed; }
+        set
+        {
+            // Increase the player's max speed
+            maxSpeed = value;
+            // Set the player's current speed to the max speed
+            Speed = maxSpeed;
         }
     }
     // Factor to be taken off of player's speed; gets set later in a method
     float speedSub = 0;
-    // Powered-Up mode that player enters when they hit 25 speed
+    // Powered-Up mode that player enters when they hits max speed
     bool poweredUp = false;
     // Two variables to hold the initial values that they were so they can be set back
     float fireRateBackup;
