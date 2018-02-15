@@ -13,6 +13,9 @@ public class EnemyManager1 : MonoBehaviour {
 	GameObject gameController;
 	GameController controller;
 
+    // Bullets to shoot, as you do with bullets
+    public GameObject enemyBullet;
+
 	void Start()
 	{
 		//Debug.Log (enemyWeapon); //Check weapon
@@ -40,10 +43,16 @@ public class EnemyManager1 : MonoBehaviour {
 		{
 			// Set player weapon to mine when
 			// mine is destroyed
-			if (gameObject.name == "Mine") 
+			if (gameObject.name.Contains("Mine")) 
 			{
 				controller.playerMan.Weapon = 3;
-				Debug.Log ("Weapon Changed");
+                // Shoot out a bunch of bullets in a cirlce
+                for (int pos = 0; pos < 360; pos += 45)
+                {
+                    Instantiate(enemyBullet, transform.position, Quaternion.Euler(new Vector3(0, 0, pos)));
+                    Debug.Log("Bullet #" + (pos + 1));
+                }
+				//Debug.Log ("Weapon Changed");
 			}
 			Destroy (other.gameObject);
 			Destroy (gameObject);

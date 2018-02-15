@@ -186,6 +186,8 @@ public class PlayerManager : MonoBehaviour
                 Destroy(gameObject);
                 // Show the reset button
                 showResetButton();
+                // Stop the wave sequences n stuff
+                controller.StopAllCoroutines();
             }
         }
     }

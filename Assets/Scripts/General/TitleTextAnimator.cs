@@ -18,8 +18,13 @@ public class TitleTextAnimator : MonoBehaviour
         // Update the rotation variable
         rotateText();
         // Apply rotation to the text
-        transform.rotation = new Quaternion(transform.rotation.x, 0, rotation, 360);
+        //transform.rotation = new Quaternion(transform.rotation.x, 0, rotation, 360);
 	}
+
+    private void FixedUpdate()
+    {
+        transform.rotation = new Quaternion(transform.rotation.x, 0, rotation, 360);
+    }
 
     // Handles increasing and decreasing the rotation variable
     void rotateText()

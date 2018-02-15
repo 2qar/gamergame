@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO: Make sprites for the items
+
 public class ShopItemManager : MonoBehaviour 
 {
     // The price of the item
@@ -15,6 +17,9 @@ public class ShopItemManager : MonoBehaviour
 
     // The game controller script
     private GameController controller;
+
+    // The object that the player copies when they fire a bullet
+    public GameObject playerBullet;
 
 	// Use this for initialization
 	void Start () 
@@ -96,6 +101,7 @@ public class ShopItemManager : MonoBehaviour
                 Debug.Log("increase player speed/ max speed/ i dont know yet help me");
                 break;
             case 5:
+                //playerBullet.transform.localScale += new Vector3(.1f, .1f, 0);
                 Debug.Log("increase player bullet size or something");
                 break;
         }
