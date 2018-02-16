@@ -134,6 +134,8 @@ public class GameController : MonoBehaviour
 
     public IEnumerator nextWaveSetup()
     {
+        // Increase the range of enemies allowed
+        enemyLevel++;
         //int shopSpawn = (int)Random.Range(1, 4);
         //if (shopSpawn == 3)
         // Spawn the shop entrance
@@ -146,8 +148,6 @@ public class GameController : MonoBehaviour
         if (spawnRate >= .5f)
             // Decrease it
             spawnRate -= .1f;
-        // Increase the range of enemies allowed
-        enemyLevel++;
         // Double the spawns
         spawns *= 2;
         // Start a new sublevel
