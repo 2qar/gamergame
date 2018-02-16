@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // TODO: Make sprites for the items
+// TODO: Add price below the items
+// TODO: Fix the items randomly changing multiple times when the player enters the shop
+// TODO: Make the player bullet size powerup work
 
 public class ShopItemManager : MonoBehaviour 
 {
@@ -31,7 +34,7 @@ public class ShopItemManager : MonoBehaviour
 
         // Give the item a number
         assignNum(gameObject.name);
-        Debug.Log(gameObject.name + " : " + itemNum);
+        //Debug.Log(gameObject.name + " : " + itemNum);
 	}
 
     private void FixedUpdate()
@@ -40,7 +43,10 @@ public class ShopItemManager : MonoBehaviour
         price = manager.price;
     }
 
-    // Assign the item a number for use later when giving the player their item
+    /// <summary>
+    /// Assign the item a number for use later when giving the player their item.
+    /// </summary>
+    /// <param name="name">Name of the item.</param>
     void assignNum(string name)
     {
         if (name.Contains("Health"))
@@ -79,27 +85,33 @@ public class ShopItemManager : MonoBehaviour
         }
     }
 
-    // Give the player their item
+    /// <summary>
+    /// Apply the effects of the item based on the number that was assigned earlier
+    /// </summary>
     void giveItem()
     {
         switch(itemNum)
         {
+            // Health Pickup
             case 1:
                 if(controller.playerMan.Health != controller.playerMan.MaxHealth)
                     controller.playerMan.Health++;
                 Debug.Log("heal player");
                 break;
+            // Max Health Increase Pickup
             case 2:
                 controller.playerMan.MaxHealth++;
                 Debug.Log("increase max player health");
                 break;
+            // Player Damage Increase Pickup
             case 3:
                 Debug.Log("increase player damage");
                 break;
+            // Max Speed Increase Pickup
             case 4:
                 controller.playerMan.MaxSpeed += 5f;
-                Debug.Log("increase player speed/ max speed/ i dont know yet help me");
                 break;
+            // Bullet Size Increase Pickup
             case 5:
                 //playerBullet.transform.localScale += new Vector3(.1f, .1f, 0);
                 Debug.Log("increase player bullet size or something");

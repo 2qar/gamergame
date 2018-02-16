@@ -11,14 +11,14 @@ public class MineCollider : MonoBehaviour
 	bool isTouchingPlayer = false;
 	bool lastTouchedPlayer = false;
 
-	// Player Object
-	GameObject player;
+	// Player Management script that stores health
+	PlayerManager playerMan;
 
 	// Use this for initialization
 	void Start () 
 	{
-		// Get player object
-		player = GameObject.FindGameObjectWithTag("Player");
+        // Get the player manager
+        playerMan = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerManager>();
 	}
 
 	void OnTriggerEnter2D(Collider2D other)
@@ -64,7 +64,8 @@ public class MineCollider : MonoBehaviour
 			// Blow em up
 			Destroy (transform.parent.gameObject);
 			Destroy(gameObject);
-			Destroy(player);
+            // Set the player's health to 0, killing them
+            playerMan.Health = 0;
 		}
 	}
 }

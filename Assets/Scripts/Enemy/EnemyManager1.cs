@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyManager1 : MonoBehaviour {
-
+public class EnemyManager1 : MonoBehaviour 
+{
 	//public int moveSpeed = 5;
     public Vector3 rotation = new Vector3(0, 0, 3);
 
@@ -16,14 +16,14 @@ public class EnemyManager1 : MonoBehaviour {
 
 	void Start()
 	{
-		//Debug.Log (enemyWeapon); //Check weapon
+        // Get the gamecontroller
 		gameController = GameObject.FindGameObjectWithTag ("GameController");
 		controller = gameController.GetComponent<GameController> ();
 	}
 
 	void FixedUpdate ()
 	{
-		//transform.position -= new Vector3(moveSpeed, 0, 0) * Time.deltaTime;
+        // Rotate the object
         transform.Rotate(rotation);
 	}
 
@@ -32,7 +32,6 @@ public class EnemyManager1 : MonoBehaviour {
 		// Kill the player on collision
 		if (other.gameObject.tag == "Player") 
 		{
-			//Destroy (other.gameObject);
 			controller.playerMan.Health = 0;
 			if (gameObject.name == "Mine")
 				Destroy (gameObject);
@@ -46,14 +45,10 @@ public class EnemyManager1 : MonoBehaviour {
 				controller.playerMan.Weapon = 3;
                 // Shoot out a bunch of bullets in a cirlce
                 for (int pos = 0; pos < 360; pos += 45)
-                {
                     Instantiate(enemyBullet, transform.position, Quaternion.Euler(new Vector3(0, 0, pos)));
-                    Debug.Log("Bullet #" + (pos + 1));
-                }
-				//Debug.Log ("Weapon Changed");
 			}
 			Destroy (other.gameObject);
-			Destroy (gameObject);
+            Destroy(gameObject);
 		}
     }
 }

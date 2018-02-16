@@ -443,7 +443,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -91904787
+  randomSeed: 1116578342
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -8393,7 +8393,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1914876950
+  randomSeed: -1610095368
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -15443,9 +15443,16 @@ MonoBehaviour:
   - {fileID: 1837489367}
   - {fileID: 357174719}
   - {fileID: 1428966265}
+  enemies:
+  - {fileID: 1684365596376908, guid: 9bab13ff372b645e4aaef4cc2b59f708, type: 2}
+  - {fileID: 1684365596376908, guid: 9bab13ff372b645e4aaef4cc2b59f708, type: 2}
+  - {fileID: 1768288237577756, guid: cc97fb19a9101469db781ec4ef0b1c6f, type: 2}
+  - {fileID: 1917282905685516, guid: d3049c283798835459c756cd3ab2bf09, type: 2}
+  - {fileID: 1917282905685516, guid: d3049c283798835459c756cd3ab2bf09, type: 2}
+  - {fileID: 1917282905685516, guid: d3049c283798835459c756cd3ab2bf09, type: 2}
   enemyLevel: 2
   score: 0
-  money: 10000
+  money: 2147483647
   spawnRate: 1.5
   waveRate: 7
   enemyWeapon: 0
@@ -15456,6 +15463,7 @@ MonoBehaviour:
   playerMan: {fileID: 0}
   shopEntrance: {fileID: 1977606508822794, guid: c152764e702744c3f98e83d06605ab00,
     type: 2}
+  asteroidField: {fileID: 737624289}
 --- !u!1 &1006402250
 GameObject:
   m_ObjectHideFlags: 0

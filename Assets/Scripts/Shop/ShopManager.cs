@@ -65,22 +65,32 @@ public class ShopManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // If the player collides with the little exit thingy
+        // If the player collides with the little exit thingy,
         if (collision.gameObject.name == "Player")
         {
-            // Move the player back to their original position
-            player.transform.position = new Vector2(-6.05f, 0f);
-            // Move the camera back to its original position
-            mainCam.transform.position = new Vector3(0, 0, -10);
-            // Hide the shop text
-            textElements[0].SetActive(false);
-            // Stop waiting
-            controller.StopCoroutine("shopWait");
-            // Disable wait variable
-            controller.waitBeforeWave = false;
-            // Start spawning enemies again
-            StartCoroutine(controller.spawnEnemies());
+            // Leave the shop
+            exitShop();
         }
+    }
+
+    /// <summary>
+    /// Move the player back into the play area w/ the camera and
+    /// set up the level text and start spawning enemies again
+    /// </summary>
+    void exitShop()
+    {
+        // Move the player back to their original position
+        player.transform.position = new Vector2(-6.05f, 0f);
+        // Move the camera back to its original position
+        mainCam.transform.position = new Vector3(0, 0, -10);
+        // Hide the shop text
+        textElements[0].SetActive(false);
+        // Stop waiting
+        controller.StopCoroutine("shopWait");
+        // Disable wait variable
+        //controller.waitBeforeWave = false;
+        // Start spawning enemies again
+        StartCoroutine(controller.spawnEnemies());
     }
 
 }
