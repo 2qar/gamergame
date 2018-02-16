@@ -13,6 +13,26 @@ public class ShopManager : MonoBehaviour
     // Randomly pick from this list when the player enters the shop
     public GameObject[] items = new GameObject[5];
 
+    // *Stuff that's gonna get moved back*
+    // The player 
+    private GameObject player;
+    // The main camera in the scene
+    private Camera mainCam;
+
+    // The gamecontroller
+    private GameController controller;
+
+    private void Start()
+    {
+        // Get the player object
+        player = GameObject.FindGameObjectWithTag("Player");
+        // Get the main camera in the scene
+        mainCam = Camera.main;
+
+        // Get the gamecontroller to reset the waves
+        controller = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+    }
+
     void generateItems()
     {
         // Goes to each item slot position and creates a random powerup for the player to buy
@@ -25,6 +45,7 @@ public class ShopManager : MonoBehaviour
         }
     }
 
+    // Set the text to the opposite state it's currently in
     void textSetup()
     {
         // Show the ShopText
@@ -41,4 +62,25 @@ public class ShopManager : MonoBehaviour
         // Set up all the text
         textSetup();
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // If the player collides with the little exit thingy
+        if (collision.gameObject.name == "Player")
+        {
+            // Move the player back to their original position
+            player.transform.position = new Vector2(-6.05f, 0f);
+            // Move the camera back to its original position
+            mainCam.transform.position = new Vector3(0, 0, -10);
+            // Hide the shop text
+            textElements[0].SetActive(false);
+            // Stop waiting
+            controller.StopCoroutine("shopWait");
+            // Disable wait variable
+            controller.waitBeforeWave = false;
+            // Start spawning enemies again
+            StartCoroutine(controller.spawnEnemies());
+        }
+    }
+
 }

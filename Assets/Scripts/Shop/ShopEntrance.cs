@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO: Change the position of the shop entrance so you can't accidentally enter
+
 public class ShopEntrance : MonoBehaviour
 {
     // The shop manager that will be enabled on entrance
@@ -25,6 +27,11 @@ public class ShopEntrance : MonoBehaviour
 	// Use this for initialization
 	void Start () 
     {
+        // Get the player object
+        player = GameObject.FindGameObjectWithTag("Player");
+        // Get the main camera in the scene
+        mainCam = Camera.main;
+
         // Initialize nicer version of rotation speed to use
         rotation = new Vector3(0, 0, rotateFactor);
 
@@ -62,6 +69,7 @@ public class ShopEntrance : MonoBehaviour
             // -When the player shoots the moving shop entrance object, hide the spriterenderer and
             // enable a wind component, sucking the player in
             // Get rid of the shop portal
+            // -Enable the shopmanager particle system so it starts spitting stuff out
             //Destroy the parent object
             Destroy(gameObject);
         }

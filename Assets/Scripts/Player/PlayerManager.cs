@@ -238,7 +238,7 @@ public class PlayerManager : MonoBehaviour
                 speedSub = .025f;
             }
             // Take the subrate off of the player's speed
-            speed -= speedSub;
+            Speed -= speedSub;
         }
     }
 

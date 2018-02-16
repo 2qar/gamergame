@@ -4,22 +4,22 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /**
-	 * IDEA FOR COMPLETE GAME REDESIGN: 
-	 * 
-	 * Instead of WAVE-BASED COMBAT, give the player a FUEL BAR
-	 * SHOOTING makes FUEL go DOWN
-	 * Killing ENEMIES makes them EXPLODE into FUEL, HEALTH, MONEY
-	 * 
-	 * The TWIST; the FUEL BAR is actually more like a SPEED BAR
-	 * 
-	 * MORE FUEL makes you GO FASTER
-	 * 
-	 * THE GAME CAN BE LEVEL BASED INSTEAD, WHERE THE PLAYER IS 
-	 * ENCOURAGED TO GET A TON OF FUEL AND SPEED TO THE END OF THE LEVEL
-	 * 
-	 * -POWER UP THAT MAKES YOU LOSE NO FUEL
-	 * -Enemy level goes up the further into the level you get
-	 **/
+ * IDEA FOR COMPLETE GAME REDESIGN: 
+ * 
+ * Instead of WAVE-BASED COMBAT, give the player a FUEL BAR
+ * SHOOTING makes FUEL go DOWN
+ * Killing ENEMIES makes them EXPLODE into FUEL, HEALTH, MONEY
+ * 
+ * The TWIST; the FUEL BAR is actually more like a SPEED BAR
+ * 
+ * MORE FUEL makes you GO FASTER
+ * 
+ * THE GAME CAN BE LEVEL BASED INSTEAD, WHERE THE PLAYER IS 
+ * ENCOURAGED TO GET A TON OF FUEL AND SPEED TO THE END OF THE LEVEL
+ * 
+ * -POWER UP THAT MAKES YOU LOSE NO FUEL
+ * -Enemy level goes up the further into the level you get
+ **/
 
 public class GameController : MonoBehaviour
 {
@@ -49,12 +49,15 @@ public class GameController : MonoBehaviour
 	public GameObject enemy;
 	public GameObject mine;
 
-	//Spawn point for enemies
-	private Vector2 enemySpawnPos;
+	// Spawn point for enemies
+	//private Vector2 enemySpawnPos;
 
-    //Player Stuff
+    // Player Stuff
     private GameObject player;
     public PlayerManager playerMan;
+
+    // The shop
+    public GameObject shopEntrance;
 
     private void Start()
     {
@@ -63,10 +66,7 @@ public class GameController : MonoBehaviour
 		// leech off of this one for player info
         player = GameObject.FindGameObjectWithTag("Player");
         playerMan = player.GetComponent<PlayerManager>();
-        /*while(Screen.height % textSizeDivisor != 0)
-        {
-            textSizeDivisor++;
-        }*/
+        
         // Start spawning enemies
         StartCoroutine(spawnEnemies());
     }
@@ -89,11 +89,12 @@ public class GameController : MonoBehaviour
 
     public IEnumerator spawnEnemies()
     {
+        Debug.Log("working");
         // If true,
         if (levelStart)
         {
             // Set up the level text element to show the right stuff
-            UIElements[4].text = "Level " + level + " - ";
+            UIElements[4].text = "Level " + level + " - " + (enemyLevel - 1);
             // Show the leveltext element
             UIElements[4].gameObject.SetActive(true);
             // Wait for a few seconds
@@ -102,7 +103,7 @@ public class GameController : MonoBehaviour
             UIElements[4].gameObject.SetActive(false);
         }
         // Make sure we don't wait again next time around
-        levelStart = false;
+        //levelStart = false;
 
         // Disable the wait before wave cus yeah
         waitBeforeWave = false;
@@ -128,10 +129,15 @@ public class GameController : MonoBehaviour
 
         // Set up next wave
         StartCoroutine(nextWaveSetup());
+        yield break;
     }
 
     public IEnumerator nextWaveSetup()
     {
+        //int shopSpawn = (int)Random.Range(1, 4);
+        //if (shopSpawn == 3)
+        // Spawn the shop entrance
+        Instantiate(shopEntrance, new Vector3(12, 0, 0), transform.rotation);
         // Wait to start the next wave
         yield return new WaitForSeconds(waveRate);
 
@@ -144,11 +150,15 @@ public class GameController : MonoBehaviour
         enemyLevel++;
         // Double the spawns
         spawns *= 2;
+        // Start a new sublevel
+        levelStart = true;
         // Go back to spawning enemies
         StartCoroutine(spawnEnemies());
+        yield break;
     }
 
-    // Called by the shop entrance; makes the game wait to spawn enemies and stuff
+    // Called by the shop entrance after stopping all other coroutines; 
+    // makes the game wait to spawn enemies and stuff
     public IEnumerator shopWait()
     {
         waitBeforeWave = true;

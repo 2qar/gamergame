@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyManager2 : MonoBehaviour {
+public class EnemyManager2 : MonoBehaviour 
+{
 
     public float moveSpeed = 5;
     private int enemyWeapon;
@@ -142,8 +143,6 @@ public class EnemyManager2 : MonoBehaviour {
 		// Exit the method
 		yield break;
 	}
-
-    // TODO: Make enemies blow up into a million pretty little pieces
 
 	// IDEA: When enemies die, the player gets a set amount of money
 	// BUT
