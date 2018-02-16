@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Handles movement and behavior of all the projectiles that the player and enemies spit out.
+/// </summary>
 public class BulletManager : MonoBehaviour
 {
     // Speed the projectile will travel at
@@ -49,6 +52,10 @@ public class BulletManager : MonoBehaviour
             Instantiate(bulletBlast, transform.position, transform.rotation);
     }
 
+    /// <summary>
+    /// Moves the player's mine at a decreasing rate,
+    /// eventually blowing up once it hits something or gets to 0 speed.
+    /// </summary>
 	IEnumerator mineMovement()
 	{
 		float waitTime = Time.time + 4;

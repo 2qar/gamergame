@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// TODO: Use Mathf.Smoothstep to make this a lil bit smoother.
+
+/// <summary>
+/// Makes the text on the attached object sway left and right.
+/// </summary>
 public class TitleTextAnimator : MonoBehaviour
 {
     // Actual rotation factor
@@ -17,12 +22,12 @@ public class TitleTextAnimator : MonoBehaviour
     {
         // Update the rotation variable
         rotateText();
-        // Apply rotation to the text
-        //transform.rotation = new Quaternion(transform.rotation.x, 0, rotation, 360);
 	}
 
     private void FixedUpdate()
     {
+        // Rotate the gameobject by the rotation factor.
+        // TODO: Change this to Eular because the current way is ugly as heck
         transform.rotation = new Quaternion(transform.rotation.x, 0, rotation, 360);
     }
 

@@ -2,6 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Manages all things related to the player, like:
+/// - Health UI component
+/// - Health
+/// - Speed
+/// - Weapon and Ship
+/// and probably a few other things that I'm forgetting about right now.
+/// </summary>
 public class PlayerManager : MonoBehaviour
 {
     // Player Health
@@ -52,6 +60,10 @@ public class PlayerManager : MonoBehaviour
     // Two variables to hold the initial values that they were so they can be set back
     float fireRateBackup;
     int moveSpeedBackup;
+    /// <summary>
+    /// Changes the player's speed and firing rate or not based on <see cref="T:PlayerManager"/> powered up.
+    /// </summary>
+    /// <value><c>true</c> if powered up; otherwise, <c>false</c>.</value>
     bool PoweredUp
     {
         get { return poweredUp; }
@@ -76,10 +88,11 @@ public class PlayerManager : MonoBehaviour
             }
         }
     }
-
-    // Store the player's weapon,
-    // play an animation and change ship when the value changes
     private int weapon = 1;
+
+    /// <summary>
+    /// Store the player's weapon, play an animation and change ship when the value changes
+    /// </summary>
     public int Weapon
     {
         get { return weapon; }
@@ -159,7 +172,12 @@ public class PlayerManager : MonoBehaviour
         healthCellRect.sizeDelta = new Vector2(16.3f * health + 5f, healthCellRect.sizeDelta.y);
     }
 
-    // Health value that everything else will access
+    /// <summary>
+    /// Health value that other objects, like enemies and the shop, will access.
+    /// When the value is changed, it will update the amount of health cells
+    /// shown in the UI component to represent the player's health.
+    /// </summary>
+    /// <value>The new value being passed in.</value>
     public int Health
     {
         get { return health; }
@@ -191,6 +209,12 @@ public class PlayerManager : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// Sets the player's max health and updates the UI health component's size
+    /// based on the player's current max health.
+    /// </summary>
+    /// <value>The max health.</value>
     public int MaxHealth
     {
         get { return maxHealth; }
@@ -218,6 +242,11 @@ public class PlayerManager : MonoBehaviour
         subtractSpeed();
     }
 
+    /// <summary>
+    /// Subtracts speed from the player based on whether they're powered up or not.
+    /// Doesn't subtract speed from the player if the game is in a waiting phase,
+    /// like in a shop or in between waves.
+    /// </summary>
     void subtractSpeed()
     {
         // If the game isn't in a break period right now, 
@@ -263,14 +292,17 @@ public class PlayerManager : MonoBehaviour
     }
 
     // TODO: Fix the alpha change
-    // Subtracts from the player's health, gives a small frame of invincibility and
-    // does some fancy visual stuff
-	IEnumerator subtractHealth(Collision2D other)
+    /// <summary>
+    /// Takes 1 HP from the player and plays some fancy effects to let the player
+    /// know that they just got hit.
+    /// </summary>
+    /// <param name="enemyBullet">The enemy's bullet that will get destroyed.</param>
+	IEnumerator subtractHealth(Collision2D enemyBullet)
 	{
 		// Take 1 HP
 		Health--;
 		// Destroy the enemy's bullet
-		Destroy (other.gameObject);
+		Destroy (enemyBullet.gameObject);
 		// Maybe subtract fuel???
 		// Enable iFrames so the player can't get clipped again
 		iFrames = true;
@@ -290,14 +322,18 @@ public class PlayerManager : MonoBehaviour
 		//yield break;
 	}
 
-    // Shows the game over text and reset button
+    /// <summary>
+    /// Shows the reset and main menu buttons.
+    /// </summary>
 	void showResetButton()
 	{
 		// Create the gameover text and the reset text
 		Instantiate (resetUI, new Vector3 (0, 0, 0), transform.rotation);
 	}
 
-    // Changes the player's ship and makes a lil poof
+    /// <summary>
+    /// Changes the player's ship and makes a lil poof.
+    /// </summary>
     void changeShip()
     {
         // Give player right sprite for right weapon
@@ -311,7 +347,10 @@ public class PlayerManager : MonoBehaviour
         Destroy(poofRef, 1);
     }
 
-    // Updates the UI health element
+    /// <summary>
+    /// Updates the UI health element.
+    /// </summary>
+    /// <param name="cells">The health cells shown on the UI.</param>
     void updateHealthCells(GameObject[] cells)
     {
         // Run through all of the objects in the array

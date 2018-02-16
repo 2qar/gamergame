@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Handles all of the particles that enemies spit out when they blow up.
+/// </summary>
 public class ExplosionManager : MonoBehaviour 
 {
     // The explosion itself
@@ -51,14 +54,16 @@ public class ExplosionManager : MonoBehaviour
         velocityOverLifetime.x = -1 * (velocity);
 	}
 
-    // TODO: Fix the initializeParticles method so that every single particle
-    // that collides with the player isn't just increasing their speed
     private void OnParticleCollision(GameObject other)
     {
         if(playerMan.Speed < playerMan.MaxSpeed)
             playerMan.Speed += .1f;
     }
 
+    /// <summary>
+    /// Grabs all of the particles that were created and stuffs them into an array
+    /// before running a method to set up these particles.
+    /// </summary>
     IEnumerator getParticlesAlive()
     {
         // Wait a lil bit for the particles to exist
@@ -71,6 +76,11 @@ public class ExplosionManager : MonoBehaviour
         initializeParticles();
     }
 
+    // TODO: Make this method actually work before you write documentation you knob
+    /// <summary>
+    /// Assigns each individual particle a random color that will determine their
+    /// behavior when they collide with the player.
+    /// </summary>
     void initializeParticles()
     {
         // report back that the program has made it to this method

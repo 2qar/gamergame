@@ -88,7 +88,9 @@ public class GameController : MonoBehaviour
 		updateText();
     }
 
-    // Update UI text
+    /// <summary>
+    /// Update any UI text elements that show stuff like speed or score
+    /// </summary>
     void updateText()
     {
         // Get the player's speed value, then "truncate" by taking substring

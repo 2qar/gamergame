@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO: Finish this dumb monobehaviour you big sillyhead
+
 public class PlayerMineExplode : MonoBehaviour
 {
     CircleCollider2D collider;

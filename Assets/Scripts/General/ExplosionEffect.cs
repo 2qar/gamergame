@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Makes a lil explosion effect.
+/// </summary>
 public class ExplosionEffect : MonoBehaviour
 {
     SpriteRenderer sr;
@@ -14,7 +17,10 @@ public class ExplosionEffect : MonoBehaviour
         StartCoroutine(effect(sr));
 	}
 
-	// Explosion effect
+	/// <summary>
+    /// Changes the color from white quickly to black, giving an explosion effect
+    /// </summary>
+    /// <param name="sr">The spriterenderer to apply the effect to.</param>
     IEnumerator effect(SpriteRenderer sr)
     {
         // Wait for half a second

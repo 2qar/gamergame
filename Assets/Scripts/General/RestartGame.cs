@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Restarts the game or goes to the main menu based on the user's input.
+/// </summary>
 public class RestartGame : MonoBehaviour 
 {
 	// Update is called once per frame

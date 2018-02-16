@@ -7,6 +7,9 @@ using UnityEngine;
 // TODO: Fix the items randomly changing multiple times when the player enters the shop
 // TODO: Make the player bullet size powerup work
 
+/// <summary>
+/// Handles the individual items, their effects, and the player purchasing them.
+/// </summary>
 public class ShopItemManager : MonoBehaviour 
 {
     // The price of the item

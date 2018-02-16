@@ -7,6 +7,9 @@ using UnityEngine.SceneManagement;
 // TODO: Use Mathf.Smoothstep for a nice smooth title rotation
 // TODO: Also use Mathf.Smoothstep for the selector cus it would probably look nice
 
+/// <summary>
+/// Handles all of the buttons on the main menu.
+/// </summary>
 public class MainMenuButtons : MonoBehaviour
 {
     // The UI buttons on the main menu
@@ -19,6 +22,11 @@ public class MainMenuButtons : MonoBehaviour
     // The position of the selector in the button array,
     // default on play button
     private int index = 0;
+    /// <summary>
+    /// Moves the selector based on what value index currently is compared to
+    /// the value being passed in.
+    /// </summary>
+    /// <value>The new index value being passed in.</value>
     int Index
     {
         get { return index; }
@@ -65,7 +73,9 @@ public class MainMenuButtons : MonoBehaviour
         pressButton();
 	}
 
-    // Get input from the player and update the index based on their input
+    /// <summary>
+    /// Get input from the player and update the index based on their input.
+    /// </summary>
     void changeSelectedElement()
     {
         // If the player presses an up button,
@@ -90,7 +100,9 @@ public class MainMenuButtons : MonoBehaviour
                 Index++;
     }
 
-    // Get input from the player and do stuff when they press buttons
+    /// <summary>
+    /// Get input from the player and do stuff when they press buttons.
+    /// </summary>
     void pressButton()
     {
         // If the player gives input to press the currently selected item,

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// TODO: Find any object using this script and give it a shadow, then remove any trace of this dumb script
+
 public class ParentTextFinder : MonoBehaviour
 {
     GameObject parentTextObj;

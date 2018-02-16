@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
+// Not gonna lie this isn't even my script, I don't know who the author is and it makes me depressed because it's amazing
+
 [ExecuteInEditMode]
 [AddComponentMenu("Image Effects/PixelBoy")]
 public class PixelBoy : MonoBehaviour

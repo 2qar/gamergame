@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Handles player movement by getting user input and adjusting the player's booster
+/// based on the user's input.
+/// </summary>
 public class PlayerMovement : MonoBehaviour
 {
     //Variables n shit
@@ -35,7 +39,9 @@ public class PlayerMovement : MonoBehaviour
         setBoosterSway();
     }
 
-    // Makes the player's booster react to their movement
+    /// <summary>
+    /// Makes the player's booster react to their movement.
+    /// </summary>
     void setBoosterSway()
     {
         // Get the velocity module from the booster particle system

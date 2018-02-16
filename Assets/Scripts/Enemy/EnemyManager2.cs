@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Handles the behavior and health of the single fire and triple fire enemies.
+/// </summary>
 public class EnemyManager2 : MonoBehaviour 
 {
 
@@ -99,6 +102,10 @@ public class EnemyManager2 : MonoBehaviour
 		}
     }
 
+    /// <summary>
+    /// Fires a certain weapon based on the enemy's weapon value that's passed in.
+    /// </summary>
+    /// <param name="weapon">The enemy weapon.</param>
 	void fireWeapon(int weapon)
 	{
 		// * * * * * * * * *
@@ -127,7 +134,10 @@ public class EnemyManager2 : MonoBehaviour
         Destroy(noise, .5f);
 	}
 
-	// Make enemy flash white when hit
+	/// <summary>
+    /// Make the enemy flash white when hit.
+    /// </summary>
+    /// <param name="sr">The enemy's spriterenderer where the flash is applied.</param>
 	IEnumerator hitEffect(SpriteRenderer sr)
 	{
 		// Change the ship color to white

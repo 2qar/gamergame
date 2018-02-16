@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Handles all of the buttons in the options submenu on the main menu.
+/// </summary>
 public class OptionsMenuManager : MonoBehaviour
 {
     // The other UI stuff
@@ -14,6 +17,11 @@ public class OptionsMenuManager : MonoBehaviour
     public Image selector;
     // Position in list that the selector is at
     int index = 0;
+    /// <summary>
+    /// Updates the selector's position based on what the index currently is 
+    /// compared to the new index value that's being passed in.
+    /// </summary>
+    /// <value>The index.</value>
     int Index
     {
         get { return index; }
@@ -26,7 +34,9 @@ public class OptionsMenuManager : MonoBehaviour
         }
     }
 
-    // List of supported resolutions 
+    /// <summary>
+    /// List of supported resolutions in the game.
+    /// </summary>
     private int[][] resolutions =
     {
         new int[] {640, 360},
@@ -36,6 +46,11 @@ public class OptionsMenuManager : MonoBehaviour
     };
     // Index for the resolution list
     int resIndex = 0;
+    /// <summary>
+    /// Updates the resolution being shown based on the current index,
+    /// and moves to the correct index based on the current value versus the new one.
+    /// </summary>
+    /// <value>The index in the resolution array.</value>
     int ResIndex
     {
         get { return resIndex; }
@@ -66,6 +81,9 @@ public class OptionsMenuManager : MonoBehaviour
         fullscreenSelector();
 	}
 
+    /// <summary>
+    /// Updates the position of the selector based on the user's input.
+    /// </summary>
     void selectorPositionUpdate()
     {
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
@@ -80,6 +98,10 @@ public class OptionsMenuManager : MonoBehaviour
                 Index++;
     }
 
+    /// <summary>
+    /// Gets button input from the player and does stuff based on
+    /// what button they've pressed.
+    /// </summary>
     void getButtonInput()
     {
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.KeypadEnter))
@@ -99,6 +121,9 @@ public class OptionsMenuManager : MonoBehaviour
             }
     }
 
+    /// <summary>
+    /// Updates the currently selected resolution based on user input.
+    /// </summary>
     void resolutionSelector()
     {
         if (index == 0)
@@ -114,6 +139,9 @@ public class OptionsMenuManager : MonoBehaviour
                     ResIndex++;
     }
 
+    /// <summary>
+    /// Updates the fullscreen state and its text based on the user's input.
+    /// </summary>
     void fullscreenSelector()
     {
         if (index == 1)

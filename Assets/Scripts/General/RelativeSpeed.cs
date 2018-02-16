@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Makes stuff move faster or slower relative to the player's speed.
+/// </summary>
 public class RelativeSpeed : MonoBehaviour
 {
     GameObject player;

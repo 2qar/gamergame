@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Handles:
+/// - Global item price
+/// - Spawning a random set of items when the player enters the shop
+/// - Moving the player and the camera back to the normal position when the player goes to the exit
+/// </summary>
 public class ShopManager : MonoBehaviour 
 {
     // The price of the items, updates when player buys stuff
@@ -33,6 +39,9 @@ public class ShopManager : MonoBehaviour
         controller = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
     }
 
+    /// <summary>
+    /// Generate the items in the shop
+    /// </summary>
     void generateItems()
     {
         // Goes to each item slot position and creates a random powerup for the player to buy
@@ -45,7 +54,9 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    // Set the text to the opposite state it's currently in
+    /// <summary>
+    /// Show the shop text and hide the level text, just in case it's active.
+    /// </summary>
     void textSetup()
     {
         // Show the ShopText
@@ -54,7 +65,9 @@ public class ShopManager : MonoBehaviour
         textElements[1].SetActive(false);
     }
 
-    // Set up all of the stuff in the shop
+    /// <summary>
+    /// Set up all of the stuff in the shop.
+    /// </summary>
     void setUpShop()
     {
         // Generate the items for the player to buy
@@ -74,8 +87,9 @@ public class ShopManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Move the player back into the play area w/ the camera and
-    /// set up the level text and start spawning enemies again
+    /// Move the player and camera back into the play area,
+    /// start spawning enemies again,
+    /// and show the level text.
     /// </summary>
     void exitShop()
     {

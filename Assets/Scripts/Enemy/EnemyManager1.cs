@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Handles behavior of the mine enemy and the meteor thingy
+/// </summary>
 public class EnemyManager1 : MonoBehaviour 
 {
 	//public int moveSpeed = 5;

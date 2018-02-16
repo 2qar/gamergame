@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Makes the player explode if they stay in the little collision area
+/// around the mine enemy for too long.
+/// </summary>
 public class MineCollider : MonoBehaviour 
 {
 	// Timer vars
@@ -51,6 +55,9 @@ public class MineCollider : MonoBehaviour
 		}
 	}
 
+    /// <summary>
+    /// Destroys the player if they're in the blast area for too long.
+    /// </summary>
 	private IEnumerator MyCoroutine()
 	{
 		while(isTouchingPlayer)

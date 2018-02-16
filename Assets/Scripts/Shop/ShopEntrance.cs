@@ -4,6 +4,10 @@ using UnityEngine;
 
 // TODO: Change the position of the shop entrance so you can't accidentally enter
 
+/// <summary>
+/// Moves the player and camera down to the little shop area when the player
+/// shoots the entrance and also stops enemies from spawning and sets up the shop.
+/// </summary>
 public class ShopEntrance : MonoBehaviour
 {
     // The shop manager that will be enabled on entrance
@@ -75,6 +79,11 @@ public class ShopEntrance : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Teleport the player and the camera to the shop,
+    /// stop spawning enemies into the level, 
+    /// and set up the items in the shop.
+    /// </summary>
     void teleportToShop()
     {
         // Get all of the enemies in the area

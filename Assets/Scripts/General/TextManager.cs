@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// TODO: Remove this dumb bloated garbage script that's completely useless because Canvas Scalar exists
+
 public class TextManager : MonoBehaviour 
 {
 	// Text references

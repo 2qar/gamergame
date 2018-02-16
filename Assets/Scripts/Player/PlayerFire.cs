@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerFire : MonoBehaviour {
-
+/// <summary>
+/// Shoots bullets when the player presses the bullet shooty button.
+/// </summary>
+public class PlayerFire : MonoBehaviour 
+{
     // Gun variables n stuff
 	float nextFire;
 	public float fireRate = 2;
@@ -30,6 +33,11 @@ public class PlayerFire : MonoBehaviour {
 		}
 	}
 
+    /// <summary>
+    /// Instantiates certain projectiles in certain amounts based on the
+    /// weapon parameter.
+    /// </summary>
+    /// <param name="weapon">The weapon that the player currently has.</param>
 	private void fireWeapon(int weapon)
 	{
         // * * * * * * * * * * * *
