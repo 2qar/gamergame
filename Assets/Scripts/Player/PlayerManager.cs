@@ -10,6 +10,12 @@ using UnityEngine;
 /// - Weapon and Ship
 /// and probably a few other things that I'm forgetting about right now.
 /// </summary>
+
+// FIXME: Don't subtract from player speed when firing in powered up mode
+// TODO: Make the player's booster turn blue and maybe change the color of their bullets to blue w/ blue trails
+    // Maybe also increase the size of their bullets when they're in powered up mode?
+    // Maybe bullets could have an explosion radius?
+
 public class PlayerManager : MonoBehaviour
 {
     // Player Health
@@ -291,7 +297,7 @@ public class PlayerManager : MonoBehaviour
 		}*/
     }
 
-    // TODO: Fix the alpha change
+    // FIXME: Fix the alpha change
     /// <summary>
     /// Takes 1 HP from the player and plays some fancy effects to let the player
     /// know that they just got hit.

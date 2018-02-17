@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO: Add a different sound effect for shooting mines
+
 /// <summary>
 /// Shoots bullets when the player presses the bullet shooty button.
 /// </summary>

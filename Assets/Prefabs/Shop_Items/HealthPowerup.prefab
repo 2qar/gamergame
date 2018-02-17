@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 61321774580694586}
   - component: {fileID: 114407068272745586}
   m_Layer: 0
-  m_Name: HeatlhPowerup
+  m_Name: HealthPowerup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,6 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6532601fbd1a24937a1ec3d30b2c4f8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerBullet: {fileID: 0}
 --- !u!212 &212547472274349492
 SpriteRenderer:
   m_ObjectHideFlags: 1

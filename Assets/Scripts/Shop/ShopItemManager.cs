@@ -4,8 +4,11 @@ using UnityEngine;
 
 // TODO: Make sprites for the items
 // TODO: Add price below the items
-// TODO: Fix the items randomly changing multiple times when the player enters the shop
-// TODO: Make the player bullet size powerup work
+// FIXME: Fix the items randomly changing multiple times when the player enters the shop
+// FIXME: Make the player bullet size powerup work
+
+// Note to self: Next time, make a single object that gives itself a color and name
+// instead of having a bunch of different prefabs for each of the different powerups
 
 /// <summary>
 /// Handles the individual items, their effects, and the player purchasing them.

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// TODO: Change the position of the shop entrance so you can't accidentally enter
+// FIXME: Change the position of the shop entrance so you can't accidentally enter
 
 /// <summary>
 /// Moves the player and camera down to the little shop area when the player
