@@ -21,6 +21,8 @@ using UnityEngine.UI;
  * -Enemy level goes up the further into the level you get
  **/
 
+// TODO: Make bosses for the end of each level
+
 /// <summary>
 /// Handles levels, spawning enemies, creating the shop entrance,
 /// player score and money, and UI elements
@@ -69,6 +71,9 @@ public class GameController : MonoBehaviour
     // The asteroid field in level 2
     public GameObject asteroidField;
 
+    // The player's bullet prefab
+    public GameObject playerBullet;
+
     private void Start()
     {
 		// Get the player object so the script can snatch some stuff off the player
@@ -76,7 +81,10 @@ public class GameController : MonoBehaviour
 		// leech off of this one for player info
         player = GameObject.FindGameObjectWithTag("Player");
         playerMan = player.GetComponent<PlayerManager>();
-        
+
+        // Set the player's bullet size back to normal when the game starts
+        playerBullet.transform.localScale = new Vector3(0.440893f, .3f, 0.440893f);
+
         // Start spawning enemies
         StartCoroutine(spawnEnemies());
     }
@@ -154,7 +162,7 @@ public class GameController : MonoBehaviour
         //int shopSpawn = (int)Random.Range(1, 4);
         //if (shopSpawn == 3)
         // Spawn the shop entrance
-        Instantiate(shopEntrance, new Vector3(12, 0, 0), transform.rotation);
+        Instantiate(shopEntrance, new Vector3(8, 0, 0), transform.rotation);
 
         // Wait to start the next wave
         yield return new WaitForSeconds(waveRate);

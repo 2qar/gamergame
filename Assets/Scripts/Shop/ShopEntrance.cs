@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// FIXME: Change the position of the shop entrance so you can't accidentally enter
+// TODO: Make the particle system start once the entrance is full size
 
 /// <summary>
 /// Moves the player and camera down to the little shop area when the player
@@ -28,8 +28,20 @@ public class ShopEntrance : MonoBehaviour
     private GameObject gameController;
     private GameController controller;
 
-	// Use this for initialization
-	void Start () 
+    // Store the amount of times the object has been hit by a bullet
+    bool shot = false;
+
+    // The collider for the entrance
+    private BoxCollider2D collider;
+
+    // The time when the object was created
+    float startTime;
+
+    // How long should it take for the entrance to increase to full size?
+    float duration = 2.0f;
+
+    // Use this for initialization
+    void Start () 
     {
         // Get the player object
         player = GameObject.FindGameObjectWithTag("Player");
@@ -46,6 +58,12 @@ public class ShopEntrance : MonoBehaviour
 
         // Find the shopmanager
         shopManager = GameObject.FindGameObjectWithTag("ShopManager");
+
+        // Get the collider
+        collider = gameObject.GetComponent<BoxCollider2D>();
+
+        // Set the start time
+        startTime = Time.time;
 	}
 	
 	// Update is called once per frame
@@ -55,17 +73,25 @@ public class ShopEntrance : MonoBehaviour
         transform.Rotate(rotation);
 	}
 
+    private void FixedUpdate()
+    {
+        // fancy math stuff to make it take duration seconds increase in size
+        float time = (Time.time - startTime) / duration;
+        // the current size of the cube to use
+        float size = Mathf.SmoothStep(0, 1, time);
+        // Update the size of the cube
+        transform.localScale = new Vector3(size, size, 1);
+        // If it's full size,
+        if (transform.localScale.x >= 1)
+            // Enable the collider
+            collider.enabled = true;
+    }
+
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == "PlayerBullet")
+        if (other.gameObject.tag == "PlayerBullet" && !shot)
         {
-            // -Teleport the player to the shop,
-            // maybe play an animation or something before sending the player to the shop
-            // -To teleport to shop, set player position and camera position
-            // to the position of a shop set up somewhere in the level
-            // -Every time the player enters the shop,
-            // generate a random set of items for them to pick from
-            //Debug.Log("teleport to shop");
+            shot = true;
             teleportToShop();
             // Destroy the player's bullet
             Destroy(other.gameObject);
@@ -101,6 +127,7 @@ public class ShopEntrance : MonoBehaviour
         mainCam.transform.position = new Vector3(0, -15, -10);
         // Change the player's position to the shop position minus an offset
         player.transform.position = new Vector3(-6.05f, -15, transform.position.z);
+
         // Set up the shop
         shopManager.SendMessage("setUpShop");
     }

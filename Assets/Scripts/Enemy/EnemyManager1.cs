@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO: Play a sound on death and maybe explode into some particles
+
 /// <summary>
 /// Handles behavior of the mine enemy and the meteor thingy
 /// </summary>

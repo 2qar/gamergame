@@ -11,7 +11,6 @@ using UnityEngine;
 /// and probably a few other things that I'm forgetting about right now.
 /// </summary>
 
-// FIXME: Don't subtract from player speed when firing in powered up mode
 // TODO: Make the player's booster turn blue and maybe change the color of their bullets to blue w/ blue trails
     // Maybe also increase the size of their bullets when they're in powered up mode?
     // Maybe bullets could have an explosion radius?
@@ -70,7 +69,7 @@ public class PlayerManager : MonoBehaviour
     /// Changes the player's speed and firing rate or not based on <see cref="T:PlayerManager"/> powered up.
     /// </summary>
     /// <value><c>true</c> if powered up; otherwise, <c>false</c>.</value>
-    bool PoweredUp
+    public bool PoweredUp
     {
         get { return poweredUp; }
         set
@@ -92,6 +91,7 @@ public class PlayerManager : MonoBehaviour
                 fireScript.fireRate = fireRateBackup;
                 movement.moveSpeed = moveSpeedBackup;
             }
+            poweredUp = value;
         }
     }
     private int weapon = 1;
@@ -239,6 +239,7 @@ public class PlayerManager : MonoBehaviour
     
     void Update ()
     {
+        //Debug.Log(poweredUp);
         //Debug.Log(Speed);
         // Kill the player when health is less than 0
     }
@@ -298,6 +299,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     // FIXME: Fix the alpha change
+    // TODO: Change the color shift on the booster to reflect the current booster
     /// <summary>
     /// Takes 1 HP from the player and plays some fancy effects to let the player
     /// know that they just got hit.
@@ -313,15 +315,17 @@ public class PlayerManager : MonoBehaviour
 		// Enable iFrames so the player can't get clipped again
 		iFrames = true;
 		// Change alpha to half
-		sr.color = new Color(255, 255, 255, 125);
+		sr.color = new Color(255, 255, 255, 20f);
+        Debug.Log(sr.color);
 		// Change alpha of booster to half
-		//booster.main.startColor = new Color(255, 111, 0, 125);
+		booster.startColor = new Color(255, 111, 0, 125);
 		// Wait for 1 second
 		yield return new WaitForSeconds (1f);
 		// Change alpha back to full
 		sr.color = new Color(255, 255, 255, 255);
+        Debug.Log(sr.color);
 		// Change alpha of booster back to full
-		//booster.main.startColor = Color(255, 111, 0, 255);
+		booster.startColor = new Color(255, 111, 0, 255);
 		// Disable invincibility
 		iFrames = false;
 		// Exit

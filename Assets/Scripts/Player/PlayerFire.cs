@@ -70,7 +70,7 @@ public class PlayerFire : MonoBehaviour
 		nextFire = Time.time + fireRate;
 
         // If the game isn't in a wait period, like in a shop,
-        if(!gameController.waitBeforeWave)
+        if(!gameController.waitBeforeWave && !gameController.playerMan.PoweredUp)
             // Subtract fuel when they fire
             gameController.playerMan.Speed -= .1f;
 

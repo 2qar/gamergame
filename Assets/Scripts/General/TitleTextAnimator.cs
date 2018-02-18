@@ -27,8 +27,7 @@ public class TitleTextAnimator : MonoBehaviour
     private void FixedUpdate()
     {
         // Rotate the gameobject by the rotation factor.
-        // TODO: Change this to Eular because the current way is ugly as heck
-        transform.rotation = new Quaternion(transform.rotation.x, 0, rotation, 360);
+        transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.x, 0, rotation / 3));
     }
 
     // Handles increasing and decreasing the rotation variable
@@ -43,7 +42,7 @@ public class TitleTextAnimator : MonoBehaviour
             // No more rotating left
             rotateLeft = false;
         // If the text is supposed to rotate right and it hasn't made it far enough yet,
-        if (!rotateLeft && rotation > -15)
+        if (!rotateLeft && rotation > -25)
             // Rotate right
             rotation -= rotationFactor;
         // If it has made it,

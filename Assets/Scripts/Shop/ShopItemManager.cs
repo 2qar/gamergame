@@ -1,11 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 // TODO: Make sprites for the items
-// TODO: Add price below the items
-// FIXME: Fix the items randomly changing multiple times when the player enters the shop
-// FIXME: Make the player bullet size powerup work
 
 // Note to self: Next time, make a single object that gives itself a color and name
 // instead of having a bunch of different prefabs for each of the different powerups
@@ -30,6 +28,12 @@ public class ShopItemManager : MonoBehaviour
     // The object that the player copies when they fire a bullet
     public GameObject playerBullet;
 
+    // The item description thingy
+    private Text itemText;
+
+    // Used to change the color
+    private SpriteRenderer sr;
+
 	// Use this for initialization
 	void Start () 
     {
@@ -37,16 +41,22 @@ public class ShopItemManager : MonoBehaviour
         manager = GameObject.FindGameObjectWithTag("ShopManager").GetComponent<ShopManager>();
         // Find the gamecontroller object and get its GameController script
         controller = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+        // Get the spriterenderer
+        sr = gameObject.GetComponent<SpriteRenderer>();
 
-        // Give the item a number
-        assignNum(gameObject.name);
-        //Debug.Log(gameObject.name + " : " + itemNum);
+        // Get the text that's attached to the item
+        itemText = gameObject.GetComponentInChildren<Text>();
+
+        // Set up the powerup
+        createPowerup(gameObject.name);
 	}
 
     private void FixedUpdate()
     {
         // Keep the price up to date with the shopmanager's price
         price = manager.price;
+        // Update the text
+        itemText.text = initializeText();
     }
 
     /// <summary>
@@ -55,16 +65,7 @@ public class ShopItemManager : MonoBehaviour
     /// <param name="name">Name of the item.</param>
     void assignNum(string name)
     {
-        if (name.Contains("Health"))
-            itemNum = 1;
-        if (name.Contains("MaxHP"))
-            itemNum = 2;
-        if (name.Contains("Damage"))
-            itemNum = 3;
-        if (name.Contains("Speed"))
-            itemNum = 4;
-        if (name.Contains("Bullet"))
-            itemNum = 5;
+        itemNum = (int)Random.Range(1, 6);
     }
 
     void OnCollisionEnter2D(Collision2D other)
@@ -116,13 +117,85 @@ public class ShopItemManager : MonoBehaviour
             // Max Speed Increase Pickup
             case 4:
                 controller.playerMan.MaxSpeed += 5f;
+                controller.playerMan.PoweredUp = true;
                 break;
             // Bullet Size Increase Pickup
             case 5:
-                //playerBullet.transform.localScale += new Vector3(.1f, .1f, 0);
+                // Increase the size of the player's bullet
+                playerBullet.transform.localScale += new Vector3(1f, 1f, 0);
                 Debug.Log("increase player bullet size or something");
                 break;
         }
+    }
+    
+    /// <summary>
+    /// Set up the text for the powerup.
+    /// </summary>
+    /// <param name="itemNum">The assigned item number.</param>
+    string initializeText()
+    {
+        string text = "";
+        switch(itemNum)
+        {
+            case 1:
+                text = "Health: ";
+                break;
+            case 2:
+                text = "Max Health: ";
+                break;
+            case 3:
+                text = "Damage: ";
+                break;
+            case 4:
+                text = "Speed: ";
+                break;
+            case 5:
+                text = "Bullet: ";
+                break;
+        }
+        text += price;
+        return text;
+    }
+    
+    /// <summary>
+    /// Pick the color for the item.
+    /// </summary>
+    /// <param name="itemNum">The assigned item number.</param>
+    Color colorPicker(int itemNum)
+    {
+        Color itemColor = new Color();
+        switch (itemNum)
+        {
+            case 1:
+                itemColor = new Color(246, 5, 5, 255);
+                break;
+            case 2:
+                itemColor = new Color(255, 0, 90, 255);
+                break;
+            case 3:
+                itemColor = new Color(124, 253, 0, 255);
+                break;
+            case 4:
+                itemColor = new Color(0, 71, 253, 255);
+                break;
+            case 5:
+                itemColor = new Color(251, 255, 0, 255);
+                break;
+        }
+        return itemColor;
+    }
+
+    /// <summary>
+    /// Set up the powerup.
+    /// </summary>
+    void createPowerup(string name)
+    {
+        // Assign what powerup it will be
+        assignNum(name);
+        Debug.Log(itemNum);
+        // Pick the color of the powerup
+        Debug.Log(colorPicker(itemNum));
+        sr.color = colorPicker(itemNum);
     }
 
 }

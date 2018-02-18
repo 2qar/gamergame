@@ -17,7 +17,8 @@ public class ShopManager : MonoBehaviour
     public GameObject[] textElements = new GameObject[2];
 
     // Randomly pick from this list when the player enters the shop
-    public GameObject[] items = new GameObject[5];
+    //public GameObject[] items = new GameObject[5];
+    public GameObject item;
 
     // *Stuff that's gonna get moved back*
     // The player 
@@ -48,9 +49,9 @@ public class ShopManager : MonoBehaviour
         for (int pos = -2; pos <= 2; pos+= 2)
         {
             // Get a random number that will represent an item from the list
-            int randomNum = Random.Range(0, items.Length);
+            //int randomNum = Random.Range(0, items.Length);
             // Create the randomly selected powerup at the current position
-            Instantiate(items[randomNum], new Vector3(6, pos - 15, 0), transform.rotation);
+            Instantiate(item, new Vector3(6, pos - 15, 0), transform.rotation);
         }
     }
 
