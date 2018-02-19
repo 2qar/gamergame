@@ -17,20 +17,42 @@ public class OptionsMenuManager : MonoBehaviour
     public Image selector;
     // Position in list that the selector is at
     int index = 0;
+
+    // Used to store position of the selector and stuff
+    RectTransform selectorPos;
+    // Used to store the position of the button and stuff???
+    RectTransform buttonPos;
+
+    // The time when the movement begins
+    private float startTime;
+    // How long the movement should last
+    public float duration = .3f;
+
+    // Manages making each dpad button press once
+    private JoystickMenuInput joystick;
+
     /// <summary>
     /// Updates the selector's position based on what the index currently is 
     /// compared to the new index value that's being passed in.
     /// </summary>
     /// <value>The index.</value>
-    int Index
+    public int Index
     {
         get { return index; }
         set
         {
+            // Update the start time
+            startTime = Time.time;
+
+            // Update the index
             index = value;
-            RectTransform selectorPos = (RectTransform)selector.transform;
-            RectTransform buttonPos = (RectTransform)UIElements[index].transform;
-            selectorPos.anchoredPosition = new Vector2(0, buttonPos.anchoredPosition.y - 50);
+            // Get the selector's recttransform to set its position
+            selectorPos = (RectTransform)selector.transform;
+            // Get the new button's recttransform to get the position that the selector needs to move to
+            buttonPos = (RectTransform)UIElements[index].transform;
+
+            // Reset each of the buttons back to false
+            joystick.ResetInputs();
         }
     }
 
@@ -59,6 +81,9 @@ public class OptionsMenuManager : MonoBehaviour
             resIndex = value;
             // Update the text element
             UIElements[0].text = "< " + resolutions[resIndex][0] + "x" + resolutions[resIndex][1] + " >";
+
+            // Reset dpad inputs to false
+            joystick.ResetInputs();
         }
     }
     // False by default
@@ -69,13 +94,18 @@ public class OptionsMenuManager : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        
-	}
+        // Get the joystick input manager
+        joystick = gameObject.GetComponent<JoystickMenuInput>();
+
+        selectorPos = (RectTransform)selector.transform;
+        buttonPos = (RectTransform)UIElements[0].transform;
+    }
 	
 	// Update is called once per frame
 	void Update ()
     {
         selectorPositionUpdate();
+        selectorMovement();
         resolutionSelector();
         getButtonInput();
         fullscreenSelector();
@@ -86,16 +116,26 @@ public class OptionsMenuManager : MonoBehaviour
     /// </summary>
     void selectorPositionUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow) || joystick.IsButtonPressed(JoystickMenuInput.DpadButtons.Up))
             if (index == 0)
                 Index = 2;
             else
                 Index--;
-        if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+        if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow) || joystick.IsButtonPressed(JoystickMenuInput.DpadButtons.Down))
             if (index == 2)
                 Index = 0;
             else
                 Index++;
+    }
+
+    /// <summary>
+    /// Moves the selector.
+    /// </summary>
+    void selectorMovement()
+    {
+        float t = (Time.time - startTime) / duration;
+        float smoothStuff = Mathf.SmoothStep(selectorPos.anchoredPosition.y, buttonPos.anchoredPosition.y - 50, t);
+        selectorPos.anchoredPosition = new Vector2(0, smoothStuff);
     }
 
     /// <summary>
@@ -104,7 +144,7 @@ public class OptionsMenuManager : MonoBehaviour
     /// </summary>
     void getButtonInput()
     {
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.KeypadEnter))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.JoystickButton0))
             // If the player hit enter on a button that isn't the back button,
             if (index != 2)
             {
@@ -119,6 +159,13 @@ public class OptionsMenuManager : MonoBehaviour
                 // Hide this menu
                 gameObject.SetActive(false);
             }
+        else if(Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton1))
+        {
+            // Show the main menu UI
+            mainUI.gameObject.SetActive(true);
+            // Hide this menu
+            gameObject.SetActive(false);
+        }
     }
 
     /// <summary>
@@ -127,12 +174,12 @@ public class OptionsMenuManager : MonoBehaviour
     void resolutionSelector()
     {
         if (index == 0)
-            if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+            if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow) || joystick.IsButtonPressed(JoystickMenuInput.DpadButtons.Left))
                 if (resIndex == 0)
                     ResIndex = 3;
                 else
                     ResIndex--;
-            else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+            else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow) || joystick.IsButtonPressed(JoystickMenuInput.DpadButtons.Right))
                 if (resIndex == 3)
                     ResIndex = 0;
                 else
@@ -145,12 +192,12 @@ public class OptionsMenuManager : MonoBehaviour
     void fullscreenSelector()
     {
         if (index == 1)
-            if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+            if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow) || joystick.IsButtonPressed(JoystickMenuInput.DpadButtons.Left))
                 if (fullscreenIndex == 0)
                     fullscreenIndex = 1;
                 else
                     fullscreenIndex--;
-            else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+            else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow) || joystick.IsButtonPressed(JoystickMenuInput.DpadButtons.Right))
                 if (fullscreenIndex == 1)
                     fullscreenIndex = 0;
                 else

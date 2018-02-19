@@ -4,9 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-// TODO: Use Mathf.Smoothstep for a nice smooth title rotation
-// TODO: Also use Mathf.Smoothstep for the selector cus it would probably look nice
-
 /// <summary>
 /// Handles all of the buttons on the main menu.
 /// </summary>
@@ -16,12 +13,28 @@ public class MainMenuButtons : MonoBehaviour
     public Text[] buttons = new Text[3];
     // The UI element with options
     public Canvas optionsUI;
+
     // The little selector thingy
     public Image selector;
     RectTransform selectorPos;
     // The position of the selector in the button array,
     // default on play button
-    private int index = 0;
+    public int index = 0;
+
+    // Stores the current position of the selector
+    private Vector2 pos;
+    // Stores the position that the selector needs to go to
+    private Vector2 newPos;
+
+    // Positions of each of the UI buttons that the selector will go to
+    private float[] selectorPositions = { 0, 50, 100 };
+
+    // Stores the current time when the player presses a button to move the selector
+    private float startTime;
+    public float duration = .2f;
+
+    private JoystickMenuInput joystick;
+
     /// <summary>
     /// Moves the selector based on what value index currently is compared to
     /// the value being passed in.
@@ -32,34 +45,27 @@ public class MainMenuButtons : MonoBehaviour
         get { return index; }
         set
         {
-            // Space between one button
-            int moveFact = 50;
-            if (value > index)
-                moveFact *= -1;
-            // If the selector is at the top element and the value passed in is
-            // the bottom element,
-            if (index == 0 && value == 2)
-                // Set the position the selector will move to at 2 buttons below
-                moveFact = -100;
-            // If the selector is at the bottom element and the value passed in is
-            // the top element,
-            if (index == 2 && value == 0)
-                // Set the position the selector will move to at 2 buttons above
-                moveFact = 100;
+            // Get the current time
+            startTime = Time.time;
+
             // Get the current position of the selector
-            Vector2 pos = selectorPos.anchoredPosition;
+            pos = selectorPos.anchoredPosition;
             // Get the new position for the selector to go to
-            Vector2 newSelectorPos = new Vector2(pos.x, pos.y + moveFact);
-            // Make it go there
-            selectorPos.anchoredPosition = newSelectorPos;
+            newPos = new Vector2(pos.x, selectorPositions[value] * -1);
+
             // Update the index
             index = value;
+
+            joystick.ResetInputs();
         }
     }
 
 	// Use this for initialization
 	void Start ()
     {
+        // Get the joystick menu input thingy
+        joystick = gameObject.GetComponent<JoystickMenuInput>();
+
         // Get the selector position
         selectorPos = (RectTransform)selector.transform;
 	}
@@ -67,6 +73,12 @@ public class MainMenuButtons : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+        float t = (Time.time - startTime) / duration;
+        // The position of the selector, but smoooooth
+        float smoothStuff = Mathf.SmoothStep(pos.y, newPos.y, t);
+        // Update the position of the selector
+        selectorPos.anchoredPosition = new Vector2(selectorPos.anchoredPosition.x, smoothStuff);
+
         // Check for an up or down key press and change the UI element to fit it
         changeSelectedElement();
         // Do the appropriate thing when the player presses the currently selected button
@@ -79,7 +91,7 @@ public class MainMenuButtons : MonoBehaviour
     void changeSelectedElement()
     {
         // If the player presses an up button,
-        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow) || joystick.IsButtonPressed(JoystickMenuInput.DpadButtons.Up))
             // If they're at the top of the button list,
             if (index == 0)
                 // Move to the bottom
@@ -89,7 +101,7 @@ public class MainMenuButtons : MonoBehaviour
                 // Lower index, moving up
                 Index--;
         // If the player presses a down button,
-        else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+        else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow) || joystick.IsButtonPressed(JoystickMenuInput.DpadButtons.Down))
             // If they're already at the bottom of the list,
             if (index == 2)
                 // Go back to the top
@@ -106,7 +118,7 @@ public class MainMenuButtons : MonoBehaviour
     void pressButton()
     {
         // If the player gives input to press the currently selected item,
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.KeypadEnter))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.JoystickButton0))
             // If they're on the play button,
             if (index == 0)
                 // Load the game

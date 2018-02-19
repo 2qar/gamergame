@@ -48,7 +48,7 @@ public class EnemyManager2 : MonoBehaviour
 		{
 			sr.sprite = altShip;
 			health = 2;
-            collider.size = new Vector2(.6f, .7f);
+            collider.size = new Vector2(.6f, .9f);
 		}
 		// Set nextFire on startup so that the enemy doesn't just
 		// immediately shoot when they spawn

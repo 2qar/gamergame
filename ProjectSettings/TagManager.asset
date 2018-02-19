@@ -20,6 +20,9 @@ TagManager:
   - PlayerSpeedText
   - LevelText
   - ShopManager
+  - Level1Boss
+  - MainUI
+  - OptionsUI
   layers:
   - Default
   - TransparentFX

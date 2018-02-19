@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// FIXME: Fix bug where sometimes the game spawns 2 enemies at a time upon exiting instead of 1
+
 /// <summary>
 /// Handles:
 /// - Global item price
@@ -19,6 +21,9 @@ public class ShopManager : MonoBehaviour
     // Randomly pick from this list when the player enters the shop
     //public GameObject[] items = new GameObject[5];
     public GameObject item;
+
+    // Store each of the items generated
+    private GameObject[] items = new GameObject[6];
 
     // *Stuff that's gonna get moved back*
     // The player 
@@ -48,10 +53,8 @@ public class ShopManager : MonoBehaviour
         // Goes to each item slot position and creates a random powerup for the player to buy
         for (int pos = -2; pos <= 2; pos+= 2)
         {
-            // Get a random number that will represent an item from the list
-            //int randomNum = Random.Range(0, items.Length);
-            // Create the randomly selected powerup at the current position
-            Instantiate(item, new Vector3(6, pos - 15, 0), transform.rotation);
+            // Create the randomly selected powerup at the current position and store it so it can be deleted later
+            items[pos + 2] = (GameObject)Instantiate(item, new Vector3(6, pos - 15, 0), transform.rotation);
         }
     }
 
@@ -98,10 +101,16 @@ public class ShopManager : MonoBehaviour
         player.transform.position = new Vector2(-6.05f, 0f);
         // Move the camera back to its original position
         mainCam.transform.position = new Vector3(0, 0, -10);
+
+        // Delete the powerups that weren't purchased
+        foreach (GameObject powerup in items)
+            Destroy(powerup);
+
         // Hide the shop text
         textElements[0].SetActive(false);
         // Stop waiting
         controller.StopCoroutine("shopWait");
+
         // Disable wait variable
         //controller.waitBeforeWave = false;
         // Start spawning enemies again

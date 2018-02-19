@@ -15,6 +15,9 @@ public class PlayerMovement : MonoBehaviour
 	Rigidbody2D rb;
     ParticleSystem booster;
 
+    private bool stickMovement = false;
+    private bool dpadMovement = false;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -25,12 +28,8 @@ public class PlayerMovement : MonoBehaviour
 	// Update is called once per frame
 	void FixedUpdate () 
 	{
-        //Get input axis
-		float x = Input.GetAxis ("Horizontal");
-		float y = Input.GetAxis ("Vertical");
-
-        //Apply movement
-		Vector2 movement = new Vector2 (x, y) * moveSpeed;
+        //Apply movement to the player's rigidbody
+		Vector2 movement = GetMovementInput() * moveSpeed;
 		rb.velocity = movement;
 	}
 
@@ -52,4 +51,58 @@ public class PlayerMovement : MonoBehaviour
         forceOverLifetime.x = -rb.velocity.x / 3;
         forceOverLifetime.y = -rb.velocity.y / 3;
     }
+
+    /// <summary>
+    /// Gets input from a keyboard or
+    /// XBOX 360 controller (left stick + dpad)
+    /// and prevents the multiple inputs from stacking.
+    /// </summary>
+    /// <returns>
+    /// A Vector2 with movement based on the player's preferred input.
+    /// </returns>
+    Vector2 GetMovementInput()
+    {
+        // Variables that will apply movement
+        float x = 0f;
+        float y = 0f;
+
+        // Store stick movement
+        float stickLeftRight = Input.GetAxis("Horizontal");
+        float stickUpDown = Input.GetAxis("Vertical");
+
+        // Store dpad movement
+        float dpadLeftRight = Input.GetAxis("dpad_leftright");
+        float dpadUpDown = Input.GetAxis("dpad_updown");
+
+        // If the stick is being used for movement and the dpad isn't being used,
+        if ((stickLeftRight != 0 || stickUpDown != 0) && !dpadMovement)
+        {
+            // Apply movement based on the stick movement
+            x = stickLeftRight;
+            y = stickUpDown;
+            // Update stickMovement to be true
+            stickMovement = true;
+        }
+        // If the stick isn't being used or the dpad is being used,
+        else
+            // Update stickMovement to false
+            stickMovement = false;
+
+        // If the player is using the dpad for movement and the stick isn't also being used,
+        if ((dpadLeftRight != 0 || dpadUpDown != 0) && !stickMovement)
+        {
+            // Apply movement based on dpad movement
+            x = dpadLeftRight;
+            y = dpadUpDown;
+            // Update dpadMovement to be true
+            dpadMovement = true;
+        }
+        // if the player isn't using the dpad for movement or the stick is being used,
+        else
+            // Update dpadMovement to false
+            dpadMovement = false;
+
+        return new Vector2(x, y);
+    }
+
 }

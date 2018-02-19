@@ -101,29 +101,29 @@ public class ShopItemManager : MonoBehaviour
         {
             // Health Pickup
             case 1:
+                // If the player isn't already at full health,
                 if(controller.playerMan.Health != controller.playerMan.MaxHealth)
+                    // Heal them
                     controller.playerMan.Health++;
-                Debug.Log("heal player");
                 break;
             // Max Health Increase Pickup
             case 2:
                 controller.playerMan.MaxHealth++;
-                Debug.Log("increase max player health");
                 break;
             // Player Damage Increase Pickup
             case 3:
-                Debug.Log("increase player damage");
+                controller.playerMan.playerDamage++;
                 break;
             // Max Speed Increase Pickup
             case 4:
-                controller.playerMan.MaxSpeed += 5f;
+                controller.playerMan.MaxSpeed += 2.5f;
                 controller.playerMan.PoweredUp = true;
                 break;
             // Bullet Size Increase Pickup
             case 5:
-                // Increase the size of the player's bullet
-                playerBullet.transform.localScale += new Vector3(1f, 1f, 0);
-                Debug.Log("increase player bullet size or something");
+                // Increase the size of the player's bullet if their bullet isn't too big
+                if(playerBullet.transform.localScale.y < 1.3)
+                    playerBullet.transform.localScale += new Vector3(.2f, .2f, 0);
                 break;
         }
     }
@@ -163,38 +163,37 @@ public class ShopItemManager : MonoBehaviour
     /// <param name="itemNum">The assigned item number.</param>
     Color colorPicker(int itemNum)
     {
-        Color itemColor = new Color();
+        //Color itemColor = new Color();
         switch (itemNum)
         {
+            // Health powerup
             case 1:
-                itemColor = new Color(246, 5, 5, 255);
-                break;
+                return Color.red;
+            // Max health powerup
             case 2:
-                itemColor = new Color(255, 0, 90, 255);
-                break;
+                return Color.magenta;
+            // Damage powerup
             case 3:
-                itemColor = new Color(124, 253, 0, 255);
-                break;
+                return Color.green;
+            // Max speed increase powerup
             case 4:
-                itemColor = new Color(0, 71, 253, 255);
-                break;
+                return Color.blue;
+            // Bullet size increase powerup
             case 5:
-                itemColor = new Color(251, 255, 0, 255);
-                break;
+                return Color.yellow;
         }
-        return itemColor;
+        // if itemNum isn't 1-5 for some reason, make the item non-existant
+        return new Color();
     }
 
     /// <summary>
-    /// Set up the powerup.
+    /// Set up the powerup by assigning what powerup it will be and giving it the appropriate color.
     /// </summary>
     void createPowerup(string name)
     {
         // Assign what powerup it will be
         assignNum(name);
-        Debug.Log(itemNum);
         // Pick the color of the powerup
-        Debug.Log(colorPicker(itemNum));
         sr.color = colorPicker(itemNum);
     }
 

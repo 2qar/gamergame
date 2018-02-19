@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO: Make a little bar below the player's health that fills up when picking up particles, when the bar fills, heal 1 HP
+    // Maybe make this an end of level powerup?
+// TODO: Make a powerup at the end of the level that increases the time that particles linger
+
 /// <summary>
 /// Handles all of the particles that enemies spit out when they blow up.
 /// </summary>
@@ -35,15 +39,14 @@ public class ExplosionManager : MonoBehaviour
         explosion.trigger.SetCollider(0, playerCollider);
         // Get how many particles there are and store each particle
         StartCoroutine(getParticlesAlive());
+
+        // Set the object up to be destroyed once the particles have disappeared
+        Destroy(gameObject, explosion.startLifetime);
 	}
 	
 	// Update is called once per frame
 	void Update () 
     {
-        // If the object has been alive for more than 1 second and there aren't any particles left,
-        if (Time.time > 1 && explosion.particleCount == 0)
-            // Destroy it
-            Destroy(gameObject);
         // Set the velocity of the particles based on the player's movement speed
         velocity = 2 + (playerMan.Speed / 10);
         // Get the velocity module of the particle system

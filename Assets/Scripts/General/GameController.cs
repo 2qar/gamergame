@@ -74,6 +74,12 @@ public class GameController : MonoBehaviour
     // The player's bullet prefab
     public GameObject playerBullet;
 
+    // The boss that's currently alive and some other stuff about it
+    public GameObject boss;
+    public BossManager bossMan;
+    public int bossNum;
+    public bool bossIsAlive = false;
+
     private void Start()
     {
 		// Get the player object so the script can snatch some stuff off the player
@@ -87,6 +93,7 @@ public class GameController : MonoBehaviour
 
         // Start spawning enemies
         StartCoroutine(spawnEnemies());
+        //StartCoroutine(level1BossBattle());
     }
 
     // Update is called once per frame
@@ -234,5 +241,27 @@ public class GameController : MonoBehaviour
         // Set up the level text element to show the right stuff
         UIElements[4].text = "Level " + level + " - " + (enemyLevel - levelOffset);
     }
+
+    IEnumerator level1BossBattle()
+    {
+        // Update the status of the boss
+        bossIsAlive = true;
+        // Get the boss
+        boss = GameObject.FindGameObjectWithTag("Level1Boss");
+        bossMan = boss.GetComponent<BossManager>();
+        // wait while the boss is alive
+        while(bossIsAlive)
+            yield return new WaitForSeconds(1f);
+        //give the player some powerups to pick from
+        yield break;
+    }
+
+    /** FIRST BOSS BATTLE **
+     *- Has a tiny gun that fires in 3-bullet bursts, normal bullets
+     *- Pulls back and fires out a bunch of projectiles that can
+     *  blow up into a bunch of health and speed and stuff
+     *- Blows up into a bunch of health and stuff for the player upon defeat
+     *- Has "arms" on the top and bottom of the screen that shoot vertically moving missiles
+     */
 
 }

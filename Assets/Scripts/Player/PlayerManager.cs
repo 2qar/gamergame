@@ -115,6 +115,9 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    // How much damage the player deals
+    public int playerDamage = 1;
+
 	// The player's particle booster
 	ParticleSystem booster;
 
@@ -298,8 +301,6 @@ public class PlayerManager : MonoBehaviour
 		}*/
     }
 
-    // FIXME: Fix the alpha change
-    // TODO: Change the color shift on the booster to reflect the current booster
     /// <summary>
     /// Takes 1 HP from the player and plays some fancy effects to let the player
     /// know that they just got hit.
@@ -311,21 +312,24 @@ public class PlayerManager : MonoBehaviour
 		Health--;
 		// Destroy the enemy's bullet
 		Destroy (enemyBullet.gameObject);
+        // Get the booster's startcolor cus referencing it a million times is annoying
+        Color boostColor = booster.startColor;
 		// Maybe subtract fuel???
+
 		// Enable iFrames so the player can't get clipped again
 		iFrames = true;
 		// Change alpha to half
-		sr.color = new Color(255, 255, 255, 20f);
-        Debug.Log(sr.color);
+		sr.color = new Color(1f, 1f, 1f, .3f);
 		// Change alpha of booster to half
-		booster.startColor = new Color(255, 111, 0, 125);
+		booster.startColor = new Color(boostColor.r, boostColor.g, boostColor.b, .3f);
+
 		// Wait for 1 second
 		yield return new WaitForSeconds (1f);
+
 		// Change alpha back to full
-		sr.color = new Color(255, 255, 255, 255);
-        Debug.Log(sr.color);
+		sr.color = new Color(1f, 1f, 1f, 1f);
 		// Change alpha of booster back to full
-		booster.startColor = new Color(255, 111, 0, 255);
+		booster.startColor = new Color(boostColor.r, boostColor.g, boostColor.b, 1f);
 		// Disable invincibility
 		iFrames = false;
 		// Exit

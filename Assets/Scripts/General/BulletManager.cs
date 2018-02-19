@@ -12,16 +12,19 @@ public class BulletManager : MonoBehaviour
     // Offset of the bullet explosion
     //Vector3 bulletOffset = new Vector3(.6f, 0);
 
-    // List of objects that should have an explosion on collision
-    //string[] objects = {"Player", "Enemy", "Mine"};
-
     // Projectile explosions
     public GameObject mineBlast;
     public GameObject bulletBlast;
 
+    // The gamecontroller
+    private GameController controller;
+
     // Update is called once per frame
     private void Start()
     {
+        // Get the gamecontroller
+        controller = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+
         // When the player or the enemy fires a bullet,
         if (gameObject.tag == "PlayerBullet" || gameObject.tag == "EnemyBullet")
             // Make a lil explosion
@@ -42,6 +45,7 @@ public class BulletManager : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        // <EFFECTS STUFF>
         // If the object being destroyed is a mine,
 		if (gameObject.tag != "PlayerBullet" && gameObject.tag != "EnemyBullet")
             // Create the object that handles the explosion
@@ -50,6 +54,23 @@ public class BulletManager : MonoBehaviour
         else
             // Make a lil poof instead of a mine explosion
             Instantiate(bulletBlast, transform.position, transform.rotation);
+
+        // <BOSS STUFF>
+        // If the current bullet is a player bullet and the boss actually exists,
+        if (gameObject.tag == "PlayerBullet" && controller.bossIsAlive)
+        {
+            // If the player is hitting the boss' normal collider, 
+            if (collision.gameObject.name.Contains("Boss1"))
+                // Do a normal amount of damage
+                controller.bossMan.SendMessage("takeDamage", false);
+            // If the player hit the boss' crit point,
+            else if (collision.gameObject.name.Contains("CritPoint"))
+                // Do double damage
+                controller.bossMan.SendMessage("takeDamage", true);
+            // Get rid of the player's bullet
+            Destroy(gameObject);
+        }
+            
     }
 
     /// <summary>
