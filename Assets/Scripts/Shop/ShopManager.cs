@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // FIXME: Fix bug where sometimes the game spawns 2 enemies at a time upon exiting instead of 1
+// TODO: Implement actual money and fix the prices so they don't skyrocket, maybe give each item a fixed price
 
 /// <summary>
 /// Handles:
@@ -12,6 +13,9 @@ using UnityEngine;
 /// </summary>
 public class ShopManager : MonoBehaviour 
 {
+    // The screen shake script on the camera
+    private ScreenShaker shaker;
+
     // The price of the items, updates when player buys stuff
     public int price = 50;
 
@@ -36,6 +40,9 @@ public class ShopManager : MonoBehaviour
 
     private void Start()
     {
+        // Get the screen shake script
+        shaker = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ScreenShaker>();
+
         // Get the player object
         player = GameObject.FindGameObjectWithTag("Player");
         // Get the main camera in the scene
@@ -74,6 +81,8 @@ public class ShopManager : MonoBehaviour
     /// </summary>
     void setUpShop()
     {
+        // Let the script know that the player is in the shop now
+        shaker.InShop = true;
         // Generate the items for the player to buy
         generateItems();
         // Set up all the text
@@ -97,6 +106,8 @@ public class ShopManager : MonoBehaviour
     /// </summary>
     void exitShop()
     {
+        // Let the script know that the player left the shop
+        shaker.InShop = false;
         // Move the player back to their original position
         player.transform.position = new Vector2(-6.05f, 0f);
         // Move the camera back to its original position

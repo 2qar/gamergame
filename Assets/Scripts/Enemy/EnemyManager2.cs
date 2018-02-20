@@ -10,7 +10,34 @@ public class EnemyManager2 : MonoBehaviour
 
     public float moveSpeed = 5;
     private int enemyWeapon;
+    // Enemy's health value
 	private int health = 1;
+    // Health value to be accessed by everything else,
+    // so that when other objects change the enemy's health, a hit effect will play
+    public int Health
+    {
+        get { return health; }
+        set
+        {
+            // Play the hit effect
+            StartCoroutine(hitEffect(sr));
+            // If the enemy has no health left,
+            if (value <= 0)
+            {
+                // Destroy the enemy
+                Destroy(gameObject);
+                // Give the player the enemy's weapon
+                controller.playerMan.Weapon = enemyWeapon;
+                // Increase the player's score
+                controller.score++;
+                // Explode into a bunch of particles
+                Instantiate(explosion, transform.position, transform.rotation);
+            }
+            // Update the enemy's health value
+            health = value;
+        }
+    }
+    // The explosion for the enemy to create on death
     public GameObject explosion;
 
     // Sound Effect objects
@@ -63,17 +90,6 @@ public class EnemyManager2 : MonoBehaviour
         // Checks to fire weapon
         if (Time.time >= nextFire)
 			fireWeapon (enemyWeapon);
-		
-		// Check enemy health & destroy enemy if health is 0
-		if (health <= 0) 
-		{
-			//StartCoroutine (hitEffect(sr));
-			Destroy (gameObject);
-			controller.playerMan.Weapon = enemyWeapon;
-			controller.score++;
-            // Explode
-            Instantiate(explosion, transform.position, transform.rotation);
-		}
     }
 		
     void FixedUpdate()
@@ -97,8 +113,7 @@ public class EnemyManager2 : MonoBehaviour
 		if (other.gameObject.tag == "PlayerBullet") 
 		{
 			Destroy (other.gameObject);
-			StartCoroutine (hitEffect(sr));
-			health--;
+			Health--;
 		}
     }
 
@@ -154,12 +169,4 @@ public class EnemyManager2 : MonoBehaviour
 		yield break;
 	}
 
-	// IDEA: When enemies die, the player gets a set amount of money
-	// BUT
-	// The enemy ship explodes into little bits, and the player can
-	// collect these bits for extra cash at the risk of losing health
-	// cus they have to get the bits and dodge enemy fire at the same
-	// time
-
-    // Add a little gravity field around the player that sucks up ship bits
 }

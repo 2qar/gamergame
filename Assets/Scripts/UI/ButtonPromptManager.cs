@@ -7,7 +7,9 @@ public class ButtonPromptManager : MonoBehaviour
     // The manager for the UI stuffs
     private MainMenuButtons buttons;
     // The other manager for UI stuffs
-    private OptionsMenuManager options;
+    public OptionsMenuManager options;
+
+    public bool mainMenuButton = false;
 
     // The locations next to each UI button to move to
     public int[] buttonPromptPositions = new int[3];
@@ -84,9 +86,9 @@ public class ButtonPromptManager : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        if (buttons != null)
+        if (mainMenuButton)
             Index = buttons.index;
-        if (options != null)
+        else
             Index = options.Index;
         float t = (Time.time - startTime) / duration;
         if(pos != null)

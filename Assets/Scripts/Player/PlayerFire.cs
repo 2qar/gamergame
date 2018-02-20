@@ -23,6 +23,9 @@ public class PlayerFire : MonoBehaviour
 
     // Object that manages the game stuff
 	public GameController gameController;
+    
+    // Camera's screenshake script
+    public ScreenShaker shaker;
 
     // Update is called once per frame
     void Update () 
@@ -73,6 +76,9 @@ public class PlayerFire : MonoBehaviour
         if(!gameController.waitBeforeWave && !gameController.playerMan.PoweredUp)
             // Subtract fuel when they fire
             gameController.playerMan.Speed -= .1f;
+
+        // Apply screenshake
+        shaker.ShakeCamera();
 
         // Make a lil noise
         GameObject noise = (GameObject)Instantiate(bulletSound, transform.position, transform.rotation);

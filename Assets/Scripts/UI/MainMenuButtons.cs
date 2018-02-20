@@ -13,6 +13,20 @@ public class MainMenuButtons : MonoBehaviour
     public Text[] buttons = new Text[3];
     // The UI element with options
     public Canvas optionsUI;
+    // The current canvas
+    private Canvas mainCanvas;
+    // Stores whether the menu is showing or not
+    private bool isShowing = true;
+    public bool IsShowing
+    {
+        get { return isShowing; }
+        set
+        {
+            if(isShowing != value && value == true)
+                Index = 1;
+            isShowing = value;
+        }
+    }
 
     // The little selector thingy
     public Image selector;
@@ -63,6 +77,9 @@ public class MainMenuButtons : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
+        // Get this gameobject's canvas
+        mainCanvas = gameObject.GetComponent<Canvas>();
+
         // Get the joystick menu input thingy
         joystick = gameObject.GetComponent<JoystickMenuInput>();
 
@@ -73,16 +90,23 @@ public class MainMenuButtons : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+        // Update whether the canvas is showing or not
+        mainCanvas.enabled = isShowing;
+
         float t = (Time.time - startTime) / duration;
         // The position of the selector, but smoooooth
         float smoothStuff = Mathf.SmoothStep(pos.y, newPos.y, t);
         // Update the position of the selector
         selectorPos.anchoredPosition = new Vector2(selectorPos.anchoredPosition.x, smoothStuff);
 
-        // Check for an up or down key press and change the UI element to fit it
-        changeSelectedElement();
-        // Do the appropriate thing when the player presses the currently selected button
-        pressButton();
+        // If the player is actually on the main menu,
+        if(isShowing)
+        {
+            // Check for an up or down key press and change the UI element to fit it
+            changeSelectedElement();
+            // Do the appropriate thing when the player presses the currently selected button
+            pressButton();
+        }
 	}
 
     /// <summary>
@@ -126,10 +150,7 @@ public class MainMenuButtons : MonoBehaviour
             // If they're on the options button,
             else if (index == 1)
             {
-                // Show the options menu
-                optionsUI.gameObject.SetActive(true);
-                // Hide the main menu
-                gameObject.SetActive(false);
+                isShowing = false;
             }
             // If they're on the exit button, 
             else if (index == 2)

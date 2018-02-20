@@ -5,6 +5,7 @@ using UnityEngine;
 // TODO: Make a little bar below the player's health that fills up when picking up particles, when the bar fills, heal 1 HP
     // Maybe make this an end of level powerup?
 // TODO: Make a powerup at the end of the level that increases the time that particles linger
+// TODO: Make the particles award more than just speed to the player
 
 /// <summary>
 /// Handles all of the particles that enemies spit out when they blow up.

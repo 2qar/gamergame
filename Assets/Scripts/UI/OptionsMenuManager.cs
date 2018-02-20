@@ -10,6 +10,11 @@ public class OptionsMenuManager : MonoBehaviour
 {
     // The other UI stuff
     public Canvas mainUI;
+    // Get the menu controller from the main UI; gotta grab that method that shows and hides the menus
+    private MainMenuButtons mainController;
+
+    // The current canvas
+    private Canvas optionsUI;
 
     // List of all of the buttons
     public Text[] UIElements = new Text[3];
@@ -56,6 +61,23 @@ public class OptionsMenuManager : MonoBehaviour
         }
     }
 
+
+    // Is this UI element showing right now?
+    private bool isShowing = false;
+    // Stores the time that the element starts showing
+    float startedShowing;
+    // Will set startedShowing when isShowing gets set to true
+    private bool IsShowing
+    {
+        get { return isShowing; }
+        set
+        {
+            if(isShowing != value && value == true)
+                startedShowing = Time.time;
+            isShowing = value;
+        }
+    }
+
     /// <summary>
     /// List of supported resolutions in the game.
     /// </summary>
@@ -94,6 +116,12 @@ public class OptionsMenuManager : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
+        // Get the main menu controller
+        mainController = mainUI.gameObject.GetComponent<MainMenuButtons>();
+
+        // Get the current canvas
+        optionsUI = gameObject.GetComponent<Canvas>();
+
         // Get the joystick input manager
         joystick = gameObject.GetComponent<JoystickMenuInput>();
 
@@ -104,11 +132,18 @@ public class OptionsMenuManager : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        selectorPositionUpdate();
-        selectorMovement();
-        resolutionSelector();
-        getButtonInput();
-        fullscreenSelector();
+        IsShowing = !mainController.IsShowing;
+        optionsUI.enabled = IsShowing;
+        // Only allow the player to control the options menu
+        // if the main menu isn't showing
+        if(IsShowing)
+        {
+            selectorPositionUpdate();
+            selectorMovement();
+            resolutionSelector();
+            getButtonInput();
+            fullscreenSelector();
+        }
 	}
 
     /// <summary>
@@ -144,7 +179,7 @@ public class OptionsMenuManager : MonoBehaviour
     /// </summary>
     void getButtonInput()
     {
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.JoystickButton0))
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.JoystickButton0)) && Time.time > startedShowing + .1f)
             // If the player hit enter on a button that isn't the back button,
             if (index != 2)
             {
@@ -153,19 +188,9 @@ public class OptionsMenuManager : MonoBehaviour
                 Screen.SetResolution(resolutions[resIndex][0], resolutions[resIndex][1], fullscreen);
             }
             else
-            {
-                // Show the main menu UI
-                mainUI.gameObject.SetActive(true);
-                // Hide this menu
-                gameObject.SetActive(false);
-            }
-        else if(Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton1))
-        {
-            // Show the main menu UI
-            mainUI.gameObject.SetActive(true);
-            // Hide this menu
-            gameObject.SetActive(false);
-        }
+                hideMenu();
+        else if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton1))
+            hideMenu();
     }
 
     /// <summary>
@@ -213,6 +238,16 @@ public class OptionsMenuManager : MonoBehaviour
             UIElements[1].text = "< on >";
             fullscreen = true;
         }
+    }
+
+    void hideMenu()
+    {
+        // Hide the options menu
+        mainController.IsShowing = true;
+        // Reset the index so it's possible to reach the menu again
+        Index = 0;
+        // Update the selector's position
+        selectorPos.anchoredPosition = new Vector2(0, buttonPos.anchoredPosition.y - 50);
     }
 
 }

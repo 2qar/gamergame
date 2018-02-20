@@ -15,7 +15,7 @@ public class RestartGame : MonoBehaviour
 		if (Input.GetKeyDown (KeyCode.R) || Input.GetKeyDown(KeyCode.JoystickButton7)) 
 			Application.LoadLevel (Application.loadedLevel);
         // If the player presses the E key,
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.JoystickButton6))
             // Load the main menu scene
             SceneManager.LoadScene(0);
 	}

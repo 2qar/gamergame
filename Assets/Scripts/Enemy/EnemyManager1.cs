@@ -19,6 +19,22 @@ public class EnemyManager1 : MonoBehaviour
     // Bullets to shoot, as you do with bullets
     public GameObject enemyBullet;
 
+    // The enemy's health
+    public int Health
+    {
+        get { return 1; }
+        set
+        {
+            if(gameObject.name.Contains("Mine"))
+            {
+                controller.playerMan.Weapon = 3;
+                // Shoot out a bunch of bullets in a cirlce
+                for (int pos = 0; pos < 360; pos += 45)
+                    Instantiate(enemyBullet, transform.position, Quaternion.Euler(new Vector3(0, 0, pos)));
+            }
+        }
+    }
+
 	void Start()
 	{
         // Get the gamecontroller
@@ -43,17 +59,9 @@ public class EnemyManager1 : MonoBehaviour
 		}
 		if (other.gameObject.tag == "PlayerBullet") 
 		{
-			// Set player weapon to mine when
-			// mine is destroyed
-			if (gameObject.name.Contains("Mine")) 
-			{
-				controller.playerMan.Weapon = 3;
-                // Shoot out a bunch of bullets in a cirlce
-                for (int pos = 0; pos < 360; pos += 45)
-                    Instantiate(enemyBullet, transform.position, Quaternion.Euler(new Vector3(0, 0, pos)));
-			}
-			Destroy (other.gameObject);
+            Health--;
+            Destroy(other.gameObject);
             Destroy(gameObject);
-		}
+        }
     }
 }

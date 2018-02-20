@@ -361,6 +361,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a6d5f3354836684f89c7e4249c442f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  options: {fileID: 1896705428}
+  mainMenuButton: 0
   buttonPromptPositions: 93feffff93feffffa3ffffff
 --- !u!114 &194727547
 MonoBehaviour:
@@ -4081,6 +4083,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a6d5f3354836684f89c7e4249c442f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  options: {fileID: 1896705428}
+  mainMenuButton: 0
   buttonPromptPositions: 36010000fa00000091000000
 --- !u!114 &480475289
 MonoBehaviour:
@@ -4398,6 +4402,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a6d5f3354836684f89c7e4249c442f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  options: {fileID: 0}
+  mainMenuButton: 1
   buttonPromptPositions: 4b000000730000004b000000
 --- !u!114 &970444866
 MonoBehaviour:
@@ -4944,7 +4950,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27f9ce7dfaeb265418f24263e04a16d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationFactor: 0.1
 --- !u!1 &1302812402
 GameObject:
   m_ObjectHideFlags: 0
@@ -5518,6 +5523,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a6d5f3354836684f89c7e4249c442f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  options: {fileID: 0}
+  mainMenuButton: 1
   buttonPromptPositions: b2ffffff8fffffffb2ffffff
 --- !u!114 &1837906649
 MonoBehaviour:
@@ -5565,7 +5572,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1896705424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5609,7 +5616,7 @@ Canvas:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1896705423}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}

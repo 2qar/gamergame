@@ -21,6 +21,8 @@ GameObject:
   - component: {fileID: 4985092554017444}
   - component: {fileID: 212057454010180430}
   - component: {fileID: 58323978290481826}
+  - component: {fileID: 114858893156323706}
+  - component: {fileID: 114367743167978282}
   m_Layer: 0
   m_Name: PlayerMineBlast
   m_TagString: Untagged
@@ -35,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1104464134862156}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.458, y: -1.531, z: 0}
+  m_LocalPosition: {x: 0.41491413, y: -2.0776286, z: 0}
   m_LocalScale: {x: 2.5274906, y: 2.5274906, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
@@ -50,12 +52,34 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &114367743167978282
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1104464134862156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a388268c110f2f4a9188e072a63444c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114858893156323706
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1104464134862156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea02f944e0bd15544853e1ec0501a247, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212057454010180430
 SpriteRenderer:
   m_ObjectHideFlags: 1

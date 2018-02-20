@@ -1,11 +1,12 @@
 fileFormatVersion: 2
 guid: 0220526b97fc94df1a005b7cf704cd80
-timeCreated: 1517175601
+timeCreated: 1519100901
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
   defaultReferences:
-  - mineBlast: {instanceID: 0}
+  - mineBlast: {fileID: 1104464134862156, guid: 74aa77de08e4af94a94af32985c37588,
+      type: 2}
   - bulletBlast: {fileID: 1006667684072656, guid: e3603ed83ecdc7b40a50c813b25bdc7c,
       type: 2}
   executionOrder: 0

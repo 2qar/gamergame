@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO: Make the player's mine explode when it collides with an enemy bullet
+
 /// <summary>
 /// Handles movement and behavior of all the projectiles that the player and enemies spit out.
 /// </summary>
@@ -19,6 +21,9 @@ public class BulletManager : MonoBehaviour
     // The gamecontroller
     private GameController controller;
 
+    // Stores whether the object is a mine or not
+    private bool isMine = false;
+
     // Update is called once per frame
     private void Start()
     {
@@ -35,23 +40,37 @@ public class BulletManager : MonoBehaviour
 			bulletSpeed = 4;
 			mineMovement ();
 		}
+
+        // Check to see if the projectile is a mine, and update if true
+        if (gameObject.name.Contains("PlayerMine"))
+            isMine = true;
     }
     void FixedUpdate () 
 	{
-        // Move the bullet
-		//if(gameObject.tag == "PlayerBullet")
-		transform.position += transform.right * bulletSpeed * Time.deltaTime;
+        // If the projectile isn't a mine,
+        if (!isMine)
+            // Move normally based on rotation
+            transform.position += transform.right * bulletSpeed * Time.deltaTime;
+        // If it is a mine,
+        else
+            // Move right
+            transform.position += new Vector3(1 * bulletSpeed * Time.deltaTime, 0, 0);
+
+        // If the projectile is a mine,
+        if (isMine)
+            // Rotate constantly
+            gameObject.transform.Rotate(new Vector3(0, 0, -3f));
 	}
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // <EFFECTS STUFF>
         // If the object being destroyed is a mine,
-		if (gameObject.tag != "PlayerBullet" && gameObject.tag != "EnemyBullet")
+		if (gameObject.name.Contains("PlayerMine"))
             // Create the object that handles the explosion
             Instantiate(mineBlast, transform.position, transform.rotation);
         // If the object isn't a mine,
-        else
+        else if(gameObject.name.Contains("PlayerBullet") || gameObject.name.Contains("EnemyBullet"))
             // Make a lil poof instead of a mine explosion
             Instantiate(bulletBlast, transform.position, transform.rotation);
 
@@ -86,14 +105,4 @@ public class BulletManager : MonoBehaviour
 		yield break;
 	}
 
-    /*bool collisionChecker(Collision2D other)
-    {
-        // Run through all of accepted objects
-        for (int pos = 0; pos < objects.Length; pos++)
-            // If the object collided with is one of these objects,
-            if (other.gameObject.name == objects[pos])
-                return true;
-        // If the object isn't one on the list,
-        return false;
-    }*/
 }

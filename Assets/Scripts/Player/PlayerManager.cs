@@ -14,6 +14,7 @@ using UnityEngine;
 // TODO: Make the player's booster turn blue and maybe change the color of their bullets to blue w/ blue trails
     // Maybe also increase the size of their bullets when they're in powered up mode?
     // Maybe bullets could have an explosion radius?
+// TODO: Maybe lower the maximum speed for balancing purposes
 
 public class PlayerManager : MonoBehaviour
 {
@@ -45,7 +46,7 @@ public class PlayerManager : MonoBehaviour
             // TODO: Make the text blink blue or something every time the speed increases
         }
     }
-    private float maxSpeed = 25.01f;
+    private float maxSpeed = 10.01f;
     // The player's max speed
     public float MaxSpeed
     {
@@ -94,6 +95,7 @@ public class PlayerManager : MonoBehaviour
             poweredUp = value;
         }
     }
+
     private int weapon = 1;
 
     /// <summary>
@@ -134,9 +136,8 @@ public class PlayerManager : MonoBehaviour
     GameObject gameController;
     GameController controller;
 
-    // Sprites n shit
-    public Sprite ship1;
-    public Sprite ship2;
+    // Sprites for each of the player ships
+    public Sprite[] ships = new Sprite[3];
 
     // Stuff that's gonna get instantiated
 	public GameObject resetUI;
@@ -263,13 +264,13 @@ public class PlayerManager : MonoBehaviour
         if(!controller.waitBeforeWave)
         {
             // Constantly lower the player's speed, encourage v i o l e n c e
-            if (speed > 0f && speed < 20f)
+            if (speed > 0f && speed < 6.5f)
             {
                 PoweredUp = false;
                 speedSub = .0025f;
             }
             // If the player's speed is at the cap or somehow above,
-            if (speed >= 25f)
+            if (speed >= 10)
             {
                 // Make the player powered up
                 PoweredUp = true;
@@ -346,15 +347,21 @@ public class PlayerManager : MonoBehaviour
 	}
 
     /// <summary>
-    /// Changes the player's ship and makes a lil poof.
+    /// Changes the player's ship based on their weapon and makes a lil poof.
     /// </summary>
     void changeShip()
     {
         // Give player right sprite for right weapon
+        // Single fire ship
         if (Weapon == 1)
-            sr.sprite = ship1;
+            sr.sprite = ships[0];
+        // Triple blaster ship
         if (Weapon == 2)
-            sr.sprite = ship2;
+            sr.sprite = ships[1];
+        // Mine launcher ship
+        if (Weapon == 3)
+            sr.sprite = ships[2];
+
         // Make a lil poof and store it
         GameObject poofRef = Instantiate(poof, transform.position, transform.rotation);
         // Destroy it after 1 second of existing, how sad :(

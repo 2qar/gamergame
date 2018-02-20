@@ -23,6 +23,10 @@ using UnityEngine.UI;
 
 // TODO: Make bosses for the end of each level
 
+// TODO: REBALANCE LITERALLY EVERYTHING BEFORE YOU EVEN CONSIDER THE GAME AS DONE (but don't do this until you've finished every other todo and the game itself)
+
+// FIXME: Player / enemy boosters rendering behind asteroids and portal particles
+
 /// <summary>
 /// Handles levels, spawning enemies, creating the shop entrance,
 /// player score and money, and UI elements
