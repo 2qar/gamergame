@@ -18,6 +18,9 @@ public class BulletManager : MonoBehaviour
     public GameObject mineBlast;
     public GameObject bulletBlast;
 
+    // Mine explode sound effect
+    public GameObject mineExplodeNoise;
+
     // The gamecontroller
     private GameController controller;
 
@@ -38,7 +41,7 @@ public class BulletManager : MonoBehaviour
 		if (gameObject.name == "PlayerMine") 
 		{
 			bulletSpeed = 4;
-			mineMovement ();
+            // TODO: Use mathf.smoothstep or mathf.smoothdamp to make the mine slowly go to zero speed after it's been moving for like 2 seconds
 		}
 
         // Check to see if the projectile is a mine, and update if true
@@ -67,12 +70,21 @@ public class BulletManager : MonoBehaviour
         // <EFFECTS STUFF>
         // If the object being destroyed is a mine,
 		if (gameObject.name.Contains("PlayerMine"))
+        {
             // Create the object that handles the explosion
             Instantiate(mineBlast, transform.position, transform.rotation);
+            // Create the explosion sound effect
+            GameObject explosionSound = Instantiate(mineExplodeNoise, transform.position, transform.rotation);
+            // Destroy it after it has finished playing
+            Destroy(explosionSound, .6f);
+            // Destroy the mine
+            Destroy(gameObject);
+        }
         // If the object isn't a mine,
-        else if(gameObject.name.Contains("PlayerBullet") || gameObject.name.Contains("EnemyBullet"))
+        else if(gameObject.tag == "PlayerBullet" || gameObject.tag == "EnemyBullet")
             // Make a lil poof instead of a mine explosion
             Instantiate(bulletBlast, transform.position, transform.rotation);
+            
 
         // <BOSS STUFF>
         // If the current bullet is a player bullet and the boss actually exists,
@@ -91,18 +103,5 @@ public class BulletManager : MonoBehaviour
         }
             
     }
-
-    /// <summary>
-    /// Moves the player's mine at a decreasing rate,
-    /// eventually blowing up once it hits something or gets to 0 speed.
-    /// </summary>
-	IEnumerator mineMovement()
-	{
-		float waitTime = Time.time + 4;
-		while (Time.time < waitTime)
-			transform.position += transform.right * bulletSpeed * Time.deltaTime * ((waitTime - Time.time) / 3);
-		Instantiate(mineBlast, transform.position, transform.rotation);
-		yield break;
-	}
 
 }

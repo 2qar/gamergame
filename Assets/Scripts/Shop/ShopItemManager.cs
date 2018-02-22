@@ -3,16 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-// TODO: Make sprites for the items
-
-// Note to self: Next time, make a single object that gives itself a color and name
-// instead of having a bunch of different prefabs for each of the different powerups
-
 /// <summary>
 /// Handles the individual items, their effects, and the player purchasing them.
 /// </summary>
 public class ShopItemManager : MonoBehaviour 
 {
+    // Sprites for the shop items
+    public Sprite[] items = new Sprite[7];
+
     // The price of the item
     private int price;
 
@@ -51,14 +49,6 @@ public class ShopItemManager : MonoBehaviour
         createPowerup(gameObject.name);
 	}
 
-    private void FixedUpdate()
-    {
-        // Keep the price up to date with the shopmanager's price
-        price = manager.price;
-        // Update the text
-        itemText.text = initializeText();
-    }
-
     /// <summary>
     /// Assign the item a number for use later when giving the player their item.
     /// </summary>
@@ -66,6 +56,33 @@ public class ShopItemManager : MonoBehaviour
     void assignNum(string name)
     {
         itemNum = (int)Random.Range(1, 6);
+    }
+
+    void assignPrice()
+    {
+        switch (itemNum)
+        {
+            // Health item
+            case 1:
+                price = 50;
+                break;
+            // Max health item
+            case 2:
+                price = 100;
+                break;
+            // Damage item
+            case 3:
+                price = 75;
+                break;
+            // Speed item
+            case 4:
+                price = 75;
+                break;
+            // Bullet size item
+            case 5:
+                price = 75;
+                break;
+        }
     }
 
     void OnCollisionEnter2D(Collision2D other)
@@ -127,63 +144,61 @@ public class ShopItemManager : MonoBehaviour
                 break;
         }
     }
-    
+
     /// <summary>
-    /// Set up the text for the powerup.
+    /// Picks a sprite or sprites for the item to be based on the item's assigned number.
     /// </summary>
-    /// <param name="itemNum">The assigned item number.</param>
-    string initializeText()
+    /// <param name="item">
+    /// The item's assigned number based on it's name
+    /// </param>
+    /// <returns>
+    /// Sprite(s) picked for the item.
+    /// </returns>
+    Sprite[] spritePicker(int item)
     {
-        string text = "";
-        switch(itemNum)
+        switch(item)
         {
+            // Health sprites
             case 1:
-                text = "Health: ";
-                break;
+                return new Sprite[] { items[5], items[6]};
+            // Max health sprite
             case 2:
-                text = "Max Health: ";
-                break;
+                return new Sprite[] { items[2] };
+            // Damage sprite
             case 3:
-                text = "Damage: ";
-                break;
+                return new Sprite[] { items[4] };
+            // Speed sprite
             case 4:
-                text = "Speed: ";
-                break;
+                return new Sprite[] { items[3] };
+            // Bullet size sprites
             case 5:
-                text = "Bullet: ";
-                break;
+                return new Sprite[] { items[0], items[1] };
         }
-        text += price;
-        return text;
+        // if the assigned item number somehow isn't in that switch, hand back the sprite the item has right now
+        return new Sprite[] { sr.sprite };
     }
-    
+
     /// <summary>
-    /// Pick the color for the item.
+    /// Animates a sprite if given more than one sprite, or gives the item its sprite if given one.
     /// </summary>
-    /// <param name="itemNum">The assigned item number.</param>
-    Color colorPicker(int itemNum)
+    /// <param name="sprites">
+    /// Sprites to animate the item with or set the item to.
+    /// </param>
+    IEnumerator animateSprite(Sprite[] sprites)
     {
-        //Color itemColor = new Color();
-        switch (itemNum)
+        // If sprites holds more than one sprite,
+        if(sprites.Length > 1)
         {
-            // Health powerup
-            case 1:
-                return Color.red;
-            // Max health powerup
-            case 2:
-                return Color.magenta;
-            // Damage powerup
-            case 3:
-                return Color.green;
-            // Max speed increase powerup
-            case 4:
-                return Color.blue;
-            // Bullet size increase powerup
-            case 5:
-                return Color.yellow;
+            sr.sprite = sprites[0];
+            yield return new WaitForSeconds(.5f);
+            sr.sprite = sprites[1];
+            yield return new WaitForSeconds(.5f);
+            StartCoroutine(animateSprite(sprites));
+            yield break;
         }
-        // if itemNum isn't 1-5 for some reason, make the item non-existant
-        return new Color();
+        // If sprites only contains one sprite,
+        sr.sprite = sprites[0];
+        yield break;
     }
 
     /// <summary>
@@ -193,8 +208,12 @@ public class ShopItemManager : MonoBehaviour
     {
         // Assign what powerup it will be
         assignNum(name);
-        // Pick the color of the powerup
-        sr.color = colorPicker(itemNum);
+        // Set the price of the item
+        assignPrice();
+        // Update the text to show this price
+        itemText.text = price.ToString();
+        // Pick the sprite
+        StartCoroutine(animateSprite(spritePicker(itemNum)));
     }
 
 }

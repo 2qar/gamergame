@@ -12,8 +12,8 @@ public class RestartGame : MonoBehaviour
 	void Update () 
 	{
         // If the player presses the R key, restart the game
-		if (Input.GetKeyDown (KeyCode.R) || Input.GetKeyDown(KeyCode.JoystickButton7)) 
-			Application.LoadLevel (Application.loadedLevel);
+        if (Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown(KeyCode.JoystickButton7))
+            SceneManager.LoadScene(1);
         // If the player presses the E key,
         if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.JoystickButton6))
             // Load the main menu scene

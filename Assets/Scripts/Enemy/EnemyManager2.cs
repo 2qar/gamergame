@@ -24,6 +24,10 @@ public class EnemyManager2 : MonoBehaviour
             // If the enemy has no health left,
             if (value <= 0)
             {
+                // Pause the game for a split second for muh game feel
+                controller.Freeze();
+                // Shake the screen
+                controller.shaker.ShakeCamera(.35f);
                 // Destroy the enemy
                 Destroy(gameObject);
                 // Give the player the enemy's weapon

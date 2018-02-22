@@ -25,6 +25,9 @@ public class ExplosionManager : MonoBehaviour
     private GameObject player;
     private PlayerManager playerMan;
 
+    // Sound to make when the player picks up a particle
+    public GameObject particleNoise;
+
 	// Use this for initialization
 	void Start () 
     {
@@ -60,8 +63,15 @@ public class ExplosionManager : MonoBehaviour
 
     private void OnParticleCollision(GameObject other)
     {
+        // If the player isn't already at their max speed,
         if(playerMan.Speed < playerMan.MaxSpeed)
+            // Add to their speed
             playerMan.Speed += .1f;
+
+        // Play the particle sound
+        GameObject sound = Instantiate(particleNoise, transform.position, transform.rotation);
+        // Destroy the sound object after it's done playing
+        Destroy(sound, .2f);
     }
 
     /// <summary>

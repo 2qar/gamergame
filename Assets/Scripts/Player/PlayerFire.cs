@@ -45,6 +45,9 @@ public class PlayerFire : MonoBehaviour
     /// <param name="weapon">The weapon that the player currently has.</param>
 	private void fireWeapon(int weapon)
 	{
+        // Amount to shake the camera by
+        float cameraShake = .05f;
+
         // * * * * * * * * * * * *
         // * Player Weapon Checks *
         // * * * * * * * * * * * *
@@ -58,14 +61,21 @@ public class PlayerFire : MonoBehaviour
         // Same as normal fire, but
         // fires an extra bullet on each side
         else if (weapon == 2)
+        {
             for (int reps = 15; reps >= -15; reps -= 15)
                 Instantiate(bullet, transform.position + bulletOffset, Quaternion.Euler(new Vector3(0, 0, reps)));
+            cameraShake = .1f;
+        }
 
         // Weapon #3: Mine
         // Fire a slow-moving mine that explodes after x seconds
         // OR on contact w/ enemy
         else if (weapon == 3)
+        {
             Instantiate(mine, transform.position + bulletOffset, transform.rotation);
+            cameraShake = .25f;
+        }
+            
         else
             Debug.Log("NO WEAPON MADE FOR WEAPON VAR #" + weapon);
 		
@@ -78,7 +88,7 @@ public class PlayerFire : MonoBehaviour
             gameController.playerMan.Speed -= .1f;
 
         // Apply screenshake
-        shaker.ShakeCamera();
+        shaker.ShakeCamera(cameraShake);
 
         // Make a lil noise
         GameObject noise = (GameObject)Instantiate(bulletSound, transform.position, transform.rotation);

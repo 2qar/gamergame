@@ -39,7 +39,7 @@ Transform:
   m_GameObject: {fileID: 1550825545638584}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.440893, y: 0.3, z: 0.440893}
+  m_LocalScale: {x: 0.840893, y: 0.7, z: 0.440893}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -195,6 +195,7 @@ MonoBehaviour:
   mineBlast: {fileID: 1104464134862156, guid: 74aa77de08e4af94a94af32985c37588, type: 2}
   bulletBlast: {fileID: 1006667684072656, guid: e3603ed83ecdc7b40a50c813b25bdc7c,
     type: 2}
+  mineExplodeNoise: {fileID: 0}
 --- !u!212 &212259677041938762
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -19,6 +19,9 @@ public class EnemyManager1 : MonoBehaviour
     // Bullets to shoot, as you do with bullets
     public GameObject enemyBullet;
 
+    // Noise for the enemy mine to make when it explodes
+    public GameObject explosionSound;
+
     // The enemy's health
     public int Health
     {
@@ -31,6 +34,11 @@ public class EnemyManager1 : MonoBehaviour
                 // Shoot out a bunch of bullets in a cirlce
                 for (int pos = 0; pos < 360; pos += 45)
                     Instantiate(enemyBullet, transform.position, Quaternion.Euler(new Vector3(0, 0, pos)));
+
+                // Play the explosion sound
+                GameObject sound = Instantiate(explosionSound, transform.position, transform.rotation);
+                // Destroy the sound object after it has finished playing
+                Destroy(sound, .6f);
             }
         }
     }

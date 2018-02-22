@@ -130,6 +130,8 @@ MonoBehaviour:
   rotation: {x: 0, y: 0, z: 3}
   enemyBullet: {fileID: 1604099380356906, guid: c127442ddfe554746b71c6fbdfb88941,
     type: 2}
+  explosionSound: {fileID: 1529322600798378, guid: a3b10cb93fd6dd04ebf55a1803a28e57,
+    type: 2}
 --- !u!114 &114703881331410092
 MonoBehaviour:
   m_ObjectHideFlags: 1

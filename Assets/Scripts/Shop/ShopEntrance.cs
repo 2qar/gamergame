@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // TODO: Make the particle system start once the entrance is full size
+// FIXME: In the built version of the game, the entrance square renders behind all of the particle
+
 
 /// <summary>
 /// Moves the player and camera down to the little shop area when the player

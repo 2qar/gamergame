@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// FIXME: The screen shakes more in the shop than it does when it's in the normal play area
-// TODO: Write code for ShakeCamera so that the new position isn't a super small number that would result in a boring movement; make a minimum value
-// TODO: Add parameters to ShakeCamera so that different objects calling it can input different shake strength and stuff
+// FIXME: Fix the bug where the particle systems for the stars suck and disappear if the camera moves too far away from them or something
 
 public class ScreenShaker : MonoBehaviour
 {
@@ -41,22 +39,21 @@ public class ScreenShaker : MonoBehaviour
 	}
 
     /// <summary>
-    /// Moves the camera to a random new position inside a circle;
-    /// when called multiple times, it can create a shaking effect
+    /// Shakes the camera inside of a unit circle with a radius of strength.
     /// </summary>
-    public void ShakeCamera()
+    /// <param name="strength">
+    /// The radius of the unit circle to generate a point inside, effectively strength.
+    /// </param>
+    public void ShakeCamera(float strength)
     {
         // Gets the start time so the camera can start resetting
         startTime = Time.time;
         // Generate a random new position for the camera to move to
-        Vector2 newPos = Random.insideUnitCircle;
-        newPos.x *= 3;
-        newPos.y *= 3;
-        // Store this position, but smooothed
-        Vector3 smoothNewPos = new Vector3(Mathf.SmoothDamp(transform.position.x, newPos.x, ref currentVelocity, smoothTime),
-                                           Mathf.SmoothDamp(transform.position.y, newPos.y, ref currentVelocity, smoothTime), transform.position.z);
+        Vector3 newPos = Random.insideUnitCircle * strength;
+        // Update the new position's z to -10 so the camera doesn't move forward and make everything invisible
+        newPos.z = -10;
         // Set the camera's position to this smoothed position
-        transform.position = smoothNewPos;
+        transform.position += newPos;
     }
 
     /// <summary>
@@ -69,7 +66,7 @@ public class ScreenShaker : MonoBehaviour
         // Smooth movement between 0,0 and the current position the camera is in
         Vector3 pos = new Vector3(Mathf.SmoothStep(transform.position.x, origin.x, t), 
                                   Mathf.SmoothStep(transform.position.y, origin.y, t), 
-                                  transform.position.z);
+                                  -10);
         // Slowly reset the camera
         transform.position = pos;
     }

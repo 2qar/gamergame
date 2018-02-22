@@ -15,6 +15,7 @@ using UnityEngine;
     // Maybe also increase the size of their bullets when they're in powered up mode?
     // Maybe bullets could have an explosion radius?
 // TODO: Maybe lower the maximum speed for balancing purposes
+// TODO: Make powered up mode do something other than increase fire rate, maybe increase bullet size too and increase damage
 
 public class PlayerManager : MonoBehaviour
 {
@@ -79,7 +80,7 @@ public class PlayerManager : MonoBehaviour
             if(value)
             {
                 // Remove the fire rate limit on the player's weapon
-                fireScript.fireRate = 0f;
+                fireScript.fireRate = 0.1f;
                 // Make the player move a little faster
                 movement.moveSpeed = 2 + moveSpeedBackup;
                 // Make their trail blue maybe???
@@ -234,7 +235,7 @@ public class PlayerManager : MonoBehaviour
             {
                 maxHealth = value;
                 // Be nice and give the player max health when their maxhealth increases
-                Health = maxHealth;
+                //Health = maxHealth;
                 // Adjust the size of the bg to compensate for an extra health cell
                 healthCellRect.sizeDelta += new Vector2(16.3f, 0f);
             }
@@ -245,7 +246,7 @@ public class PlayerManager : MonoBehaviour
     {
         //Debug.Log(poweredUp);
         //Debug.Log(Speed);
-        // Kill the player when health is less than 0
+        //WeaponSwitcher();
     }
 
     private void FixedUpdate()
@@ -384,6 +385,20 @@ public class PlayerManager : MonoBehaviour
             else
                 // Hide it on the UI
                 cells[pos].SetActive(false);
+    }
+
+    /// <summary>
+    /// Switch between player weapons using E.
+    /// </summary>
+    private void WeaponSwitcher()
+    {
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            if (Weapon == 3)
+                Weapon = 1;
+            else
+                Weapon++;
+        }
     }
 
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 // FIXME: Fix bug where sometimes the game spawns 2 enemies at a time upon exiting instead of 1
 // TODO: Implement actual money and fix the prices so they don't skyrocket, maybe give each item a fixed price
+// TODO: Add cool purple particles as the shop background
 
 /// <summary>
 /// Handles:
@@ -13,6 +14,9 @@ using UnityEngine;
 /// </summary>
 public class ShopManager : MonoBehaviour 
 {
+    // The shop exit collider
+    private Collider2D exitCollider;
+
     // The screen shake script on the camera
     private ScreenShaker shaker;
 
@@ -38,8 +42,14 @@ public class ShopManager : MonoBehaviour
     // The gamecontroller
     private GameController controller;
 
+    // Stores whether the player is in the shop or not
+    private bool inShop;
+
     private void Start()
     {
+        // Get the exit collider
+        exitCollider = gameObject.GetComponent<BoxCollider2D>();
+
         // Get the screen shake script
         shaker = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ScreenShaker>();
 
@@ -81,6 +91,8 @@ public class ShopManager : MonoBehaviour
     /// </summary>
     void setUpShop()
     {
+        // Update inShop so that the exit can check for collisions with the player
+        inShop = true;
         // Let the script know that the player is in the shop now
         shaker.InShop = true;
         // Generate the items for the player to buy
@@ -91,8 +103,8 @@ public class ShopManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // If the player collides with the little exit thingy,
-        if (collision.gameObject.name == "Player")
+        // If the exit detects a collision from the player and the player is in the shop,
+        if (collision.gameObject.name == "Player" && inShop)
         {
             // Leave the shop
             exitShop();
@@ -106,6 +118,11 @@ public class ShopManager : MonoBehaviour
     /// </summary>
     void exitShop()
     {
+        // Update the var so the player isn't in the shop
+        inShop = false;
+        // Disable the collider so the player can't somehow trigger this method again
+        exitCollider.enabled = false;
+
         // Let the script know that the player left the shop
         shaker.InShop = false;
         // Move the player back to their original position
@@ -126,6 +143,9 @@ public class ShopManager : MonoBehaviour
         //controller.waitBeforeWave = false;
         // Start spawning enemies again
         StartCoroutine(controller.spawnEnemies());
+
+        // Enable the collider again for when the player comes back to the shop
+        exitCollider.enabled = true;
     }
 
 }

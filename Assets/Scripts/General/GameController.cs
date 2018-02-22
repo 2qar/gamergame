@@ -27,12 +27,20 @@ using UnityEngine.UI;
 
 // FIXME: Player / enemy boosters rendering behind asteroids and portal particles
 
+// TODO: Spawn more enemies per wave, maybe spawn them in bursts
+// TODO: Make enemy spawn rate based on the player's speed
+// TODO: Change the asteroids in the second level so that they're randomly picked on their own rather than being a part of the normal enemy pool
+    // This way, the enemy level can just be set back to 1 at the start of level 2 instead of the weird shit that's going on right now
+
 /// <summary>
 /// Handles levels, spawning enemies, creating the shop entrance,
 /// player score and money, and UI elements
 /// </summary>
 public class GameController : MonoBehaviour
 {
+    // The camera's screen shake component
+    public ScreenShaker shaker;
+
     // UI Elements
     public Text[] UIElements = new Text[5];
 
@@ -258,6 +266,25 @@ public class GameController : MonoBehaviour
             yield return new WaitForSeconds(1f);
         //give the player some powerups to pick from
         yield break;
+    }
+
+    /// <summary>
+    /// Pause the game for a tiny fraction of a second when called.
+    /// </summary>
+    private IEnumerator FreezeGame()
+    {
+        Time.timeScale = 0f;
+        yield return new WaitForSecondsRealtime(.03f);
+        Time.timeScale = 1f;
+        yield break;
+    }
+
+    /// <summary>
+    /// Freeze the game for a tiny fraction of a second when called.
+    /// </summary>
+    public void Freeze()
+    {
+        StartCoroutine(FreezeGame());
     }
 
     /** FIRST BOSS BATTLE **

@@ -69,6 +69,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a388268c110f2f4a9188e072a63444c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mineExplodeNoise: {fileID: 1529322600798378, guid: a3b10cb93fd6dd04ebf55a1803a28e57,
+    type: 2}
 --- !u!114 &114858893156323706
 MonoBehaviour:
   m_ObjectHideFlags: 1
