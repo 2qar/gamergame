@@ -77,6 +77,10 @@ public class BulletManager : MonoBehaviour
             GameObject explosionSound = Instantiate(mineExplodeNoise, transform.position, transform.rotation);
             // Destroy it after it has finished playing
             Destroy(explosionSound, .6f);
+            // If the thing that the mine collided with was an enemy's bullet,
+            if (collision.gameObject.tag == "EnemyBullet")
+                // Destroy it
+                Destroy(collision.gameObject);
             // Destroy the mine
             Destroy(gameObject);
         }

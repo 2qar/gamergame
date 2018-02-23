@@ -85,7 +85,7 @@ public class ExplosionManager : MonoBehaviour
         // Get how many particles are alive, and store the particles in an array
         particlesAlive = explosion.GetParticles(particles);
         // Report back how many particles exist
-        Debug.Log(particlesAlive);
+        //Debug.Log(particlesAlive);
         // Set up these particles
         initializeParticles();
     }
@@ -98,7 +98,7 @@ public class ExplosionManager : MonoBehaviour
     void initializeParticles()
     {
         // report back that the program has made it to this method
-        Debug.Log("initializing");
+        //Debug.Log("initializing");
         // Run through each particle that exists
         for (int pos = 0; pos < particlesAlive; pos++)
         {

@@ -21,6 +21,8 @@ using UnityEngine.UI;
  * -Enemy level goes up the further into the level you get
  **/
 
+// FIXME: Sometimes when the player and the enemy die at the same time, the timescale stays at 0
+
 // TODO: Make bosses for the end of each level
 
 // TODO: REBALANCE LITERALLY EVERYTHING BEFORE YOU EVEN CONSIDER THE GAME AS DONE (but don't do this until you've finished every other todo and the game itself)
@@ -31,6 +33,7 @@ using UnityEngine.UI;
 // TODO: Make enemy spawn rate based on the player's speed
 // TODO: Change the asteroids in the second level so that they're randomly picked on their own rather than being a part of the normal enemy pool
     // This way, the enemy level can just be set back to 1 at the start of level 2 instead of the weird shit that's going on right now
+// TODO: Make get rid of spawnsPerCreation and just use the current level?????
 
 /// <summary>
 /// Handles levels, spawning enemies, creating the shop entrance,
@@ -44,20 +47,26 @@ public class GameController : MonoBehaviour
     // UI Elements
     public Text[] UIElements = new Text[5];
 
-    // Enemies to spawn
+    // Enemies to spawn, gotta get rid of this my guy
     public GameObject[] enemies = new GameObject[6];
 
     // Bunch of variables
     private int level = 1;
     public int enemyLevel = 2;
+
     // The player's score earned from destroying enemies and stuff
     public int score = 0;
     // The player's money earned from destroying enemies that they can spend
     public int money = 0;
-	private int wave = 1;
-	private int spawns = 5;
-	public float spawnRate = 1.5f;
-	public float waveRate = 7f;
+
+    // Stores the current wave and how many enemies to spawn that wave
+    // spawnsPerCreation is how many enemies will be spawned at a time
+    private int wave = 1, spawns = 5;
+
+    // Stores the current time between each enemy spawn and the pause between each wave
+    public float spawnRate = 1.5f, waveRate = 7f;
+
+    // Stores the enemies weapon, might get rid of this
 	public int enemyWeapon;
 
     // Should the game wait before starting the wave???
@@ -156,9 +165,10 @@ public class GameController : MonoBehaviour
         // Spawn <spawns> enemies
         for(int enemies = 0; enemies <= spawns; enemies++)
         {
-            // Create an enemy
-            enemyCreation();
-            // Wait to spawn another enemy
+            // Create enemies
+            for(int enemiesToSpawn = 0; enemiesToSpawn < level; enemiesToSpawn++)
+                enemyCreation();
+            // Wait to spawn another enemy or set
             yield return new WaitForSeconds(spawnRate);
         }
 
@@ -175,6 +185,8 @@ public class GameController : MonoBehaviour
     /// </summary>
     public IEnumerator nextWaveSetup()
     {
+        // Start waiting so the player's speed doesn't go down
+        waitBeforeWave = true;
         // Increase the range of enemies allowed
         enemyLevel++;
 
@@ -183,18 +195,19 @@ public class GameController : MonoBehaviour
         // Spawn the shop entrance
         Instantiate(shopEntrance, new Vector3(8, 0, 0), transform.rotation);
 
-        // Wait to start the next wave
-        yield return new WaitForSeconds(waveRate);
-
         // Transition into the next wave
         // While the spawnRate is above a certain num,
         if (spawnRate >= .5f)
             // Decrease it
             spawnRate -= .1f;
         // Double the spawns
-        spawns *= 2;
+        //spawns *= 2;
         // Start a new sublevel
         levelStart = true;
+
+        // Wait to start the next wave
+        yield return new WaitForSeconds(waveRate);
+
         // Go back to spawning enemies
         StartCoroutine(spawnEnemies());
         // Exit the method
@@ -224,7 +237,7 @@ public class GameController : MonoBehaviour
         // Enable the asteroid field
         asteroidField.SetActive(true);
         //Increase maxLevel???
-        //Add asteroid enemies to pool
+        //Start a method that randomly spawns the asteroid enemies instead of including the asteroid enemies in the normal enemy pool
     }
 
     /// <summary>
@@ -237,8 +250,36 @@ public class GameController : MonoBehaviour
         // Generate a random weapon for the enemy based on how high the current level is
         enemyWeapon = Random.Range(1, enemyLevel);
 
-        // Spawn an enemy off the list of enemies based on the weapon that was picked
-        Instantiate(enemies[enemyWeapon - 1], spawnPos, transform.rotation);
+        // Pick the right enemy to spawn based on the weapon picked for the enemy 
+        switch(enemyWeapon)
+        {
+            // Normal enemy
+            case 1:
+                Instantiate(enemy, spawnPos, transform.rotation);
+                break;
+            // Triple fire enemy
+            case 2:
+                Instantiate(enemy, spawnPos, transform.rotation);
+                break;
+            // Mine enemy
+            case 3:
+                Instantiate(mine, spawnPos, transform.rotation);
+                break;
+            // Dupes to increase spawnrate later on
+            case 4:
+                enemyWeapon -= 3;
+                Instantiate(enemy, spawnPos, transform.rotation);
+                break;
+            case 5:
+                enemyWeapon -= 3;
+                Instantiate(enemy, spawnPos, transform.rotation);
+                break;
+            case 6:
+                enemyWeapon -= 3;
+                Instantiate(mine, spawnPos, transform.rotation);
+                break;
+        }
+
     }
 
     /// <summary>

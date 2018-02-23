@@ -17,6 +17,8 @@ using UnityEngine;
 // TODO: Maybe lower the maximum speed for balancing purposes
 // TODO: Make powered up mode do something other than increase fire rate, maybe increase bullet size too and increase damage
 
+// TODO: Make a slider thingy on the bottom of the UI that represents the player's position and moves based on their movement speed. On that line, have triggers that start a wave of enemies.
+
 public class PlayerManager : MonoBehaviour
 {
     // Player Health
@@ -209,6 +211,8 @@ public class PlayerManager : MonoBehaviour
             // If the player's health reaches zero or somehow below that,
             if (health <= 0)
             {
+                // Shake the screen a whole lot
+                controller.shaker.ShakeCamera(1f);
                 // Explode into a bunch of bits
                 Instantiate(deathExplosion, transform.position, transform.rotation);
                 // Kill the player

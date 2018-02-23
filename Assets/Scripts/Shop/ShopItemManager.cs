@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// TODO: Make the item re-roll if it's an item the player can't benefit from right now; health powerup at full health, bullet size powerup at max bullet size
+
 /// <summary>
 /// Handles the individual items, their effects, and the player purchasing them.
 /// </summary>

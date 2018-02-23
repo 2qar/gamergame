@@ -191,10 +191,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0220526b97fc94df1a005b7cf704cd80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSpeed: -20
+  bulletSpeed: -15
   mineBlast: {fileID: 0}
   bulletBlast: {fileID: 1006667684072656, guid: e3603ed83ecdc7b40a50c813b25bdc7c,
     type: 2}
+  mineExplodeNoise: {fileID: 0}
 --- !u!212 &212053603684141496
 SpriteRenderer:
   m_ObjectHideFlags: 1

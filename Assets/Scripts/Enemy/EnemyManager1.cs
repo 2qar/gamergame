@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// TODO: Play a sound on death and maybe explode into some particles
-
 /// <summary>
 /// Handles behavior of the mine enemy and the meteor thingy
 /// </summary>
@@ -35,6 +33,8 @@ public class EnemyManager1 : MonoBehaviour
                 for (int pos = 0; pos < 360; pos += 45)
                     Instantiate(enemyBullet, transform.position, Quaternion.Euler(new Vector3(0, 0, pos)));
 
+                // Shake the screen
+                controller.shaker.ShakeCamera(.5f);
                 // Play the explosion sound
                 GameObject sound = Instantiate(explosionSound, transform.position, transform.rotation);
                 // Destroy the sound object after it has finished playing
