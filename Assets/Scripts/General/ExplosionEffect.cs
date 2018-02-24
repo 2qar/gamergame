@@ -15,6 +15,9 @@ public class ExplosionEffect : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         // Play the effect
         StartCoroutine(effect(sr));
+
+        // Move the explosion above the rest of the objects in the scene so it renders in front
+        transform.position = new Vector3(transform.position.x, transform.position.y, -1);
 	}
 
 	/// <summary>

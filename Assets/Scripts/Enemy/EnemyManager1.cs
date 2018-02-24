@@ -35,6 +35,8 @@ public class EnemyManager1 : MonoBehaviour
 
                 // Shake the screen
                 controller.shaker.ShakeCamera(.5f);
+                // Give the player some money
+                controller.Money += 15;
                 // Play the explosion sound
                 GameObject sound = Instantiate(explosionSound, transform.position, transform.rotation);
                 // Destroy the sound object after it has finished playing

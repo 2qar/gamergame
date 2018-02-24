@@ -372,7 +372,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1935847654
+  randomSeed: 1237832507
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -5188,7 +5188,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -2040545026
+  randomSeed: 941720593
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -12102,7 +12102,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 749360172}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5cc044b142fb21143b5a4d74592dc50f, type: 3}
   m_Name: 
@@ -15866,7 +15866,6 @@ MonoBehaviour:
   - {fileID: 1917282905685516, guid: d3049c283798835459c756cd3ab2bf09, type: 2}
   enemyLevel: 2
   score: 0
-  money: 2147483647
   spawnRate: 1.5
   waveRate: 7
   enemyWeapon: 0
@@ -15884,6 +15883,7 @@ MonoBehaviour:
   bossMan: {fileID: 0}
   bossNum: 0
   bossIsAlive: 0
+  scoreTextMan: {fileID: 1706539318}
 --- !u!1 &984794216
 GameObject:
   m_ObjectHideFlags: 0
@@ -16384,7 +16384,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4844371970392354, guid: c152764e702744c3f98e83d06605ab00, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4844371970392354, guid: c152764e702744c3f98e83d06605ab00, type: 2}
       propertyPath: m_LocalRotation.x
@@ -16649,11 +16649,11 @@ RectTransform:
   m_Father: {fileID: 775530863}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -377.73984, y: -242.88646}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
-  m_Pivot: {x: 1, y: 1}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1428966264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16694,7 +16694,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 70
-    m_Alignment: 1
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 1
@@ -17227,6 +17227,7 @@ GameObject:
   - component: {fileID: 1706539314}
   - component: {fileID: 1706539316}
   - component: {fileID: 1706539317}
+  - component: {fileID: 1706539318}
   m_Layer: 5
   m_Name: ScoreText
   m_TagString: ScoreText
@@ -17319,6 +17320,18 @@ MonoBehaviour:
   m_EffectColor: {r: 0.13333334, g: 0.1254902, b: 0.20392159, a: 1}
   m_EffectDistance: {x: 0, y: -3}
   m_UseGraphicAlpha: 1
+--- !u!114 &1706539318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1706539312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ec40f017e74fad42a657b0ccba20118, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newColor: {r: 0.2, g: 1, b: 0.23, a: 1}
 --- !u!1 &1712670988
 GameObject:
   m_ObjectHideFlags: 0
@@ -21045,7 +21058,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -878807438
+  randomSeed: 1675991366
   InitialModule:
     serializedVersion: 3
     enabled: 1

@@ -21,9 +21,11 @@ public class ExplosionManager : MonoBehaviour
     // Stores the speed that these particles will be travelling at
     private float velocity;
 
-    // The player gameobject / manager
+    // The player gameobject 
     private GameObject player;
-    private PlayerManager playerMan;
+
+    // The GameController script
+    private GameController controller;
 
     // Sound to make when the player picks up a particle
     public GameObject particleNoise;
@@ -36,8 +38,10 @@ public class ExplosionManager : MonoBehaviour
 
         // Get player components
         player = GameObject.FindGameObjectWithTag("Player");
-        playerMan = player.GetComponent<PlayerManager>();
         BoxCollider2D playerCollider = player.GetComponent<BoxCollider2D>();
+
+        // Get the gamecontroller
+        controller = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
 
         // Enable collision between the player and the particles
         explosion.trigger.SetCollider(0, playerCollider);
@@ -52,7 +56,7 @@ public class ExplosionManager : MonoBehaviour
 	void Update () 
     {
         // Set the velocity of the particles based on the player's movement speed
-        velocity = 2 + (playerMan.Speed / 10);
+        velocity = 2 + (controller.playerMan.Speed / 10);
         // Get the velocity module of the particle system
         var velocityOverLifetime = explosion.velocityOverLifetime;
         // Enable it for use in code
@@ -64,9 +68,12 @@ public class ExplosionManager : MonoBehaviour
     private void OnParticleCollision(GameObject other)
     {
         // If the player isn't already at their max speed,
-        if(playerMan.Speed < playerMan.MaxSpeed)
+        if(controller.playerMan.Speed < controller.playerMan.MaxSpeed)
             // Add to their speed
-            playerMan.Speed += .1f;
+            controller.playerMan.Speed += .1f;
+
+        // Give the player a little bit of cash
+        controller.Money++;
 
         // Play the particle sound
         GameObject sound = Instantiate(particleNoise, transform.position, transform.rotation);

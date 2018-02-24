@@ -34,6 +34,9 @@ public class ShopItemManager : MonoBehaviour
     // Used to change the color
     private SpriteRenderer sr;
 
+    // Get a reference to the score text manager; gonna make it flash red when the player tries to buy something they can't afford
+    private ScoreTextManager scoreTextMan;
+
 	// Use this for initialization
 	void Start () 
     {
@@ -43,6 +46,9 @@ public class ShopItemManager : MonoBehaviour
         controller = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         // Get the spriterenderer
         sr = gameObject.GetComponent<SpriteRenderer>();
+
+        // Get the scoretextmanager
+        scoreTextMan = GameObject.FindGameObjectWithTag("ScoreText").GetComponent<ScoreTextManager>();
 
         // Get the text that's attached to the item
         itemText = gameObject.GetComponentInChildren<Text>();
@@ -72,9 +78,9 @@ public class ShopItemManager : MonoBehaviour
             case 2:
                 price = 100;
                 break;
-            // Damage item
+            // Health item
             case 3:
-                price = 75;
+                price = 50;
                 break;
             // Speed item
             case 4:
@@ -94,20 +100,20 @@ public class ShopItemManager : MonoBehaviour
             // Destroy the bullet
             Destroy(other.gameObject);
             // If the player has enough cash money,
-            if (controller.money >= price)
+            if (controller.Money >= price)
             {
                 // Give them the item
                 giveItem();
                 // Take money from the player 
-                controller.money -= price;
+                controller.Money -= price;
                 // Destroy the object
                 Destroy(gameObject);
                 // Increase the price of all the items at the shop
                 manager.price *= 2;
             }
             else
-                // Tell the player that they don't have enough money
-                Debug.Log("Not enough money: " + controller.money + " (" + price + " needed)");
+                // Tell the player that they don't have enough money by flashing their money red
+                scoreTextMan.PrettyTextEffect(.1f, Color.red);
         }
     }
 
@@ -129,9 +135,12 @@ public class ShopItemManager : MonoBehaviour
             case 2:
                 controller.playerMan.MaxHealth++;
                 break;
-            // Player Damage Increase Pickup
+            // Health Pickup
             case 3:
-                controller.playerMan.playerDamage++;
+                // If the player isn't already at full health,
+                if (controller.playerMan.Health != controller.playerMan.MaxHealth)
+                    // Heal them
+                    controller.playerMan.Health++;
                 break;
             // Max Speed Increase Pickup
             case 4:
@@ -166,9 +175,9 @@ public class ShopItemManager : MonoBehaviour
             // Max health sprite
             case 2:
                 return new Sprite[] { items[2] };
-            // Damage sprite
+            // Health sprites
             case 3:
-                return new Sprite[] { items[4] };
+                return new Sprite[] { items[5], items[6] };
             // Speed sprite
             case 4:
                 return new Sprite[] { items[3] };

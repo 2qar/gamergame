@@ -99,6 +99,10 @@ public class ButtonSpriteManager : MonoBehaviour
                 return 2;
             case "thumbstick":
                 return 2;
+            case "start":
+                return 14;
+            case "back":
+                return 13;
         }
         return -1;
     }
@@ -111,13 +115,15 @@ public class ButtonSpriteManager : MonoBehaviour
     /// </param>
     void KeyboardButtonSetup(int keyNum)
     {
-        if (keyNum == 2)
-        {
-            ArrowKeyAnimator();
-            MovementKeyChecker();
-        }
-        else
-            image.sprite = KeyboardPrompts[keyNum];
+        // double check that a controller isn't connected
+        if(!XboxControllerIsConnected)
+            if (keyNum == 2)
+            {
+                ArrowKeyAnimator();
+                MovementKeyChecker();
+            }
+            else
+                image.sprite = KeyboardPrompts[keyNum];
     }
 
     /// <summary>
@@ -216,6 +222,10 @@ public class ButtonSpriteManager : MonoBehaviour
                 return 4;
             case "thumbstick":
                 return 9;
+            case "start":
+                return 14;
+            case "back":
+                return 15;
         }
         return -1;
     }
@@ -242,7 +252,7 @@ public class ButtonSpriteManager : MonoBehaviour
     void DpadSpriteAnimator()
     {
         // If a button is pressed,
-        if(DpadButtonPressed())
+        if (DpadButtonPressed())
         {
             // Create a new dpad
             GameObject dpad = new GameObject("dpad");
@@ -266,7 +276,15 @@ public class ButtonSpriteManager : MonoBehaviour
             // Reset the inputs
             joystick.ResetInputs();
         }
+        image.sprite = ControllerButtonPrompts[DpadInputConverter()];
     }
+
+    /*
+    IEnumerator DpadSpriteSetter()
+    {
+
+    }
+    */
 
     /// <summary>
     /// Convert input from the dpad into an index in ControllerButtonPrompts.

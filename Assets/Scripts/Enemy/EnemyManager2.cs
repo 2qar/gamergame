@@ -34,6 +34,11 @@ public class EnemyManager2 : MonoBehaviour
                 controller.playerMan.Weapon = enemyWeapon;
                 // Increase the player's score
                 controller.score++;
+                // Increase the player's money based on the enemy's weapon
+                if (enemyWeapon == 1)
+                    controller.Money += 5;
+                else
+                    controller.Money += 10;
                 // Explode into a bunch of particles
                 Instantiate(explosion, transform.position, transform.rotation);
             }

@@ -33,8 +33,6 @@ using UnityEngine.UI;
 // TODO: Make enemy spawn rate based on the player's speed
 // TODO: Change the asteroids in the second level so that they're randomly picked on their own rather than being a part of the normal enemy pool
     // This way, the enemy level can just be set back to 1 at the start of level 2 instead of the weird shit that's going on right now
-// TODO: Make get rid of spawnsPerCreation and just use the current level?????
-// TODO: Properly configure pixelboy
 
 /// <summary>
 /// Handles levels, spawning enemies, creating the shop entrance,
@@ -57,8 +55,23 @@ public class GameController : MonoBehaviour
 
     // The player's score earned from destroying enemies and stuff
     public int score = 0;
+    
     // The player's money earned from destroying enemies that they can spend
-    public int money = 0;
+    private int money = 0;
+    public int Money
+    {
+        get { return money; }
+        set
+        {
+            if (value > money)
+            {
+                // Make the amount the text increases scale with how much money the player just earned
+                float sizeIncreaseAmount = (value - money) / 100f;
+                scoreTextMan.PrettyTextEffect(sizeIncreaseAmount, scoreTextMan.newColor);
+            }
+            money = value;
+        }
+    }
 
     // Stores the current wave and how many enemies to spawn that wave
     // spawnsPerCreation is how many enemies will be spawned at a time
@@ -101,6 +114,8 @@ public class GameController : MonoBehaviour
     public BossManager bossMan;
     public int bossNum;
     public bool bossIsAlive = false;
+
+    public ScoreTextManager scoreTextMan;
 
     private void Start()
     {

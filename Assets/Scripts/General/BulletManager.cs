@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// TODO: Make the player's mine explode when it collides with an enemy bullet
-
 /// <summary>
 /// Handles movement and behavior of all the projectiles that the player and enemies spit out.
 /// </summary>
