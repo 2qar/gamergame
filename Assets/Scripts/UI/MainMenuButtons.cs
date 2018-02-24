@@ -154,9 +154,8 @@ public class MainMenuButtons : MonoBehaviour
             }
             // If they're on the exit button, 
             else if (index == 2)
-                // Quit the game somehow
-                //Application.Quit;
-                Debug.Log("Quit");
+                // Quit the game 
+                Application.Quit();
     }
 
 }
