@@ -21,7 +21,7 @@ public class ScreenShaker : MonoBehaviour
         set
         {
             if(value)
-                origin = new Vector3(0, -15, -10);
+                origin = new Vector3(0, -100, -10);
             else
                 origin = new Vector3(0, 0, -10);
             inShop = value;

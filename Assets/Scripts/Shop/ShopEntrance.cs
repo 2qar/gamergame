@@ -126,9 +126,9 @@ public class ShopEntrance : MonoBehaviour
         controller.StartCoroutine(controller.shopWait());
 
         // Change the camera's position to the shop position
-        mainCam.transform.position = new Vector3(0, -15, -10);
+        mainCam.transform.position = new Vector3(0, -100, -10);
         // Change the player's position to the shop position minus an offset
-        player.transform.position = new Vector3(-6.05f, -15, transform.position.z);
+        player.transform.position = new Vector3(-6.05f, -100, transform.position.z);
 
         // Set up the shop
         shopManager.SendMessage("setUpShop");

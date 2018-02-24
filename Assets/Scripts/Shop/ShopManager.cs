@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// FIXME: Fix bug where the shoptext breaks by just putting it on another canvas and disabling the canvas instead of the gameobject
 // FIXME: Fix bug where sometimes the game spawns 2 enemies at a time upon exiting instead of 1
 // TODO: Implement actual money and fix the prices so they don't skyrocket, maybe give each item a fixed price
 // TODO: Add cool purple particles as the shop background
@@ -71,7 +72,7 @@ public class ShopManager : MonoBehaviour
         for (int pos = -2; pos <= 2; pos+= 2)
         {
             // Create the randomly selected powerup at the current position and store it so it can be deleted later
-            items[pos + 2] = (GameObject)Instantiate(item, new Vector3(6, pos - 15, 0), transform.rotation);
+            items[pos + 2] = (GameObject)Instantiate(item, new Vector3(6, pos - 100, 0), transform.rotation);
         }
     }
 

@@ -280,7 +280,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
 --- !u!1 &274245686
 GameObject:
@@ -715,9 +715,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 188e6e6da6ebb624780666bae2541208, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
-  ship1: {fileID: 21300000, guid: c5be1d1695276bc43a9599e19c42ba18, type: 3}
-  ship2: {fileID: 21300000, guid: 790c08dfed130e04595faeacad6c99b7, type: 3}
+  playerDamage: 1
+  ships:
+  - {fileID: 21300000, guid: 21ec138ba2964f2419732ae9e21f42a7, type: 3}
+  - {fileID: 21300000, guid: d5b15a314fa9ba345a50b073edce0bec, type: 3}
+  - {fileID: 21300000, guid: 474048cdf9fdb224f8a34fea07e7e4a0, type: 3}
+  resetUI: {fileID: 0}
+  poof: {fileID: 0}
+  deathExplosion: {fileID: 0}
+  hurtSound: {fileID: 0}
 --- !u!61 &980633518
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -734,7 +740,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 6, y: 3}
+    oldSize: {x: 70, y: 50}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -757,7 +763,10 @@ MonoBehaviour:
   fireRate: 0.2
   bulletOffset: {x: 0.2, y: 0, z: 0}
   bullet: {fileID: 1550825545638584, guid: 2c94b977cf4005841814611b8f14b5c9, type: 2}
+  mine: {fileID: 0}
+  bulletSound: {fileID: 0}
   gameController: {fileID: 1360390647}
+  shaker: {fileID: 0}
 --- !u!114 &980633520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -822,7 +831,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c5be1d1695276bc43a9599e19c42ba18, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 21ec138ba2964f2419732ae9e21f42a7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -952,15 +961,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 831157916e4fb4f2fba1de03baa67443, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreText: {fileID: 785315476}
-  waveText: {fileID: 2135447151}
-  healthText: {fileID: 1734224694}
+  shaker: {fileID: 0}
+  UIElements:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  enemies:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   enemyLevel: 2
   score: 0
-  weapon: 1
+  money: 0
   spawnRate: 1.5
   waveRate: 7
+  enemyWeapon: 0
+  waitBeforeWave: 1
+  levelStart: 1
   enemy: {fileID: 1684365596376908, guid: 9bab13ff372b645e4aaef4cc2b59f708, type: 2}
+  mine: {fileID: 0}
+  playerMan: {fileID: 0}
+  shopEntrance: {fileID: 0}
+  asteroidField: {fileID: 0}
+  playerBullet: {fileID: 0}
+  boss: {fileID: 0}
+  bossMan: {fileID: 0}
+  bossNum: 0
+  bossIsAlive: 0
 --- !u!4 &1360390648
 Transform:
   m_ObjectHideFlags: 0

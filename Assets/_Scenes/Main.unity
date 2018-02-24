@@ -375,6 +375,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 012c854c34e906b4f91e7d98128c71fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  KeyboardPrompts:
+  - {fileID: 21300000, guid: b83b9a6ddfaf4584a940ee92749728f4, type: 3}
+  - {fileID: 21300000, guid: f342a947324166d4e81800c7dccd1501, type: 3}
+  - {fileID: 21300000, guid: c49c0ffd0eda82b4fb1ac58053a014ed, type: 3}
+  - {fileID: 21300002, guid: c49c0ffd0eda82b4fb1ac58053a014ed, type: 3}
+  - {fileID: 21300004, guid: c49c0ffd0eda82b4fb1ac58053a014ed, type: 3}
+  - {fileID: 21300006, guid: c49c0ffd0eda82b4fb1ac58053a014ed, type: 3}
+  - {fileID: 21300008, guid: c49c0ffd0eda82b4fb1ac58053a014ed, type: 3}
+  - {fileID: 21300000, guid: 4bcd41156c14303478f55430a34fde26, type: 3}
+  - {fileID: 21300002, guid: 4bcd41156c14303478f55430a34fde26, type: 3}
+  - {fileID: 21300004, guid: 4bcd41156c14303478f55430a34fde26, type: 3}
+  - {fileID: 21300006, guid: 4bcd41156c14303478f55430a34fde26, type: 3}
+  - {fileID: 21300008, guid: 4bcd41156c14303478f55430a34fde26, type: 3}
+  - {fileID: 21300008, guid: 8943a4c6fe19398478b73002e7d0187e, type: 3}
+  - {fileID: 21300018, guid: 8943a4c6fe19398478b73002e7d0187e, type: 3}
+  - {fileID: 0}
   ControllerButtonPrompts:
   - {fileID: 21300000, guid: d1a1a31db13c9094c96f2ba6c32f1c49, type: 3}
   - {fileID: 21300002, guid: d1a1a31db13c9094c96f2ba6c32f1c49, type: 3}
@@ -469,7 +485,7 @@ ParticleSystem:
   serializedVersion: 5
   lengthInSec: 10000
   simulationSpeed: 0.2
-  looping: 0
+  looping: 1
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -519,7 +535,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -300456074
+  randomSeed: 306365193
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3924,6 +3940,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 012c854c34e906b4f91e7d98128c71fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  KeyboardPrompts:
+  - {fileID: 21300000, guid: b83b9a6ddfaf4584a940ee92749728f4, type: 3}
+  - {fileID: 21300000, guid: f342a947324166d4e81800c7dccd1501, type: 3}
+  - {fileID: 21300000, guid: c49c0ffd0eda82b4fb1ac58053a014ed, type: 3}
+  - {fileID: 21300002, guid: c49c0ffd0eda82b4fb1ac58053a014ed, type: 3}
+  - {fileID: 21300004, guid: c49c0ffd0eda82b4fb1ac58053a014ed, type: 3}
+  - {fileID: 21300006, guid: c49c0ffd0eda82b4fb1ac58053a014ed, type: 3}
+  - {fileID: 21300008, guid: c49c0ffd0eda82b4fb1ac58053a014ed, type: 3}
+  - {fileID: 21300000, guid: 4bcd41156c14303478f55430a34fde26, type: 3}
+  - {fileID: 21300002, guid: 4bcd41156c14303478f55430a34fde26, type: 3}
+  - {fileID: 21300004, guid: 4bcd41156c14303478f55430a34fde26, type: 3}
+  - {fileID: 21300006, guid: 4bcd41156c14303478f55430a34fde26, type: 3}
+  - {fileID: 21300008, guid: 4bcd41156c14303478f55430a34fde26, type: 3}
+  - {fileID: 21300008, guid: 8943a4c6fe19398478b73002e7d0187e, type: 3}
+  - {fileID: 21300018, guid: 8943a4c6fe19398478b73002e7d0187e, type: 3}
+  - {fileID: 0}
   ControllerButtonPrompts:
   - {fileID: 21300000, guid: d1a1a31db13c9094c96f2ba6c32f1c49, type: 3}
   - {fileID: 21300002, guid: d1a1a31db13c9094c96f2ba6c32f1c49, type: 3}
@@ -4097,6 +4129,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 012c854c34e906b4f91e7d98128c71fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  KeyboardPrompts:
+  - {fileID: 21300000, guid: b83b9a6ddfaf4584a940ee92749728f4, type: 3}
+  - {fileID: 21300000, guid: f342a947324166d4e81800c7dccd1501, type: 3}
+  - {fileID: 21300000, guid: c49c0ffd0eda82b4fb1ac58053a014ed, type: 3}
+  - {fileID: 21300002, guid: c49c0ffd0eda82b4fb1ac58053a014ed, type: 3}
+  - {fileID: 21300004, guid: c49c0ffd0eda82b4fb1ac58053a014ed, type: 3}
+  - {fileID: 21300006, guid: c49c0ffd0eda82b4fb1ac58053a014ed, type: 3}
+  - {fileID: 21300008, guid: c49c0ffd0eda82b4fb1ac58053a014ed, type: 3}
+  - {fileID: 21300000, guid: 4bcd41156c14303478f55430a34fde26, type: 3}
+  - {fileID: 21300002, guid: 4bcd41156c14303478f55430a34fde26, type: 3}
+  - {fileID: 21300004, guid: 4bcd41156c14303478f55430a34fde26, type: 3}
+  - {fileID: 21300006, guid: 4bcd41156c14303478f55430a34fde26, type: 3}
+  - {fileID: 21300008, guid: 4bcd41156c14303478f55430a34fde26, type: 3}
+  - {fileID: 21300008, guid: 8943a4c6fe19398478b73002e7d0187e, type: 3}
+  - {fileID: 21300018, guid: 8943a4c6fe19398478b73002e7d0187e, type: 3}
+  - {fileID: 0}
   ControllerButtonPrompts:
   - {fileID: 21300000, guid: d1a1a31db13c9094c96f2ba6c32f1c49, type: 3}
   - {fileID: 21300002, guid: d1a1a31db13c9094c96f2ba6c32f1c49, type: 3}
@@ -4453,6 +4501,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 012c854c34e906b4f91e7d98128c71fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  KeyboardPrompts:
+  - {fileID: 21300000, guid: b83b9a6ddfaf4584a940ee92749728f4, type: 3}
+  - {fileID: 21300000, guid: f342a947324166d4e81800c7dccd1501, type: 3}
+  - {fileID: 21300000, guid: c49c0ffd0eda82b4fb1ac58053a014ed, type: 3}
+  - {fileID: 21300002, guid: c49c0ffd0eda82b4fb1ac58053a014ed, type: 3}
+  - {fileID: 21300004, guid: c49c0ffd0eda82b4fb1ac58053a014ed, type: 3}
+  - {fileID: 21300006, guid: c49c0ffd0eda82b4fb1ac58053a014ed, type: 3}
+  - {fileID: 21300008, guid: c49c0ffd0eda82b4fb1ac58053a014ed, type: 3}
+  - {fileID: 21300000, guid: 4bcd41156c14303478f55430a34fde26, type: 3}
+  - {fileID: 21300002, guid: 4bcd41156c14303478f55430a34fde26, type: 3}
+  - {fileID: 21300004, guid: 4bcd41156c14303478f55430a34fde26, type: 3}
+  - {fileID: 21300006, guid: 4bcd41156c14303478f55430a34fde26, type: 3}
+  - {fileID: 21300008, guid: 4bcd41156c14303478f55430a34fde26, type: 3}
+  - {fileID: 21300008, guid: 8943a4c6fe19398478b73002e7d0187e, type: 3}
+  - {fileID: 21300018, guid: 8943a4c6fe19398478b73002e7d0187e, type: 3}
+  - {fileID: 0}
   ControllerButtonPrompts:
   - {fileID: 21300000, guid: d1a1a31db13c9094c96f2ba6c32f1c49, type: 3}
   - {fileID: 21300002, guid: d1a1a31db13c9094c96f2ba6c32f1c49, type: 3}
@@ -5882,6 +5946,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 012c854c34e906b4f91e7d98128c71fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  KeyboardPrompts:
+  - {fileID: 21300000, guid: b83b9a6ddfaf4584a940ee92749728f4, type: 3}
+  - {fileID: 21300000, guid: f342a947324166d4e81800c7dccd1501, type: 3}
+  - {fileID: 21300000, guid: c49c0ffd0eda82b4fb1ac58053a014ed, type: 3}
+  - {fileID: 21300002, guid: c49c0ffd0eda82b4fb1ac58053a014ed, type: 3}
+  - {fileID: 21300004, guid: c49c0ffd0eda82b4fb1ac58053a014ed, type: 3}
+  - {fileID: 21300006, guid: c49c0ffd0eda82b4fb1ac58053a014ed, type: 3}
+  - {fileID: 21300008, guid: c49c0ffd0eda82b4fb1ac58053a014ed, type: 3}
+  - {fileID: 21300000, guid: 4bcd41156c14303478f55430a34fde26, type: 3}
+  - {fileID: 21300002, guid: 4bcd41156c14303478f55430a34fde26, type: 3}
+  - {fileID: 21300004, guid: 4bcd41156c14303478f55430a34fde26, type: 3}
+  - {fileID: 21300006, guid: 4bcd41156c14303478f55430a34fde26, type: 3}
+  - {fileID: 21300008, guid: 4bcd41156c14303478f55430a34fde26, type: 3}
+  - {fileID: 21300008, guid: 8943a4c6fe19398478b73002e7d0187e, type: 3}
+  - {fileID: 21300018, guid: 8943a4c6fe19398478b73002e7d0187e, type: 3}
+  - {fileID: 0}
   ControllerButtonPrompts:
   - {fileID: 21300000, guid: d1a1a31db13c9094c96f2ba6c32f1c49, type: 3}
   - {fileID: 21300002, guid: d1a1a31db13c9094c96f2ba6c32f1c49, type: 3}
@@ -6180,7 +6260,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2022080366
 MonoBehaviour:
   m_ObjectHideFlags: 0
