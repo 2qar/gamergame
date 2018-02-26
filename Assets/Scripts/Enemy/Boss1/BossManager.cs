@@ -16,6 +16,7 @@ public class BossManager : MonoBehaviour
             StartCoroutine(damageEffect());
             // Update the health
             health = value;
+            Debug.Log(health);
         }
     }
 

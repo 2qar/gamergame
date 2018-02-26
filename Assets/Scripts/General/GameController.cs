@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 /**
  * IDEA FOR COMPLETE GAME REDESIGN: 
@@ -21,18 +22,17 @@ using UnityEngine.UI;
  * -Enemy level goes up the further into the level you get
  **/
 
-// FIXME: Sometimes when the player and the enemy die at the same time, the timescale stays at 0
-
 // TODO: Make bosses for the end of each level
 
 // TODO: REBALANCE LITERALLY EVERYTHING BEFORE YOU EVEN CONSIDER THE GAME AS DONE (but don't do this until you've finished every other todo and the game itself)
 
 // FIXME: Player / enemy boosters rendering behind asteroids and portal particles
 
-// TODO: Spawn more enemies per wave, maybe spawn them in bursts
 // TODO: Make enemy spawn rate based on the player's speed
 // TODO: Change the asteroids in the second level so that they're randomly picked on their own rather than being a part of the normal enemy pool
     // This way, the enemy level can just be set back to 1 at the start of level 2 instead of the weird shit that's going on right now
+// TODO: Now that you're switching the game to the level system, make it so the gamecontroller randomly spawns enemies so there's always enemies, even when the player isn't fighting a huge wave
+    // Maybe disable this during waves
 
 /// <summary>
 /// Handles levels, spawning enemies, creating the shop entrance,
@@ -50,7 +50,7 @@ public class GameController : MonoBehaviour
     public GameObject[] enemies = new GameObject[6];
 
     // Bunch of variables
-    private int level = 1;
+    public int level = 1;
     public int enemyLevel = 2;
 
     // The player's score earned from destroying enemies and stuff
@@ -117,6 +117,9 @@ public class GameController : MonoBehaviour
 
     public ScoreTextManager scoreTextMan;
 
+    // Keeps track of whether the player is in the shop or not
+    public bool IsPlayerInShop = false;
+
     private void Start()
     {
 		// Get the player object so the script can snatch some stuff off the player
@@ -131,6 +134,17 @@ public class GameController : MonoBehaviour
         // Start spawning enemies
         StartCoroutine(spawnEnemies());
         //StartCoroutine(level1BossBattle());
+    }
+
+    private void OnDisable()
+    {
+        PlayerPrefs.SetInt("money", money);
+    }
+
+    private void OnEnable()
+    {
+        if (SceneManager.GetActiveScene().name != "Level1")
+            money = PlayerPrefs.GetInt("money");
     }
 
     // Update is called once per frame
@@ -156,15 +170,9 @@ public class GameController : MonoBehaviour
     /// </summary>
     public IEnumerator spawnEnemies()
     {
-        // If the enemy level is high enough for the controller to not spawn enemies,
-        if (enemyLevel == 5 && level == 1)
-            // Move to the next level
-            level2Init();
         // If true,
         if (levelStart)
         {
-            // Set up the level text
-            setLevelText();
             // Show the leveltext element
             UIElements[4].gameObject.SetActive(true);
             // Wait for a few seconds
@@ -208,6 +216,12 @@ public class GameController : MonoBehaviour
             // Wait to spawn another enemy or set
             yield return new WaitForSeconds(spawnRate);
         }
+        // pick a random number 1-3
+        int shopSpawn = (int)Random.Range(1, 4);
+        // if the number is 3,
+        if (shopSpawn == 3)
+            // Spawn the shop entrance
+            Instantiate(shopEntrance, new Vector3(8, 0, 0), transform.rotation);
         yield break;
     }
 
@@ -221,7 +235,7 @@ public class GameController : MonoBehaviour
         // Start waiting so the player's speed doesn't go down
         waitBeforeWave = true;
         // Increase the range of enemies allowed
-        enemyLevel++;
+        //enemyLevel++;
 
         //int shopSpawn = (int)Random.Range(1, 4);
         //if (shopSpawn == 3)
@@ -230,19 +244,21 @@ public class GameController : MonoBehaviour
 
         // Transition into the next wave
         // While the spawnRate is above a certain num,
-        if (spawnRate >= .5f)
+        //if (spawnRate >= .5f)
             // Decrease it
-            spawnRate -= .1f;
+            //spawnRate -= .1f;
         // Double the spawns
-        //spawns *= 2;
+        spawns += 2;
         // Start a new sublevel
-        levelStart = true;
+        //levelStart = true;
 
         // Wait to start the next wave
         yield return new WaitForSeconds(waveRate);
 
+        // Disable the wait
+        waitBeforeWave = false;
         // Go back to spawning enemies
-        StartCoroutine(spawnEnemies());
+        //StartCoroutine(spawnEnemies());
         // Exit the method
         yield break;
     }
@@ -258,19 +274,6 @@ public class GameController : MonoBehaviour
         // Constantly wait while the method is running
         while (true)
             yield return new WaitForSeconds(1);
-    }
-
-    /// <summary>
-    /// Sets up for creating things in the second level.
-    /// </summary>
-    void level2Init()
-    {
-        // Change the level to 2
-        level++;
-        // Enable the asteroid field
-        asteroidField.SetActive(true);
-        //Increase maxLevel???
-        //Start a method that randomly spawns the asteroid enemies instead of including the asteroid enemies in the normal enemy pool
     }
 
     /// <summary>
@@ -298,45 +301,34 @@ public class GameController : MonoBehaviour
             case 3:
                 Instantiate(mine, spawnPos, transform.rotation);
                 break;
-            // Dupes to increase spawnrate later on
-            case 4:
-                enemyWeapon -= 3;
-                Instantiate(enemy, spawnPos, transform.rotation);
-                break;
-            case 5:
-                enemyWeapon -= 3;
-                Instantiate(enemy, spawnPos, transform.rotation);
-                break;
-            case 6:
-                enemyWeapon -= 3;
-                Instantiate(mine, spawnPos, transform.rotation);
-                break;
         }
 
     }
 
-    /// <summary>
-    /// Sets up the level text to display the correct level.
-    /// </summary>
-    void setLevelText()
-    {
-        int levelOffset = 1;
-        // Set up the offset to make the level appear properly
-        if (level == 2)
-            levelOffset = 4;
-        // Set up the level text element to show the right stuff
-        UIElements[4].text = "Level " + level + " - " + (enemyLevel - levelOffset);
-    }
-
-    IEnumerator level1BossBattle()
+    public IEnumerator level1BossBattle()
     {
         // Update the status of the boss
         bossIsAlive = true;
         // Get the boss
         boss = GameObject.FindGameObjectWithTag("Level1Boss");
         bossMan = boss.GetComponent<BossManager>();
+
+        // Give the player a chance at the shop
+        Instantiate(shopEntrance, new Vector3(8, 0, 0), transform.rotation);
+        // Wait for a little while
+        yield return new WaitForSeconds(waveRate);
+
+        // Set the leveltext to show that it's a boss fight
+        UIElements[4].gameObject.GetComponent<Text>().text = "Boss Fight";
+        // Show the leveltext element
+        UIElements[4].gameObject.SetActive(true);
+        // Wait for a few seconds
+        yield return new WaitForSeconds(3);
+        // Hide the text
+        UIElements[4].gameObject.SetActive(false);
+
         // wait while the boss is alive
-        while(bossIsAlive)
+        while (bossIsAlive)
             yield return new WaitForSeconds(1f);
         //give the player some powerups to pick from
         yield break;

@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // FIXME: Fix bug where the shoptext breaks by just putting it on another canvas and disabling the canvas instead of the gameobject
-// FIXME: Fix bug where sometimes the game spawns 2 enemies at a time upon exiting instead of 1
-// TODO: Implement actual money and fix the prices so they don't skyrocket, maybe give each item a fixed price
-// TODO: Add cool purple particles as the shop background
 
 /// <summary>
 /// Handles:
@@ -92,6 +89,8 @@ public class ShopManager : MonoBehaviour
     /// </summary>
     void setUpShop()
     {
+        // Let the gamecontroller know that the player is in the shop
+        controller.IsPlayerInShop = true;
         // Update inShop so that the exit can check for collisions with the player
         inShop = true;
         // Let the script know that the player is in the shop now
@@ -119,6 +118,8 @@ public class ShopManager : MonoBehaviour
     /// </summary>
     void exitShop()
     {
+        // Let the gamecontroller know that the player isn't in the shop anymore
+        controller.IsPlayerInShop = false;
         // Update the var so the player isn't in the shop
         inShop = false;
         // Disable the collider so the player can't somehow trigger this method again
@@ -141,9 +142,9 @@ public class ShopManager : MonoBehaviour
         controller.StopCoroutine("shopWait");
 
         // Disable wait variable
-        //controller.waitBeforeWave = false;
+        controller.waitBeforeWave = false;
         // Start spawning enemies again
-        StartCoroutine(controller.spawnEnemies());
+        //StartCoroutine(controller.spawnEnemies());
 
         // Enable the collider again for when the player comes back to the shop
         exitCollider.enabled = true;

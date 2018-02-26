@@ -144,7 +144,7 @@ public class ShopItemManager : MonoBehaviour
                 break;
             // Max Speed Increase Pickup
             case 4:
-                controller.playerMan.MaxSpeed += 2.5f;
+                controller.playerMan.MaxSpeed += 1f;
                 controller.playerMan.PoweredUp = true;
                 break;
             // Bullet Size Increase Pickup

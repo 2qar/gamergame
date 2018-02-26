@@ -73,10 +73,13 @@ public class EnemyManager2 : MonoBehaviour
         // Get GameController script
         gameController = GameObject.FindGameObjectWithTag("GameController");
         controller = gameController.GetComponent<GameController>();
+
 		// Get SpriteRenderer component so the sprite can be changed
         sr = GetComponent<SpriteRenderer>();
+
 		// Get the BoxCollider so the size can be changed
 		BoxCollider2D collider = GetComponent<BoxCollider2D> ();
+
         // Set weapon and ship
 		enemyWeapon = controller.enemyWeapon;
 		// If the weapon is 2, triple blast ship
@@ -93,18 +96,25 @@ public class EnemyManager2 : MonoBehaviour
 
     private void Update()
     {
-        // Change the enemy's move speed based on the player's speed
-        moveSpeed = 3 + (controller.playerMan.Speed / 10);
+        // If the game isn't in a waiting state,
+        if(!controller.IsPlayerInShop)
+        {
+            // Change the enemy's move speed based on the player's speed
+            moveSpeed = 3 + (controller.playerMan.Speed / 10);
 
-        // Checks to fire weapon
-        if (Time.time >= nextFire)
-			fireWeapon (enemyWeapon);
+            // Checks to fire weapon
+            if (Time.time >= nextFire)
+                fireWeapon(enemyWeapon);
+        }
+        
     }
 		
     void FixedUpdate()
     {
-		//Move the dude
-        transform.position -= new Vector3(moveSpeed, 0, 0) * Time.deltaTime;
+        // If the game currently isn't in a waiting state,
+        if(!controller.IsPlayerInShop)
+		    //Move the dude
+            transform.position -= new Vector3(moveSpeed, 0, 0) * Time.deltaTime;
     }
 
     void OnCollisionEnter2D(Collision2D other)

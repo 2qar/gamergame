@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Manages all things related to the player, like:
@@ -15,8 +16,6 @@ using UnityEngine;
     // Maybe also increase the size of their bullets when they're in powered up mode?
     // Maybe bullets could have an explosion radius?
 // TODO: Make powered up mode do something other than increase fire rate, maybe increase bullet size too and increase damage
-
-// TODO: Make a slider thingy on the bottom of the UI that represents the player's position and moves based on their movement speed. On that line, have triggers that start a wave of enemies.
 
 public class PlayerManager : MonoBehaviour
 {
@@ -68,6 +67,12 @@ public class PlayerManager : MonoBehaviour
     // Two variables to hold the initial values that they were so they can be set back
     float fireRateBackup;
     int moveSpeedBackup;
+
+    // The original color of the booster
+    Color[] originalColors = { new Color(1f, .5f, 0f, 1f), new Color(.95f, .23f, 0, 1f) };
+    // Original speed of the booster
+    float originalSpeed;
+
     /// <summary>
     /// Changes the player's speed and firing rate or not based on <see cref="T:PlayerManager"/> powered up.
     /// </summary>
@@ -84,8 +89,10 @@ public class PlayerManager : MonoBehaviour
                 fireScript.fireRate = 0.1f;
                 // Make the player move a little faster
                 movement.moveSpeed = 2 + moveSpeedBackup;
-                // Make their trail blue maybe???
-                // Make bullets + bullet trail blue maybe???
+                // Make the particles faster
+                booster.startSpeed = 13.5f;
+                // Set the start color of the thing to blue
+                booster.startColor = Color.blue;
             }
             // If the player isn't powered up,
             else
@@ -93,6 +100,13 @@ public class PlayerManager : MonoBehaviour
                 // Keep the fire rate and movement speed at their normal values
                 fireScript.fireRate = fireRateBackup;
                 movement.moveSpeed = moveSpeedBackup;
+
+                // Set the color and the speed of the player's booster particles back to normal
+                booster.startSpeed = originalSpeed;
+                Color ogStartColor = new Color(Random.Range(originalColors[0].r, originalColors[1].r),
+                                               Random.Range(originalColors[0].g, originalColors[1].g),
+                                               Random.Range(originalColors[0].b, originalColors[1].b));
+                booster.startColor = ogStartColor;
             }
             poweredUp = value;
         }
@@ -162,18 +176,27 @@ public class PlayerManager : MonoBehaviour
         fireRateBackup = fireScript.fireRate;
         moveSpeedBackup = movement.moveSpeed;
 
+        // Get the original starting speed of the booster
+        originalSpeed = booster.startSpeed;
+
+        // Set up the health cells
+        HealthCellInit();
+    }
+
+    void HealthCellInit()
+    {
         // Set up the UI health element
         healthCells = GameObject.FindGameObjectsWithTag("HealthCell");
         // Sort the GameObjects into a seperate array
         // Run through each element in the new array
-        for(int pos = 0; pos < sortedHealthCells.Length; pos++)
+        for (int pos = 0; pos < sortedHealthCells.Length; pos++)
             // Run through each element in the old array
-            for(int reps = 0; reps < healthCells.Length; reps++)
+            for (int reps = 0; reps < healthCells.Length; reps++)
             {
                 // Store the name of the current object
                 string objName = "" + healthCells[reps];
                 // If the object has the correct number for the current sorted array position,
-                if(objName.Contains("" + pos))
+                if (objName.Contains("" + pos))
                     // Put the cola in the slot
                     sortedHealthCells[pos] = healthCells[reps];
             }
@@ -210,6 +233,8 @@ public class PlayerManager : MonoBehaviour
             // If the player's health reaches zero or somehow below that,
             if (health <= 0)
             {
+                // Wait so the progress bar doesn't more anymore
+                controller.waitBeforeWave = true;
                 // Shake the screen a whole lot
                 controller.shaker.ShakeCamera(1f);
                 // Explode into a bunch of bits
@@ -220,6 +245,8 @@ public class PlayerManager : MonoBehaviour
                 showResetButton();
                 // Stop the wave sequences n stuff
                 controller.StopAllCoroutines();
+                // Set the timescale back to 1 since stopping all coroutines can stop the freeze coroutine, leaving the game frozen
+                Time.timeScale = 1;
             }
         }
     }
@@ -401,6 +428,32 @@ public class PlayerManager : MonoBehaviour
                 Weapon = 1;
             else
                 Weapon++;
+        }
+    }
+
+
+    // Save all of the player's variables n stuff when the object gets disabled at the end of the scene
+    private void OnDisable()
+    {
+        PlayerPrefs.SetInt("maxhealth", MaxHealth);
+        PlayerPrefs.SetInt("health", health);
+        PlayerPrefs.SetFloat("speed", speed);
+        PlayerPrefs.SetInt("weapon", weapon);
+    }
+
+    // When the scene loads, this should run, setting the player's health and speed back to what it was
+    private void OnEnable()
+    {
+        // Check to make sure the current scene isn't the first level so the player doesn't keep their stuff from when they died and reset
+        if (SceneManager.GetActiveScene().name != "Level1")
+        {
+            healthCellBG = GameObject.FindGameObjectWithTag("HealthCellBG");
+            HealthCellInit();
+            MaxHealth = PlayerPrefs.GetInt("maxhealth");
+            Debug.Log(MaxHealth);
+            Health = PlayerPrefs.GetInt("health");
+            Speed = PlayerPrefs.GetFloat("speed");
+            Weapon = PlayerPrefs.GetInt("weapon");
         }
     }
 

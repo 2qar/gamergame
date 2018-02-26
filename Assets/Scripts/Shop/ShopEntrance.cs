@@ -113,10 +113,10 @@ public class ShopEntrance : MonoBehaviour
     void teleportToShop()
     {
         // Get all of the enemies in the area
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        //GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         // Run through and kill all of them
-        foreach (GameObject enemy in enemies)
-            Destroy(enemy);
+        //foreach (GameObject enemy in enemies)
+            //Destroy(enemy);
         
         // Stop the enemy spawning
         controller.StopAllCoroutines();
