@@ -76,7 +76,7 @@ public class ShopItemManager : MonoBehaviour
                 break;
             // Max health item
             case 2:
-                price = 100;
+                price = 50;
                 break;
             // Health item
             case 3:
@@ -126,21 +126,15 @@ public class ShopItemManager : MonoBehaviour
         {
             // Health Pickup
             case 1:
-                // If the player isn't already at full health,
-                if(controller.playerMan.Health != controller.playerMan.MaxHealth)
-                    // Heal them
-                    controller.playerMan.Health++;
+                givePlayerHealth();
                 break;
-            // Max Health Increase Pickup
+            // Health pickup
             case 2:
-                controller.playerMan.MaxHealth++;
+                givePlayerHealth();
                 break;
             // Health Pickup
             case 3:
-                // If the player isn't already at full health,
-                if (controller.playerMan.Health != controller.playerMan.MaxHealth)
-                    // Heal them
-                    controller.playerMan.Health++;
+                givePlayerHealth();
                 break;
             // Max Speed Increase Pickup
             case 4:
@@ -154,6 +148,17 @@ public class ShopItemManager : MonoBehaviour
                     playerBullet.transform.localScale += new Vector3(.2f, .2f, 0);
                 break;
         }
+    }
+
+    void givePlayerHealth()
+    {
+        // If the player isn't already at full health,
+        if (controller.playerMan.Health != controller.playerMan.MaxHealth)
+            // Heal them
+            controller.playerMan.Health++;
+        else
+            // Add to the player's max health
+            controller.playerMan.MaxHealth++;
     }
 
     /// <summary>
@@ -172,9 +177,9 @@ public class ShopItemManager : MonoBehaviour
             // Health sprites
             case 1:
                 return new Sprite[] { items[5], items[6]};
-            // Max health sprite
+            // health sprite
             case 2:
-                return new Sprite[] { items[2] };
+                return new Sprite[] { items[5], items[6] };
             // Health sprites
             case 3:
                 return new Sprite[] { items[5], items[6] };

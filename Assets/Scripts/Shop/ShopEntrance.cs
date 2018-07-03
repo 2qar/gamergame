@@ -120,6 +120,8 @@ public class ShopEntrance : MonoBehaviour
         
         // Stop the enemy spawning
         controller.StopAllCoroutines();
+        // Set the timescale back to 1 just incase the freeze coroutine is running when the player enters the shop
+        Time.timeScale = 1;
         // Start a wait that runs until the player leaves the shop
         controller.StartCoroutine(controller.shopWait());
 

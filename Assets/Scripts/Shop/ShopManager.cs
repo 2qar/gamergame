@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // FIXME: Fix bug where the shoptext breaks by just putting it on another canvas and disabling the canvas instead of the gameobject
+// FIXME: I think the bug where stuff spawns twice when the player leaves the shop is still there
 
 /// <summary>
 /// Handles:

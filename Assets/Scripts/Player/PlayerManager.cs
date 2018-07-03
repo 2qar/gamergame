@@ -265,7 +265,7 @@ public class PlayerManager : MonoBehaviour
             {
                 maxHealth = value;
                 // Be nice and give the player max health when their maxhealth increases
-                //Health = maxHealth;
+                Health = maxHealth;
                 // Adjust the size of the bg to compensate for an extra health cell
                 healthCellRect.sizeDelta += new Vector2(16.3f, 0f);
             }
